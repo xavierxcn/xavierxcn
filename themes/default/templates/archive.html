@@ -4,22 +4,17 @@
 
 {% block content %}
 <section class="archive">
-    <h1>Archive</h1>
+    <h1>{% if tag %}Tag: {{ tag }}{% elif category %}Category: {{ category }}{% else %}Archive{% endif %}</h1>
 
-    {% for year, year_posts in posts | group_by(attribute="year") %}
-    <section class="archive-year">
-        <h2>{{ year }}</h2>
-        <ul class="archive-list">
-            {% for post in year_posts %}
-            <li>
-                <time datetime="{{ post.date | date(format='%Y-%m-%d') }}">
-                    {{ post.date | date(format='%m-%d') }}
-                </time>
-                <a href="{{ post.url }}">{{ post.title }}</a>
-            </li>
-            {% endfor %}
-        </ul>
-    </section>
-    {% endfor %}
+    <ul class="archive-list">
+        {% for post in posts %}
+        <li>
+            <time datetime="{{ post.date | date(format='%Y-%m-%d') }}">
+                {{ post.date | date(format='%Y-%m-%d') }}
+            </time>
+            <a href="{{ site.base_path }}{{ post.url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
 </section>
 {% endblock %}

@@ -4,6 +4,7 @@ site:
   description: "A personal blog about technology and life"
   author: "Xavier Fan"
   url: "https://xavierxcn.github.io"
+  base_path: "/xavierxcn"  # 项目站点的基础路径，用户站点设为 ""
   language: "zh-CN"
 
 # Build Configuration

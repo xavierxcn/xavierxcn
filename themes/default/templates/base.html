@@ -7,7 +7,7 @@
     <meta name="description" content="{% block description %}{{ site.description }}{% endblock %}">
     <meta name="author" content="{{ site.author }}">
 
-    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="{{ site.base_path }}/static/css/style.css">
 
     {% if config.markdown.math %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -18,10 +18,10 @@
 <body>
     <header class="site-header">
         <nav class="nav">
-            <a href="/" class="site-title">{{ site.title }}</a>
+            <a href="{{ site.base_path }}/" class="site-title">{{ site.title }}</a>
             <ul class="nav-links">
                 {% for item in nav %}
-                <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                <li><a href="{{ site.base_path }}{{ item.url }}">{{ item.title }}</a></li>
                 {% endfor %}
             </ul>
         </nav>

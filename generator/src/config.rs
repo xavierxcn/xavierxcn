@@ -25,6 +25,8 @@ pub struct SiteConfig {
     #[serde(default)]
     pub author: String,
     pub url: String,
+    #[serde(default)]
+    pub base_path: String,
     #[serde(default = "default_language")]
     pub language: String,
 }
