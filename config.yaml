@@ -9,7 +9,7 @@ site:
 # Build Configuration
 build:
   content_dir: "content"
-  output_dir: "output"
+  output_dir: "docs"
   theme: "default"
 
 # Theme Configuration
