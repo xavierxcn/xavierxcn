@@ -10,11 +10,11 @@
         <h1>{{ post.title }}</h1>
         <div class="post-meta">
             <time datetime="{{ post.date | date(format='%Y-%m-%d') }}">
-                {{ post.date | date(format='%B %d, %Y') }}
+                {{ post.date | date(format='%Y年%m月%d日') }}
             </time>
             {% if post.updated %}
             <span class="updated">
-                Updated: {{ post.updated | date(format='%B %d, %Y') }}
+                更新于 {{ post.updated | date(format='%Y年%m月%d日') }}
             </span>
             {% endif %}
         </div>
@@ -35,7 +35,7 @@
     <footer class="post-footer">
         {% if post.categories %}
         <div class="categories">
-            <span>Categories:</span>
+            <span>分类：</span>
             {% for category in post.categories %}
             <a href="{{ site.base_path }}/categories/{{ category }}/">{{ category }}</a>
             {% endfor %}
@@ -47,14 +47,14 @@
 <nav class="post-nav">
     {% if prev_post %}
     <a href="{{ site.base_path }}{{ prev_post.url }}" class="prev-post">
-        <span>Previous</span>
+        <span>上一篇</span>
         <span>{{ prev_post.title }}</span>
     </a>
     {% endif %}
 
     {% if next_post %}
     <a href="{{ site.base_path }}{{ next_post.url }}" class="next-post">
-        <span>Next</span>
+        <span>下一篇</span>
         <span>{{ next_post.title }}</span>
     </a>
     {% endif %}

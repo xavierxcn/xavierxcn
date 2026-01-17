@@ -56,6 +56,8 @@ pub struct ListContext<'a> {
     pub config: ConfigContext<'a>,
     pub posts: &'a [crate::content::Post],
     pub nav: &'a [crate::config::NavItem],
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pagination: Option<Pagination>,
 }
 
 /// Context for rendering tag/category pages
@@ -66,6 +68,8 @@ pub struct TagContext<'a> {
     pub posts: &'a [crate::content::Post],
     pub nav: &'a [crate::config::NavItem],
     pub tag: &'a str,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pagination: Option<Pagination>,
 }
 
 /// Context for rendering category pages
@@ -76,12 +80,77 @@ pub struct CategoryContext<'a> {
     pub posts: &'a [crate::content::Post],
     pub nav: &'a [crate::config::NavItem],
     pub category: &'a str,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub pagination: Option<Pagination>,
 }
 
 /// Subset of config exposed to templates
 #[derive(Debug, Serialize)]
 pub struct ConfigContext<'a> {
     pub markdown: &'a crate::config::MarkdownConfig,
+}
+
+/// Pagination information for list pages
+#[derive(Debug, Clone, Serialize)]
+pub struct Pagination {
+    pub current_page: usize,
+    pub total_pages: usize,
+    pub total_items: usize,
+    pub per_page: usize,
+    pub prev_page: Option<String>,
+    pub next_page: Option<String>,
+}
+
+impl Pagination {
+    /// Create pagination info for a list of items
+    pub fn new(
+        total_items: usize,
+        per_page: usize,
+        current_page: usize,
+        base_url: &str,
+    ) -> Self {
+        let total_pages = if total_items == 0 {
+            1
+        } else {
+            (total_items + per_page - 1) / per_page
+        };
+
+        let prev_page = if current_page > 1 {
+            if current_page == 2 {
+                Some(format!("{}/", base_url))
+            } else {
+                Some(format!("{}/page/{}/", base_url, current_page - 1))
+            }
+        } else {
+            None
+        };
+
+        let next_page = if current_page < total_pages {
+            Some(format!("{}/page/{}/", base_url, current_page + 1))
+        } else {
+            None
+        };
+
+        Self {
+            current_page,
+            total_pages,
+            total_items,
+            per_page,
+            prev_page,
+            next_page,
+        }
+    }
+
+    /// Get a slice of items for the current page
+    pub fn paginate<'a, T>(&self, items: &'a [T]) -> &'a [T] {
+        let start = (self.current_page - 1) * self.per_page;
+        let end = std::cmp::min(start + self.per_page, items.len());
+        if start >= items.len() {
+            &[]
+        } else {
+            &items[start..end]
+        }
+    }
 }
 
 #[cfg(test)]

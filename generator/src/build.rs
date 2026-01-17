@@ -1,15 +1,27 @@
 use crate::config::Config;
 use crate::content::{load_pages, load_posts, Page, Post};
 use crate::render::template::{
-    CategoryContext, ConfigContext, ListContext, PageContext, PostContext, TagContext,
+    CategoryContext, ConfigContext, ListContext, PageContext, Pagination, PostContext, TagContext,
     TemplateEngine,
 };
 use anyhow::{Context, Result};
+use serde::Serialize;
 use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 use tracing::info;
 use walkdir::WalkDir;
+
+/// Search index item for client-side search
+#[derive(Debug, Serialize)]
+pub struct SearchIndexItem {
+    pub slug: String,
+    pub url: String,
+    pub title: String,
+    pub summary: String,
+    pub tags: Vec<String>,
+    pub date: String,
+}
 
 pub struct Builder {
     config: Config,
@@ -53,6 +65,7 @@ impl Builder {
         self.generate_archive(output_dir)?;
         self.generate_tag_pages(output_dir)?;
         self.generate_category_pages(output_dir)?;
+        self.generate_search_index(output_dir)?;
 
         // Copy static assets
         self.copy_static_assets(output_dir)?;
@@ -107,46 +120,90 @@ impl Builder {
         Ok(())
     }
 
-    /// Generate the index page
+    /// Generate the index page with pagination
     fn generate_index(&self, output_dir: &Path) -> Result<()> {
-        let context = ListContext {
-            site: &self.config.site,
-            config: ConfigContext {
-                markdown: &self.config.markdown,
-            },
-            posts: &self.posts,
-            nav: &self.config.nav,
+        let per_page = self.config.pagination.posts_per_page;
+        let total_posts = self.posts.len();
+        let total_pages = if total_posts == 0 {
+            1
+        } else {
+            (total_posts + per_page - 1) / per_page
         };
 
-        let html = self.template_engine.render("index.html", &context)?;
-        fs::write(output_dir.join("index.html"), html)?;
+        for page_num in 1..=total_pages {
+            let pagination = Pagination::new(total_posts, per_page, page_num, "");
+            let page_posts: Vec<Post> = pagination.paginate(&self.posts).to_vec();
 
-        info!("Generated index page");
+            let context = ListContext {
+                site: &self.config.site,
+                config: ConfigContext {
+                    markdown: &self.config.markdown,
+                },
+                posts: &page_posts,
+                nav: &self.config.nav,
+                pagination: Some(pagination),
+            };
+
+            let html = self.template_engine.render("index.html", &context)?;
+
+            if page_num == 1 {
+                fs::write(output_dir.join("index.html"), &html)?;
+                info!("Generated index page");
+            } else {
+                let page_dir = output_dir.join("page").join(page_num.to_string());
+                fs::create_dir_all(&page_dir)?;
+                fs::write(page_dir.join("index.html"), &html)?;
+                info!("Generated index page {}", page_num);
+            }
+        }
+
         Ok(())
     }
 
-    /// Generate the archive page
+    /// Generate the archive page with pagination
     fn generate_archive(&self, output_dir: &Path) -> Result<()> {
         let archive_dir = output_dir.join("archive");
         fs::create_dir_all(&archive_dir)?;
 
-        let context = ListContext {
-            site: &self.config.site,
-            config: ConfigContext {
-                markdown: &self.config.markdown,
-            },
-            posts: &self.posts,
-            nav: &self.config.nav,
+        let per_page = self.config.pagination.posts_per_page;
+        let total_posts = self.posts.len();
+        let total_pages = if total_posts == 0 {
+            1
+        } else {
+            (total_posts + per_page - 1) / per_page
         };
 
-        let html = self.template_engine.render("archive.html", &context)?;
-        fs::write(archive_dir.join("index.html"), html)?;
+        for page_num in 1..=total_pages {
+            let pagination = Pagination::new(total_posts, per_page, page_num, "/archive");
+            let page_posts: Vec<Post> = pagination.paginate(&self.posts).to_vec();
 
-        info!("Generated archive page");
+            let context = ListContext {
+                site: &self.config.site,
+                config: ConfigContext {
+                    markdown: &self.config.markdown,
+                },
+                posts: &page_posts,
+                nav: &self.config.nav,
+                pagination: Some(pagination),
+            };
+
+            let html = self.template_engine.render("archive.html", &context)?;
+
+            if page_num == 1 {
+                fs::write(archive_dir.join("index.html"), &html)?;
+                info!("Generated archive page");
+            } else {
+                let page_dir = archive_dir.join("page").join(page_num.to_string());
+                fs::create_dir_all(&page_dir)?;
+                fs::write(page_dir.join("index.html"), &html)?;
+                info!("Generated archive page {}", page_num);
+            }
+        }
+
         Ok(())
     }
 
-    /// Generate tag pages
+    /// Generate tag pages with pagination
     fn generate_tag_pages(&self, output_dir: &Path) -> Result<()> {
         let mut tags_map: HashMap<String, Vec<&Post>> = HashMap::new();
 
@@ -159,31 +216,55 @@ impl Builder {
         let tags_dir = output_dir.join("tags");
         fs::create_dir_all(&tags_dir)?;
 
+        let per_page = self.config.pagination.posts_per_page;
+
         for (tag, posts) in tags_map {
             let tag_dir = tags_dir.join(&tag);
             fs::create_dir_all(&tag_dir)?;
 
             let posts_vec: Vec<Post> = posts.into_iter().cloned().collect();
-            let context = TagContext {
-                site: &self.config.site,
-                config: ConfigContext {
-                    markdown: &self.config.markdown,
-                },
-                posts: &posts_vec,
-                nav: &self.config.nav,
-                tag: &tag,
+            let total_posts = posts_vec.len();
+            let total_pages = if total_posts == 0 {
+                1
+            } else {
+                (total_posts + per_page - 1) / per_page
             };
 
-            let html = self.template_engine.render("archive.html", &context)?;
-            fs::write(tag_dir.join("index.html"), html)?;
+            let base_url = format!("/tags/{}", tag);
 
-            info!("Generated tag page: /tags/{}/", tag);
+            for page_num in 1..=total_pages {
+                let pagination = Pagination::new(total_posts, per_page, page_num, &base_url);
+                let page_posts: Vec<Post> = pagination.paginate(&posts_vec).to_vec();
+
+                let context = TagContext {
+                    site: &self.config.site,
+                    config: ConfigContext {
+                        markdown: &self.config.markdown,
+                    },
+                    posts: &page_posts,
+                    nav: &self.config.nav,
+                    tag: &tag,
+                    pagination: Some(pagination),
+                };
+
+                let html = self.template_engine.render("archive.html", &context)?;
+
+                if page_num == 1 {
+                    fs::write(tag_dir.join("index.html"), &html)?;
+                    info!("Generated tag page: /tags/{}/", tag);
+                } else {
+                    let page_dir = tag_dir.join("page").join(page_num.to_string());
+                    fs::create_dir_all(&page_dir)?;
+                    fs::write(page_dir.join("index.html"), &html)?;
+                    info!("Generated tag page: /tags/{}/page/{}/", tag, page_num);
+                }
+            }
         }
 
         Ok(())
     }
 
-    /// Generate category pages
+    /// Generate category pages with pagination
     fn generate_category_pages(&self, output_dir: &Path) -> Result<()> {
         let mut categories_map: HashMap<String, Vec<&Post>> = HashMap::new();
 
@@ -199,26 +280,106 @@ impl Builder {
         let categories_dir = output_dir.join("categories");
         fs::create_dir_all(&categories_dir)?;
 
+        let per_page = self.config.pagination.posts_per_page;
+
         for (category, posts) in categories_map {
             let category_dir = categories_dir.join(&category);
             fs::create_dir_all(&category_dir)?;
 
             let posts_vec: Vec<Post> = posts.into_iter().cloned().collect();
-            let context = CategoryContext {
-                site: &self.config.site,
-                config: ConfigContext {
-                    markdown: &self.config.markdown,
-                },
-                posts: &posts_vec,
-                nav: &self.config.nav,
-                category: &category,
+            let total_posts = posts_vec.len();
+            let total_pages = if total_posts == 0 {
+                1
+            } else {
+                (total_posts + per_page - 1) / per_page
             };
 
-            let html = self.template_engine.render("archive.html", &context)?;
-            fs::write(category_dir.join("index.html"), html)?;
+            let base_url = format!("/categories/{}", category);
 
-            info!("Generated category page: /categories/{}/", category);
+            for page_num in 1..=total_pages {
+                let pagination = Pagination::new(total_posts, per_page, page_num, &base_url);
+                let page_posts: Vec<Post> = pagination.paginate(&posts_vec).to_vec();
+
+                let context = CategoryContext {
+                    site: &self.config.site,
+                    config: ConfigContext {
+                        markdown: &self.config.markdown,
+                    },
+                    posts: &page_posts,
+                    nav: &self.config.nav,
+                    category: &category,
+                    pagination: Some(pagination),
+                };
+
+                let html = self.template_engine.render("archive.html", &context)?;
+
+                if page_num == 1 {
+                    fs::write(category_dir.join("index.html"), &html)?;
+                    info!("Generated category page: /categories/{}/", category);
+                } else {
+                    let page_dir = category_dir.join("page").join(page_num.to_string());
+                    fs::create_dir_all(&page_dir)?;
+                    fs::write(page_dir.join("index.html"), &html)?;
+                    info!("Generated category page: /categories/{}/page/{}/", category, page_num);
+                }
+            }
         }
+
+        Ok(())
+    }
+
+    /// Generate search index JSON file
+    fn generate_search_index(&self, output_dir: &Path) -> Result<()> {
+        let search_index: Vec<SearchIndexItem> = self
+            .posts
+            .iter()
+            .map(|post| {
+                // Generate summary: use post summary or first 200 chars of content
+                let summary = if let Some(ref s) = post.meta.summary {
+                    s.clone()
+                } else {
+                    // Strip HTML tags and get first 200 chars
+                    let text: String = post
+                        .html_content
+                        .chars()
+                        .filter(|c| *c != '<')
+                        .take(300)
+                        .collect();
+                    // Simple HTML strip - remove anything between < and >
+                    let mut result = String::new();
+                    let mut in_tag = false;
+                    for c in text.chars() {
+                        if c == '<' {
+                            in_tag = true;
+                        } else if c == '>' {
+                            in_tag = false;
+                        } else if !in_tag {
+                            result.push(c);
+                        }
+                    }
+                    result.chars().take(200).collect::<String>() + "..."
+                };
+
+                SearchIndexItem {
+                    slug: post.slug.clone(),
+                    url: post.url.clone(),
+                    title: post.meta.title.clone(),
+                    summary,
+                    tags: post.meta.tags.clone(),
+                    date: post
+                        .meta
+                        .date
+                        .map(|d| d.format("%Y-%m-%d").to_string())
+                        .unwrap_or_default(),
+                }
+            })
+            .collect();
+
+        let json = serde_json::to_string_pretty(&search_index)
+            .context("Failed to serialize search index")?;
+
+        fs::write(output_dir.join("search-index.json"), json)?;
+        info!("Generated search index with {} items", search_index.len());
 
         Ok(())
     }

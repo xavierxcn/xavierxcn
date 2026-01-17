@@ -1,10 +1,10 @@
 {% extends "base.html" %}
 
-{% block title %}Archive - {{ site.title }}{% endblock %}
+{% block title %}归档 - {{ site.title }}{% endblock %}
 
 {% block content %}
 <section class="archive">
-    <h1>{% if tag %}Tag: {{ tag }}{% elif category %}Category: {{ category }}{% else %}Archive{% endif %}</h1>
+    <h1>{% if tag %}标签：{{ tag }}{% elif category %}分类：{{ category }}{% else %}归档{% endif %}</h1>
 
     <ul class="archive-list">
         {% for post in posts %}
@@ -16,5 +16,9 @@
         </li>
         {% endfor %}
     </ul>
+
+    {% if pagination %}
+    {% include "partials/pagination.html" %}
+    {% endif %}
 </section>
 {% endblock %}

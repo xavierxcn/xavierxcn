@@ -19,15 +19,21 @@
     <header class="site-header">
         <nav class="nav">
             <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
-            <ul class="nav-links">
-                
-                <li><a href="&#x2F;xavierxcn&#x2F;">Home</a></li>
-                
-                <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">Archive</a></li>
-                
-                <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">About</a></li>
-                
-            </ul>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
         </nav>
     </header>
 
@@ -63,7 +69,7 @@
     </main>
 
     <footer class="site-footer">
-        <p>&copy; 2026 Xavier Fan. All rights reserved.</p>
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
     </footer>
 
     
@@ -76,6 +82,13 @@
     <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
         onload="renderMathInElement(document.body);"></script>
     
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('&#x2F;xavierxcn');
+        });
+    </script>
 
     
 </body>

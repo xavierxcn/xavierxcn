@@ -30,9 +30,9 @@ pagination:
 
 # Navigation
 nav:
-  - title: "Home"
+  - title: "首页"
     url: "/"
-  - title: "Archive"
+  - title: "归档"
     url: "/archive/"
-  - title: "About"
+  - title: "关于"
     url: "/about/"

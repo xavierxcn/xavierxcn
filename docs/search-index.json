@@ -1,0 +1,14 @@
+[
+  {
+    "slug": "hello-world",
+    "url": "/posts/hello-world/",
+    "title": "Hello World - 我的第一篇博客",
+    "summary": "这是我使用 Rust 静态博客生成器创建的第一篇文章，展示各种 Markdown 功能。",
+    "tags": [
+      "Rust",
+      "Blog",
+      "Markdown"
+    ],
+    "date": "2024-01-17"
+  }
+]

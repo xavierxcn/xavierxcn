@@ -1,0 +1,17 @@
+{% if pagination and pagination.total_pages > 1 %}
+<nav class="pagination">
+    {% if pagination.prev_page %}
+    <a href="{{ site.base_path }}{{ pagination.prev_page }}" class="prev">上一页</a>
+    {% else %}
+    <span class="prev disabled">上一页</span>
+    {% endif %}
+
+    <span class="page-info">第 {{ pagination.current_page }} 页，共 {{ pagination.total_pages }} 页</span>
+
+    {% if pagination.next_page %}
+    <a href="{{ site.base_path }}{{ pagination.next_page }}" class="next">下一页</a>
+    {% else %}
+    <span class="next disabled">下一页</span>
+    {% endif %}
+</nav>
+{% endif %}
