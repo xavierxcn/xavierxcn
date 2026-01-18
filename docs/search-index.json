@@ -1,13 +1,23 @@
 [
   {
+    "slug": "building-effective-agents",
+    "url": "/posts/building-effective-agents/",
+    "title": "读 Anthropic《Building Effective Agents》",
+    "summary": "Anthropic 这篇关于构建 AI Agent 的文章，读完后有些想法想记录下来",
+    "tags": [
+      "AI",
+      "Agent",
+      "LLM"
+    ],
+    "date": "2026-01-18"
+  },
+  {
     "slug": "hello-world",
     "url": "/posts/hello-world/",
-    "title": "Hello World - 我的第一篇博客",
-    "summary": "这是我使用 Rust 静态博客生成器创建的第一篇文章，展示各种 Markdown 功能。",
+    "title": "你好，世界",
+    "summary": "关于这个博客",
     "tags": [
-      "Rust",
-      "Blog",
-      "Markdown"
+      "随笔"
     ],
     "date": "2024-01-17"
   }

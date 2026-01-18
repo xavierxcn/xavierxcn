@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World - 我的第一篇博客 - Xavier&#x27;s Blog</title>
-    <meta name="description" content="这是我使用 Rust 静态博客生成器创建的第一篇文章，展示各种 Markdown 功能。">
+    <title>你好，世界 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="关于这个博客">
     <meta name="author" content="Xavier Fan">
 
     <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
@@ -41,7 +41,7 @@
         
 <article class="post">
     <header class="post-header">
-        <h1>Hello World - 我的第一篇博客</h1>
+        <h1>你好，世界</h1>
         <div class="post-meta">
             <time datetime="2024-01-17">
                 2024年01月17日
@@ -52,98 +52,32 @@
         
         <div class="tags">
             
-            <a href="&#x2F;xavierxcn/tags/Rust/" class="tag">Rust</a>
-            
-            <a href="&#x2F;xavierxcn/tags/Blog/" class="tag">Blog</a>
-            
-            <a href="&#x2F;xavierxcn/tags/Markdown/" class="tag">Markdown</a>
+            <a href="&#x2F;xavierxcn/tags/随笔/" class="tag">随笔</a>
             
         </div>
         
     </header>
 
     <div class="post-content">
-        <h1>欢迎来到我的博客</h1>
-<p>这是使用 <strong>xavierxcn-generator</strong> 构建的第一篇博客文章。这个静态网站生成器使用 Rust 开发，专门为本博客定制。</p>
-<h2>Markdown 功能展示</h2>
-<h3>代码高亮</h3>
-<p>下面是一段 Rust 代码示例：</p>
-<pre style="background-color:#2b303b;">
-<span style="color:#b48ead;">fn </span><span style="color:#8fa1b3;">main</span><span style="color:#c0c5ce;">() {
-</span><span style="color:#c0c5ce;">    println!(&quot;</span><span style="color:#a3be8c;">Hello, World!</span><span style="color:#c0c5ce;">&quot;);
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> numbers: Vec&lt;</span><span style="color:#b48ead;">i32</span><span style="color:#c0c5ce;">&gt; = (</span><span style="color:#d08770;">1</span><span style="color:#c0c5ce;">..=</span><span style="color:#d08770;">10</span><span style="color:#c0c5ce;">).</span><span style="color:#96b5b4;">collect</span><span style="color:#c0c5ce;">();
-</span><span style="color:#c0c5ce;">    </span><span style="color:#b48ead;">let</span><span style="color:#c0c5ce;"> sum: </span><span style="color:#b48ead;">i32 </span><span style="color:#c0c5ce;">= numbers.</span><span style="color:#96b5b4;">iter</span><span style="color:#c0c5ce;">().</span><span style="color:#96b5b4;">sum</span><span style="color:#c0c5ce;">();
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">    println!(&quot;</span><span style="color:#a3be8c;">Sum of 1 to 10: </span><span style="color:#d08770;">{}</span><span style="color:#c0c5ce;">&quot;, sum);
-</span><span style="color:#c0c5ce;">}
-</span></pre>
-<p>JavaScript 代码：</p>
-<pre style="background-color:#2b303b;">
-<span style="color:#b48ead;">const </span><span style="color:#8fa1b3;">greeting </span><span style="color:#c0c5ce;">= (name) </span><span style="color:#b48ead;">=&gt; </span><span style="color:#c0c5ce;">{
-</span><span style="color:#c0c5ce;">  </span><span style="color:#b48ead;">return </span><span style="color:#c0c5ce;">`</span><span style="color:#a3be8c;">Hello, </span><span style="color:#c0c5ce;">${</span><span style="color:#bf616a;">name</span><span style="color:#c0c5ce;">}</span><span style="color:#a3be8c;">!</span><span style="color:#c0c5ce;">`;
-</span><span style="color:#c0c5ce;">};
-</span><span style="color:#c0c5ce;">
-</span><span style="color:#c0c5ce;">console.</span><span style="color:#96b5b4;">log</span><span style="color:#c0c5ce;">(</span><span style="color:#8fa1b3;">greeting</span><span style="color:#c0c5ce;">(&#39;</span><span style="color:#a3be8c;">World</span><span style="color:#c0c5ce;">&#39;));
-</span></pre>
-<h3>表格</h3>
-<table><thead><tr><th>特性</th><th>支持情况</th><th>说明</th></tr></thead><tbody>
-<tr><th>代码高亮</th><th>✅</th><th>使用 syntect</th></tr>
-<tr><th>Mermaid</th><th>✅</th><th>客户端渲染</th></tr>
-<tr><th>LaTeX</th><th>✅</th><th>KaTeX 渲染</th></tr>
-<tr><th>GFM 表格</th><th>✅</th><th>支持</th></tr>
-</tbody></table>
-<h3>Mermaid 图表</h3>
-<pre class="mermaid">graph TD
-    A[Markdown 文件] --&gt; B[解析 Front Matter]
-    B --&gt; C[解析 Markdown]
-    C --&gt; D[语法高亮]
-    D --&gt; E[模板渲染]
-    E --&gt; F[HTML 输出]
-</pre>
-<h3>LaTeX 公式</h3>
-<p>行内公式：当 $a \ne 0$ 时，$ax^2 + bx + c = 0$ 的解为：</p>
-<p>$$x = \frac{-b \pm \sqrt{b^2-4ac}}{2a}$$</p>
-<p>欧拉恒等式：</p>
-<p>$$e^{i\pi} + 1 = 0$$</p>
-<h3>引用</h3>
-<blockquote>
-<p>程序必须是为了给人看而写，给机器执行只是附带的。</p>
-<p>— Harold Abelson</p>
-</blockquote>
-<h3>任务列表</h3>
-<ul>
-<li><input disabled="" type="checkbox" checked=""/>
-初始化项目结构</li>
-<li><input disabled="" type="checkbox" checked=""/>
-配置 Cargo.toml</li>
-<li><input disabled="" type="checkbox" checked=""/>
-编写 openspec/project.md</li>
-<li><input disabled="" type="checkbox"/>
-实现 Markdown 解析</li>
-<li><input disabled="" type="checkbox"/>
-实现模板渲染</li>
-<li><input disabled="" type="checkbox"/>
-实现开发服务器</li>
-</ul>
-<h3>脚注</h3>
-<p>这是一个带有脚注的句子<sup class="footnote-reference"><a href="#1">1</a></sup>。</p>
-<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup><p>这是脚注的内容。</p>
-</div>
-<h2>总结</h2>
-<p>这个博客生成器虽然只为本项目服务，但它将支持所有常见的 Markdown 扩展功能，包括代码高亮、Mermaid 图表、LaTeX 公式等。</p>
-<p>感谢阅读！</p>
+        <p>开一个博客，记录一些想法。</p>
+<h2>会写些什么</h2>
+<p>主要是三类内容：</p>
+<p><strong>AI 相关</strong> — 最近在折腾 AI 应用开发，会记录一些学习笔记、踩坑经验、读论文/博客的感想。不是那种很学术的分析，更多是个人视角的理解和思考。</p>
+<p><strong>技术杂谈</strong> — 工作中遇到的有意思的问题，或者业余捣鼓的小项目。Rust、Go、前端、后端，什么都可能写一点。</p>
+<p><strong>随便聊聊</strong> — 读书、观影、生活，偶尔也想写点和技术无关的东西。</p>
+<h2>为什么写博客</h2>
+<p>一是整理思路。很多东西以为自己懂了，写下来才发现漏洞百出。写作是检验理解的好方法。</p>
+<p>二是留个记录。过几年回头看，可能会觉得当时的想法很幼稚，但那也是成长的痕迹。</p>
+<p>三是也许能帮到别人。我自己学东西的时候，经常受益于别人的博客。如果我写的东西偶尔也能帮到谁，那就更好了。</p>
+<h2>关于这个网站</h2>
+<p>这个博客是用 Rust 写的静态网站生成器构建的，算是一个 side project。没用现成的框架，纯粹是想练练手。</p>
+<p>代码在 <a href="https://github.com/xavierxcn/xavierxcn">GitHub</a> 上，有兴趣可以看看。</p>
+<hr />
+<p>就这样，开始写吧。</p>
 
     </div>
 
     <footer class="post-footer">
-        
-        <div class="categories">
-            <span>分类：</span>
-            
-            <a href="&#x2F;xavierxcn/categories/技术/">技术</a>
-            
-        </div>
         
     </footer>
 </article>

@@ -1,10 +1,12 @@
-+++
-title = "读 Anthropic《Building Effective Agents》"
-date = 2026-01-18
-description = "Anthropic 这篇关于构建 AI Agent 的文章，读完后有些想法想记录下来"
-[taxonomies]
-tags = ["AI", "Agent", "LLM"]
-+++
+---
+title: 读 Anthropic《Building Effective Agents》
+date: 2026-01-18
+summary: Anthropic 这篇关于构建 AI Agent 的文章，读完后有些想法想记录下来
+tags:
+  - AI
+  - Agent
+  - LLM
+---
 
 最近回顾了 Anthropic 的 [Building Effective Agents](https://www.anthropic.com/engineering/building-effective-agents)，这篇文章来自他们与几十个团队合作构建 LLM Agent 的实践经验。读完觉得有些地方挺有意思，记录一下。
 
