@@ -1,0 +1,5 @@
+tools:
+  - slug: md2wechat
+    title: Markdown 转微信公众号
+    description: 将 Markdown 转换为微信公众号兼容的 HTML 格式，支持代码高亮和 Mermaid 图表
+    icon: 📝

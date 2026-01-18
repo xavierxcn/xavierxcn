@@ -84,6 +84,15 @@ pub struct CategoryContext<'a> {
     pub pagination: Option<Pagination>,
 }
 
+/// Context for rendering the tools list page
+#[derive(Debug, Serialize)]
+pub struct ToolsListContext<'a> {
+    pub site: &'a crate::config::SiteConfig,
+    pub config: ConfigContext<'a>,
+    pub tools: &'a [crate::content::Tool],
+    pub nav: &'a [crate::config::NavItem],
+}
+
 /// Subset of config exposed to templates
 #[derive(Debug, Serialize)]
 pub struct ConfigContext<'a> {

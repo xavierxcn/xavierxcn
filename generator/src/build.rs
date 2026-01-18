@@ -1,8 +1,8 @@
 use crate::config::Config;
-use crate::content::{load_pages, load_posts, Page, Post};
+use crate::content::{load_pages, load_posts, load_tools, Page, Post, Tool};
 use crate::render::template::{
     CategoryContext, ConfigContext, ListContext, PageContext, Pagination, PostContext, TagContext,
-    TemplateEngine,
+    TemplateEngine, ToolsListContext,
 };
 use anyhow::{Context, Result};
 use serde::Serialize;
@@ -29,6 +29,7 @@ pub struct Builder {
     template_engine: TemplateEngine,
     posts: Vec<Post>,
     pages: Vec<Page>,
+    tools: Vec<Tool>,
 }
 
 impl Builder {
@@ -38,14 +39,21 @@ impl Builder {
         let template_engine = TemplateEngine::new(&theme_dir)?;
         let posts = load_posts(&config.build.content_dir)?;
         let pages = load_pages(&config.build.content_dir)?;
+        let tools = load_tools(&config.build.content_dir)?;
 
-        info!("Loaded {} posts and {} pages", posts.len(), pages.len());
+        info!(
+            "Loaded {} posts, {} pages, and {} tools",
+            posts.len(),
+            pages.len(),
+            tools.len()
+        );
 
         Ok(Self {
             config,
             template_engine,
             posts,
             pages,
+            tools,
         })
     }
 
@@ -62,6 +70,7 @@ impl Builder {
         // Generate all pages
         self.generate_posts(output_dir)?;
         self.generate_pages(output_dir)?;
+        self.generate_tools(output_dir)?;
         self.generate_index(output_dir)?;
         self.generate_archive(output_dir)?;
         self.generate_tag_pages(output_dir)?;
@@ -118,6 +127,48 @@ impl Builder {
 
             info!("Generated page: /{}/", page.slug);
         }
+        Ok(())
+    }
+
+    /// Generate tool pages (copy directories) and tools list
+    fn generate_tools(&self, output_dir: &Path) -> Result<()> {
+        if self.tools.is_empty() {
+            return Ok(());
+        }
+
+        let tools_dir = output_dir.join("tools");
+        fs::create_dir_all(&tools_dir)?;
+
+        // Copy each tool's directory to output
+        let content_tools_dir = Path::new(&self.config.build.content_dir).join("tools");
+        for tool in &self.tools {
+            let src_dir = content_tools_dir.join(&tool.slug);
+            let dst_dir = tools_dir.join(&tool.slug);
+
+            if src_dir.exists() {
+                fs::create_dir_all(&dst_dir)?;
+                copy_dir_recursive(&src_dir, &dst_dir)?;
+                info!("Generated tool: /tools/{}/", tool.slug);
+            } else {
+                tracing::warn!("Tool directory not found: {}", src_dir.display());
+            }
+        }
+
+        // Generate tools list page
+        let context = ToolsListContext {
+            site: &self.config.site,
+            config: ConfigContext {
+                markdown: &self.config.markdown,
+            },
+            tools: &self.tools,
+            nav: &self.config.nav,
+        };
+
+        let html = self.template_engine.render("tools.html", &context)?;
+        fs::write(tools_dir.join("index.html"), html)?;
+
+        info!("Generated tools list page");
+
         Ok(())
     }
 

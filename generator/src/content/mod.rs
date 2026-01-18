@@ -57,6 +57,36 @@ pub struct Page {
     pub html_content: String,
 }
 
+/// Tool metadata from _meta.yaml
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ToolMeta {
+    pub slug: String,
+    pub title: String,
+    #[serde(default)]
+    pub description: Option<String>,
+    #[serde(default)]
+    pub icon: Option<String>,
+}
+
+/// Tools metadata file (_meta.yaml)
+#[derive(Debug, Clone, Deserialize)]
+pub struct ToolsMetaFile {
+    #[serde(default)]
+    pub tools: Vec<ToolMeta>,
+}
+
+/// A tool page (for template rendering)
+#[derive(Debug, Clone, Serialize)]
+pub struct Tool {
+    pub slug: String,
+    pub url: String,
+    pub title: String,
+    #[serde(default)]
+    pub description: Option<String>,
+    #[serde(default)]
+    pub icon: Option<String>,
+}
+
 /// Generate slug from filename
 fn slug_from_filename(path: &Path) -> String {
     path.file_stem()
@@ -175,6 +205,34 @@ fn load_page(path: &Path) -> Result<Page> {
         title: meta.title,
         html_content,
     })
+}
+
+/// Load all tools from the _meta.yaml file
+pub fn load_tools<P: AsRef<Path>>(content_dir: P) -> Result<Vec<Tool>> {
+    let meta_path = content_dir.as_ref().join("tools/_meta.yaml");
+    if !meta_path.exists() {
+        return Ok(Vec::new());
+    }
+
+    let content = fs::read_to_string(&meta_path)
+        .with_context(|| format!("Failed to read tools metadata: {}", meta_path.display()))?;
+
+    let meta_file: ToolsMetaFile = serde_yaml::from_str(&content)
+        .with_context(|| "Failed to parse tools/_meta.yaml")?;
+
+    let tools = meta_file
+        .tools
+        .into_iter()
+        .map(|meta| Tool {
+            url: format!("/tools/{}/", meta.slug),
+            slug: meta.slug,
+            title: meta.title,
+            description: meta.description,
+            icon: meta.icon,
+        })
+        .collect();
+
+    Ok(tools)
 }
 
 #[cfg(test)]

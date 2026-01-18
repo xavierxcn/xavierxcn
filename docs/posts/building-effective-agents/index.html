@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>读 Anthropic《Building Effective Agents》 - Xavier&#x27;s Blog</title>
-    <meta name="description" content="轻流程，重智能——读完这篇文章后对 Agent 开发的一些思考">
+    <title>重温《Building Effective Agents》 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="轻流程，重智能，强观测——我对 Agent 开发的一点思考">
     <meta name="author" content="Xavier Fan">
 
     <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
@@ -28,6 +28,8 @@
                     
                     <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
                     
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
                     <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
                     
                     <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
@@ -41,7 +43,7 @@
         
 <article class="post">
     <header class="post-header">
-        <h1>读 Anthropic《Building Effective Agents》</h1>
+        <h1>重温《Building Effective Agents》</h1>
         <div class="post-meta">
             <time datetime="2026-01-18">
                 2026年01月18日
@@ -63,83 +65,76 @@
     </header>
 
     <div class="post-content">
-        <p>最近回顾了 Anthropic 的 <a href="https://www.anthropic.com/engineering/building-effective-agents">Building Effective Agents</a>，这篇文章来自他们与几十个团队合作构建 LLM Agent 的实践经验。读完之后，有一个想法越来越清晰：<strong>Agent 开发的核心应该是轻流程、重智能</strong>。</p>
-<h2>文章说了什么</h2>
-<p>Anthropic 把 Agentic 系统分成两类：</p>
-<pre class="mermaid">graph LR
-    subgraph Workflow["Workflow"]
-        W["预定义的流程&lt;br/&gt;代码控制走向"]
-    end
-    subgraph Agent["Agent"]
-        A["LLM 自己决定&lt;br/&gt;下一步做什么"]
-    end
-
-    style Workflow fill:#e1f5fe
-    style Agent fill:#fff3e0
-</pre>
-<p><strong>Workflow</strong> 是你写好剧本让 LLM 演，<strong>Agent</strong> 是让 LLM 自己即兴发挥。</p>
-<p>文章介绍了五种 Workflow 模式：</p>
+        <p>最近又翻了一遍 Anthropic 的 <a href="https://www.anthropic.com/engineering/building-effective-agents">Building Effective Agents</a>。这篇文章是 2024 年底发布的，由 Erik Schluntz 和 Barry Zhang 撰写，是他们和几十个团队合作做 Agent 之后的经验总结。时隔一段时间再读，有了一些新的体会。</p>
+<h2>原文概览</h2>
+<p>文章首先定义了 <strong>Agentic Systems（智能体系统）</strong> 这个大概念，然后把它分成两类：</p>
+<h3>Workflow vs Agent</h3>
 <ul>
-<li><strong>Prompt Chaining</strong>：任务拆成一串步骤，一个接一个</li>
-<li><strong>Routing</strong>：根据输入类型走不同分支</li>
-<li><strong>Parallelization</strong>：多个 LLM 并行处理，汇总结果</li>
-<li><strong>Orchestrator-Workers</strong>：一个 LLM 分配任务，多个 LLM 执行</li>
-<li><strong>Evaluator-Optimizer</strong>：一个生成，一个评估，循环改进</li>
+<li><strong>Workflow</strong>：多个 LLM 按照<strong>预定义的流程</strong>协作，人来设计路径</li>
+<li><strong>Agent</strong>：LLM <strong>自主决定</strong>下一步做什么、用什么工具、何时停止</li>
 </ul>
-<p>以及真正的 Agent 模式——LLM 自己决定做什么、用什么工具、什么时候停下。</p>
-<h2>我的思考：轻流程，重智能</h2>
-<p>读完这篇文章，我在想一个问题：这些 Workflow 模式固然有用，但随着模型能力的提升，我们是不是应该把更多的决策权交给 AI 本身？</p>
-<pre class="mermaid">flowchart LR
-    subgraph 传统思路["传统思路"]
-        H1["开发者设计流程"] --&gt; H2["AI 执行步骤"]
-    end
-
-    subgraph 新思路["新思路"]
-        N1["开发者提供工具"] --&gt; N2["AI 自主决策"]
-    end
-
-    style 传统思路 fill:#e1f5fe
-    style 新思路 fill:#fff3e0
-</pre>
-<p>传统思路是：我们设计好流程，AI 按步骤执行。这当然可控，但也限制了 AI 的能力发挥。</p>
-<p>新的思路是：我们专注于提供优质、稳定的工具，把逻辑路径的决策交给 AI 自己。</p>
-<p>为什么这样更好？</p>
-<p><strong>第一，模型能力在快速提升。</strong> 今天需要用 Workflow 硬编码的逻辑，明天的模型可能自己就能判断。与其花时间设计复杂的流程编排，不如投入精力打磨工具的质量。</p>
-<p><strong>第二，流程设计有天花板。</strong> 再精心设计的 Workflow，也只能覆盖预想到的场景。但现实中的问题千变万化，让 AI 自主决策反而能处理更多长尾情况。</p>
-<p><strong>第三，工具是可复用的资产。</strong> 一个设计良好的工具，可以被不同的 Agent 在不同场景下使用。而一套 Workflow 往往只能解决特定问题。</p>
-<h2>工具设计才是核心</h2>
-<p>这也呼应了文章中我最认同的一个观点：</p>
-<blockquote>
-<p><strong>在 SWE-bench 上，我们花在优化工具的时间比优化 prompt 还多。</strong></p>
-</blockquote>
-<p>工具就是 AI 的手和眼。工具设计得好，AI 才能发挥出真正的能力。</p>
-<pre class="mermaid">graph TD
-    subgraph 好的工具["好的工具设计"]
-        T1["清晰的接口"]
-        T2["稳定的行为"]
-        T3["完善的文档"]
-        T4["合理的错误处理"]
-    end
-
-    T1 --&gt; R["AI 能正确使用"]
-    T2 --&gt; R
-    T3 --&gt; R
-    T4 --&gt; R
-
-    R --&gt; O["高质量的输出"]
-
-    style 好的工具 fill:#c8e6c9
-</pre>
-<p>无论是通过 MCP（Model Context Protocol）提供工具，还是通过 Skill 的方式，核心都是一样的：<strong>把工具做好，让 AI 自己决定怎么用</strong>。</p>
-<p>文章举了个例子：他们的 Agent 在相对路径上老是出错，改成强制用绝对路径后问题就解决了。这不是靠更复杂的流程，而是靠更好的工具设计。</p>
-<h2>Agent 的未来</h2>
-<p>我相信 Agent 的发展方向是：</p>
+<p>两者的核心区别在于<strong>自主程度</strong>。Workflow 跑在预设的轨道上，Agent 则拥有更高的自由度。</p>
+<h3>五种 Workflow 模式</h3>
+<p>文章详细介绍了五种构建 Workflow 的模式：</p>
+<table><thead><tr><th>模式</th><th>说明</th><th>典型场景</th></tr></thead><tbody>
+<tr><th><strong>Prompt Chaining</strong></th><th>将任务拆成多个步骤，前一步的输出作为后一步的输入</th><th>先生成文档，再翻译成另一种语言</th></tr>
+<tr><th><strong>Routing</strong></th><th>第一个 LLM 调用决定后续走哪条分支</th><th>根据用户问题类型分发给不同的专业模型</th></tr>
+<tr><th><strong>Parallelization</strong></th><th>任务拆分后并行处理，或通过投票机制聚合结果</th><th>多模型同时评估，取多数意见</th></tr>
+<tr><th><strong>Orchestrator-Workers</strong></th><th>编排器触发多个 Worker，最后综合结果</th><th>复杂任务分解给多个子任务处理器</th></tr>
+<tr><th><strong>Evaluator-Optimizer</strong></th><th>一个模型生成，另一个模型评估，循环优化</th><th>代码生成后自动测试并修复</th></tr>
+</tbody></table>
+<h3>Agent 模式</h3>
+<p>相比 Workflow 的预定义路径，Agent 模式让 LLM 自己决定执行流程。它的基础构建块是 <strong>Augmented LLM</strong>——一个增强了检索、工具调用、记忆能力的语言模型。</p>
+<h3>核心建议</h3>
+<p>文章反复强调几个原则：</p>
 <ol>
-<li><strong>流程越来越轻</strong>：从硬编码的 Workflow，到越来越多的自主决策</li>
-<li><strong>工具越来越重要</strong>：工具的质量决定了 Agent 的能力上限</li>
-<li><strong>人的角色转变</strong>：从"流程设计者"变成"工具提供者"和"目标设定者"</li>
+<li><strong>简单优先</strong>：能用简单方案就不要上复杂系统</li>
+<li><strong>谨慎使用框架</strong>：框架容易增加不必要的抽象层，建议先用原生 API</li>
+<li><strong>工具质量决定上限</strong>：在 SWE-bench 上，他们花在优化工具的时间比优化 prompt 还多</li>
 </ol>
-<p>当然，这不是说 Workflow 没有价值。在一些需要强可控性的场景（比如金融、医疗），预定义流程仍然是必要的。但对于大多数应用场景，让 AI 更自主可能是更好的选择。</p>
+<blockquote>
+<p>Success isn't about building the most sophisticated system. It's about building the right system for your needs.</p>
+</blockquote>
+<hr />
+<p>这些内容都很实用。但读完之后，我脑子里一直在转一个问题：<strong>我们真的需要那么多"流程"吗？</strong></p>
+<h2>为什么我们总想设计"流程"？</h2>
+<p>大概是程序员的本能吧——遇到问题就想设计一套系统来解决它。看到 AI 会犯错，第一反应是"我来加个检查点"；看到任务复杂，第一反应是"我来拆成几个步骤"。</p>
+<p>但这种思路有个隐含假设：<strong>我们比 AI 更懂这个任务应该怎么做</strong>。</p>
+<p>在模型能力还比较弱的时候，这个假设是成立的。我们确实需要用代码来"兜住" AI，防止它跑偏。</p>
+<p>但现在呢？模型越来越强，很多时候它对任务的理解已经不比我们差了。这时候如果还坚持用硬编码的流程去约束它，反而可能适得其反——就像给一个有经验的员工写一份事无巨细的操作手册，既没必要，又限制了他发挥。</p>
+<h2>轻流程，重工具</h2>
+<p>我现在越来越倾向于另一种思路：<strong>少设计流程，多打磨工具</strong>。</p>
+<p>与其花时间想"第一步做什么、第二步做什么、遇到什么情况走哪个分支"，不如把精力放在：给 AI 提供一套好用的工具，然后让它自己决定怎么组合使用。</p>
+<p>文章里有一句话我印象很深：</p>
+<blockquote>
+<p>在 SWE-bench 上，我们花在优化工具的时间比优化 prompt 还多。</p>
+</blockquote>
+<p>这说明什么？<strong>工具的质量，直接决定了 Agent 的能力上限</strong>。</p>
+<p>一个设计良好的工具，AI 拿起来就能用对。一个设计糟糕的工具，你再怎么在 prompt 里强调"小心使用"，它还是会出错。</p>
+<p>文章举了个例子：他们发现 Agent 在相对路径上老是搞错，后来改成强制使用绝对路径，问题就没了。这不是靠更复杂的流程解决的，而是靠更好的工具设计。</p>
+<h2>MCP 和 Skill：工具的两种形态</h2>
+<p>说到工具，现在有两种主流的提供方式：</p>
+<p>一种是 <strong>MCP（Model Context Protocol）</strong>，Anthropic 自己推的标准。它定义了一套协议，让不同的工具可以用统一的方式接入 AI。</p>
+<p>另一种是 <strong>Skill</strong>，更像是一段预定义的能力，AI 可以在需要的时候调用。</p>
+<p>形式不重要，重要的是：<strong>把工具做得足够好，足够稳定，足够清晰</strong>。接口要直观，行为要可预期，文档要完善。做到这些，剩下的交给 AI 自己来决定就好了。</p>
+<h2>一点实践感受</h2>
+<p>最近在用 Claude Code 写代码，感受挺明显的。</p>
+<p>它有很多内置的工具——读文件、写文件、搜索、执行命令、调用 MCP 服务等等。作为用户，我不需要告诉它"先搜索相关代码，再读取文件，再分析，再修改"——我只要说清楚我想要什么，它自己就会决定该怎么做。</p>
+<p>有时候它的做法和我预想的不一样，但结果往往也能达到目的。这就是让 AI 自主决策的好处：它可能会找到一些我没想到的路径。</p>
+<p>当然，这建立在工具本身足够可靠的基础上。如果某个工具不稳定，或者行为不可预期，那 AI 用起来也会出问题——这时候就是工具的问题，不是流程的问题。</p>
+<h2>那人类怎么办？</h2>
+<p>写到这里我自己也在想：如果让 AI 自己决定怎么做，那我作为开发者（或者用户），怎么知道它在干什么？万一它跑偏了怎么办？</p>
+<p>我目前的答案是：<strong>看着它干</strong>。</p>
+<p>这听起来有点废话，但我觉得这是一个思路上的转变。以前我们习惯"事前约束"——提前告诉它只能这样做。现在可能更好的方式是"事中观测"——让它自己干，但我能看到它在做什么。</p>
+<p>还是拿 Claude Code 举例。它每次调用工具、读取文件、执行命令，我都能实时看到。我不需要事先规定"你必须先搜索再读取再修改"，但如果它的方向不对，我可以随时喊停、随时纠正。</p>
+<p>这种感觉有点像带新人：与其写一份事无巨细的操作手册让他照着做，不如让他自己想办法，但过程中保持沟通——"你打算怎么做？""做到哪了？""遇到什么问题？"</p>
+<p>所以我现在觉得，<strong>可观测性（Observability）</strong> 可能是"重智能"思路下最重要的配套设施。工具调用日志、思考过程展示、关键操作确认……这些不是锦上添花，而是让人敢于放手的前提。</p>
+<h2>写在最后</h2>
+<p>回到最开始的问题：我们真的需要那么多"流程"吗？</p>
+<p>我目前的想法是：<strong>看情况，但可能没我们以为的那么多</strong>。</p>
+<p>金融、医疗这种场景，预定义流程肯定还是要的。但对于大多数开发场景，我越来越倾向于：流程做轻一点，工具做好一点，观测做全一点。然后相信模型能找到合理的路径。</p>
+<p>毕竟，我们用 AI 就是因为它能处理复杂性。如果所有逻辑都硬编码了，AI 的价值在哪呢？</p>
+<p>当然，这只是我目前的想法。模型能力还在快速迭代，最佳实践也在变。也许过一段时间再读这篇文章，又会有不一样的理解。</p>
 <hr />
 <p><em>原文：<a href="https://www.anthropic.com/engineering/building-effective-agents">Building Effective Agents</a></em></p>
 

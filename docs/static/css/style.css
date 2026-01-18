@@ -961,3 +961,116 @@ a.tag:hover {
         color: #666;
     }
 }
+
+/* ===== TOOLS ===== */
+.tools-section {
+    animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.tools-header {
+    margin-bottom: var(--space-2xl);
+}
+
+.tools-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+}
+
+.tools-intro {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.tool-card {
+    display: flex;
+    flex-direction: column;
+    padding: var(--space-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+    text-decoration: none;
+}
+
+.tool-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 24px var(--color-shadow-hover);
+    transform: translateY(-4px);
+}
+
+.tool-card-icon {
+    font-size: 2rem;
+    margin-bottom: var(--space-md);
+}
+
+.tool-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.tool-card-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+}
+
+/* Tool Page */
+.tool-page {
+    animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.tool-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tool-header .tool-icon {
+    font-size: 2.5rem;
+    display: block;
+    margin-bottom: var(--space-md);
+}
+
+.tool-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+}
+
+.tool-description {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+}
+
+.tool-content {
+    line-height: 1.7;
+}
+
+/* Tool page needs wider layout */
+.tool-page {
+    max-width: var(--max-width-wide);
+}
+
+@media (max-width: 768px) {
+    .tools-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .tool-header h1 {
+        font-size: 1.65rem;
+    }
+}

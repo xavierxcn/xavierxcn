@@ -32,6 +32,8 @@ pagination:
 nav:
   - title: "首页"
     url: "/"
+  - title: "工具"
+    url: "/tools/"
   - title: "归档"
     url: "/archive/"
   - title: "关于"
