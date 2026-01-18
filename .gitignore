@@ -1,6 +1,9 @@
 # Generated output
 /output/
 
+# Local dev symlink
+/docs/xavierxcn
+
 # Rust build
 /generator/target/
 
@@ -9,6 +12,7 @@
 .vscode/
 *.swp
 *.swo
+target/
 
 # OS
 .DS_Store

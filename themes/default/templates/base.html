@@ -55,7 +55,7 @@
     <script src="{{ site.base_path }}/static/js/search.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            initSearch('{{ site.base_path }}');
+            initSearch('{{ site.base_path | safe }}');
         });
     </script>
 

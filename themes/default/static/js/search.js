@@ -11,9 +11,23 @@ function initSearch(path) {
 async function loadSearchIndex() {
     try {
         const response = await fetch(`${basePath}/search-index.json`);
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}`);
+        }
         searchIndex = await response.json();
+        console.log('Search index loaded:', searchIndex.length, 'items');
     } catch (error) {
         console.error('Failed to load search index:', error);
+        // Fallback: try without basePath
+        try {
+            const response = await fetch('/search-index.json');
+            if (response.ok) {
+                searchIndex = await response.json();
+                console.log('Search index loaded (fallback):', searchIndex.length, 'items');
+            }
+        } catch (e) {
+            console.error('Fallback also failed:', e);
+        }
     }
 }
 
@@ -62,6 +76,7 @@ function search(query) {
             let score = 0;
             const titleLower = item.title.toLowerCase();
             const summaryLower = item.summary.toLowerCase();
+            const contentLower = (item.content || '').toLowerCase();
             const tagsLower = item.tags.map(t => t.toLowerCase());
 
             // Check each word
@@ -80,9 +95,14 @@ function search(query) {
                     score += 5;
                 }
 
-                // Summary/content match
+                // Summary match
                 if (summaryLower.includes(word)) {
-                    score += 2;
+                    score += 3;
+                }
+
+                // Content match
+                if (contentLower.includes(word)) {
+                    score += 1;
                 }
             }
 

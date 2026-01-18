@@ -25,7 +25,8 @@ clean:
 
 # 本地预览
 serve:
-	@echo "🌐 启动本地服务器: http://localhost:8000"
+	@echo "🌐 启动本地服务器: http://localhost:8000/xavierxcn/"
+	@cd docs && ln -sf . xavierxcn 2>/dev/null || true
 	@cd docs && python3 -m http.server 8000
 
 # 构建并预览

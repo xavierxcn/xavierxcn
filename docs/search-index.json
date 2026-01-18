@@ -4,6 +4,7 @@
     "url": "/posts/building-effective-agents/",
     "title": "读 Anthropic《Building Effective Agents》",
     "summary": "轻流程，重智能——读完这篇文章后对 Agent 开发的一些思考",
+    "content": "最近回顾了 Anthropic 的 Building Effective Agents，这篇文章来自他们与几十个团队合作构建 LLM Agent 的实践经验。读完之后，有一个想法越来越清晰：Agent 开发的核心应该是轻流程、重智能。\n文章说了什么\nAnthropic 把 Agentic 系统分成两类：\ngraph LR\n    subgraph Workflow[\"Workflow\"]\n        W[\"预定义的流程&lt;br/&gt;代码控制走向\"]\n    end\n    subgraph Agent[\"Agent\"]\n        A[\"LLM 自己决定&lt;br/&gt;下一步做什么\"]\n    end\n\n    style Workflow fill:#e1f5fe\n    style Agent fill:#fff3e0\n\nWorkflow 是你写好剧本让 LLM 演，Agent 是让 LLM 自己即兴发挥。\n文章介绍了五种 Workflow 模式：\n\nPrompt Chaining：任务拆成一串步骤，一个接一个\nRouting：根据输入类型走不同分支\nParallelization：多个 LLM 并行处理，汇总结果\nOrchestrator-Workers：一个 LLM 分配任务，多个 LLM 执行\nEvaluator-Optimizer：一个生成，一个评估，循环改进\n\n以及真正的 Agent 模式——LLM 自己决定做什么、用什么工具、什么时候停下。\n我的思考：轻流程，重智能\n读完这篇文章，我在想一个问题：这些 Workflow 模式固然有用，但随着模型能力的提升，我们是不是应该把更多的决策权交给 AI 本身？\nflowchart LR\n    subgraph 传统思路[\"传统思路\"]\n        H1[\"开发者设计流程\"] --&gt; H2[\"AI 执行步骤\"]\n    end\n\n    subgraph 新思路[\"新思路\"]\n        N1[\"开发者提供工具\"] --&gt; N2[\"AI 自主决策\"]\n    end\n\n    style 传统思路 fill:#e1f5fe\n    style 新思路 fill:#fff3e0\n\n传统思路是：我们设计好流程，AI 按步骤执行。这当然可控，但也限制了 AI 的能力发挥。\n新的思路是：我们专注于提供优质、稳定的工具，把逻辑路径的决策交给 AI 自己。\n为什么这样更好？\n第一，模型能力在快速提升。 今天需要用 Workflow 硬编码的逻辑，明天的模型可能自己就能判断。与其花时间设计复杂的流程编排，不如投入精力打磨工具的质量。\n第二，流程设计有天花板。 再精心设计的 Workflow，也只能覆盖预想到的场景。但现实中的问题千变万化，让 AI 自主决策反而能处理更多长尾情况。\n第三，工具是可复用的资产。 一个设计良好的工具，可以被不同的 Agent 在不同场景下使用。而一套 Workflow 往往只能解决特定问题。\n工具设计才是核心\n这也呼应了文章中我最认同的一个观点：\n\n在 SWE-bench 上，我们花在优化工具的时间比优化 prompt 还多。\n\n工具就是 AI 的手和眼。工具设计得好，AI 才能发挥出真正的能力。\ngraph TD\n    subgraph 好的工具[\"好的工具设计\"]\n        T1[\"清晰的接口\"]\n        T2[\"稳定的行为\"]\n        T3[\"完善的文档\"]\n        T4[\"合理的错误处理\"]\n    end\n\n    T1 --&gt; R[\"AI 能正确使用\"]\n    T2 --&gt; R\n    T3 --&gt; R\n    T4 --&gt; R\n\n    R --&gt; O[\"高质量的输出\"]\n\n    style 好的工具 fill:#c8e6c9\n\n无论是通过 MCP（Model Context Protocol）提供工具，还是通过 Skill 的方式，核心都是一样的：把工具做好，让 AI 自己决定怎么用。\n文章举了个例子：他们的 Agent 在相对路径上老是出错，改成强制用绝对路径后问题就解决了。这不是靠更复杂的流程，而是靠更好的工具设计。\nAgent 的未来\n我相信 Agent 的发展方向是：\n\n流程越来越轻：从硬编码的 Workflow，到越来越多的自主决策\n工具越来越重要：工具的质量决定了 Agent 的能力上限\n人的角色转变：从\"流程设计者\"变成\"工具提供者\"和\"目标设定者\"\n\n当然，这不是说 Workflow 没有价值。在一些需要强可控性的场景（比如金融、医疗），预定义流程仍然是必要的。但对于大多数应用场景，让 AI 更自主可能是更好的选择。\n",
     "tags": [
       "AI",
       "Agent",
@@ -16,6 +17,7 @@
     "url": "/posts/hello-world/",
     "title": "你好，世界",
     "summary": "关于这个博客",
+    "content": "开一个博客，记录一些想法。\n会写些什么\n主要是三类内容：\nAI 相关 — 最近在折腾 AI 应用开发，会记录一些学习笔记、踩坑经验、读论文/博客的感想。不是那种很学术的分析，更多是个人视角的理解和思考。\n技术杂谈 — 工作中遇到的有意思的问题，或者业余捣鼓的小项目。Rust、Go、前端、后端，什么都可能写一点。\n随便聊聊 — 读书、观影、生活，偶尔也想写点和技术无关的东西。\n为什么写博客\n一是整理思路。很多东西以为自己懂了，写下来才发现漏洞百出。写作是检验理解的好方法。\n二是留个记录。过几年回头看，可能会觉得当时的想法很幼稚，但那也是成长的痕迹。\n三是也许能帮到别人。我自己学东西的时候，经常受益于别人的博客。如果我写的东西偶尔也能帮到谁，那就更好了。\n关于这个网站\n这个博客是用 Rust 写的静态网站生成器构建的，算是一个 side project。没用现成的框架，纯粹是想练练手。\n代码在 GitHub 上，有兴趣可以看看。\n\n就这样，开始写吧。\n",
     "tags": [
       "随笔"
     ],

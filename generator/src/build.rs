@@ -19,6 +19,7 @@ pub struct SearchIndexItem {
     pub url: String,
     pub title: String,
     pub summary: String,
+    pub content: String,
     pub tags: Vec<String>,
     pub date: String,
 }
@@ -334,21 +335,11 @@ impl Builder {
             .posts
             .iter()
             .map(|post| {
-                // Generate summary: use post summary or first 200 chars of content
-                let summary = if let Some(ref s) = post.meta.summary {
-                    s.clone()
-                } else {
-                    // Strip HTML tags and get first 200 chars
-                    let text: String = post
-                        .html_content
-                        .chars()
-                        .filter(|c| *c != '<')
-                        .take(300)
-                        .collect();
-                    // Simple HTML strip - remove anything between < and >
+                // Strip HTML tags from content
+                let strip_html = |html: &str| -> String {
                     let mut result = String::new();
                     let mut in_tag = false;
-                    for c in text.chars() {
+                    for c in html.chars() {
                         if c == '<' {
                             in_tag = true;
                         } else if c == '>' {
@@ -357,14 +348,26 @@ impl Builder {
                             result.push(c);
                         }
                     }
-                    result.chars().take(200).collect::<String>() + "..."
+                    result
                 };
+
+                // Generate summary: use post summary or first 200 chars of content
+                let plain_content = strip_html(&post.html_content);
+                let summary = if let Some(ref s) = post.meta.summary {
+                    s.clone()
+                } else {
+                    plain_content.chars().take(200).collect::<String>() + "..."
+                };
+
+                // Content for search: first 2000 chars of plain text
+                let content = plain_content.chars().take(2000).collect();
 
                 SearchIndexItem {
                     slug: post.slug.clone(),
                     url: post.url.clone(),
                     title: post.meta.title.clone(),
                     summary,
+                    content,
                     tags: post.meta.tags.clone(),
                     date: post
                         .meta
