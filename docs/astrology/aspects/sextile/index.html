@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>六分相 - 相位 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="温和的支持与顺畅的机会">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-item-page {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.item-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xl);
+}
+
+.item-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.item-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.item-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.item-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-hero-symbol {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-hero-attrs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.item-hero-attr {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-code-bg);
+}
+
+.item-hero-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.item-keywords-section {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+}
+
+.item-keyword-tag {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-border);
+}
+
+.item-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text);
+}
+
+.item-content h1,
+.item-content h2,
+.item-content h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+}
+
+.item-content h1 { font-size: 1.75rem; }
+.item-content h2 { font-size: 1.4rem; }
+.item-content h3 { font-size: 1.15rem; }
+
+.item-content p {
+    margin-bottom: var(--space-lg);
+}
+
+.item-content strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-content ul,
+.item-content ol {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+}
+
+.item-content li {
+    margin-bottom: var(--space-sm);
+}
+
+.item-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.item-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+    .item-hero-title {
+        font-size: 2rem;
+    }
+
+    .item-hero-symbol {
+        font-size: 3rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="astrology-item-page">
+    <nav class="item-breadcrumb">
+        <a href="&#x2F;xavierxcn/astrology/">占星</a>
+        <span>/</span>
+        <a href="&#x2F;xavierxcn/astrology/aspects/">相位</a>
+        <span>/</span>
+        六分相
+    </nav>
+
+    <header class="item-hero">
+        
+        <div class="item-hero-symbol">⚹</div>
+        
+        <h1 class="item-hero-title">六分相</h1>
+        
+        
+        <p class="item-hero-summary">温和的支持与顺畅的机会</p>
+        
+        
+        <div class="item-keywords-section">
+            
+            <span class="item-keyword-tag">机会</span>
+            
+            <span class="item-keyword-tag">和谐</span>
+            
+            <span class="item-keyword-tag">合作</span>
+            
+            <span class="item-keyword-tag">顺畅</span>
+            
+        </div>
+        
+    </header>
+
+    <div class="item-content">
+        <h1>六分相</h1>
+<p>六分相是两颗行星相距60度时形成的相位。它被认为是一个和谐、有利的相位——不像三分相那么强势，但带着自己独特的温和支持。</p>
+<h2>机会的相位</h2>
+<p>六分相常被称为"机会的相位"。它不会把好事直接送到你面前（那更像三分相），而是创造一种顺畅的通道——如果你愿意采取行动，好事就容易发生。</p>
+<p>可以这样理解：三分相是打开的门，而六分相是没锁的门——你需要自己推一下，但推开不难。</p>
+<h2>六分相的意义</h2>
+<p><strong>和谐的合作</strong>：形成六分相的两颗行星通常落在相容的元素中（火-风，土-水）。它们彼此"理解"，能够顺畅地配合。</p>
+<p><strong>温和的支持</strong>：六分相提供的是一种背景性的支持，不是戏剧性的大运，而是事情比较容易成的感觉。</p>
+<p><strong>需要主动</strong>：六分相的能量需要被激活。它给你机会，但不替你做决定。如果你不采取行动，六分相的好处可能就溜走了。</p>
+<p><strong>学习与成长</strong>：六分相也与学习有关。它让你比较容易掌握某些技能或理解某些概念。</p>
+<h2>六分相的元素组合</h2>
+<p>六分相通常发生在相容的元素之间：</p>
+<p><strong>火象与风象</strong>（白羊-双子、狮子-天秤、射手-水瓶等）：火需要空气来燃烧，想法（风）被热情（火）驱动成行动。这种组合充满活力和创意。</p>
+<p><strong>土象与水象</strong>（金牛-巨蟹、处女-天蝎、摩羯-双鱼等）：土需要水来滋养，情感（水）通过实际的方式（土）被表达。这种组合稳定而有深度。</p>
+<h2>常见的六分相</h2>
+<p><strong>太阳六分月亮</strong>：自我意志和情感需求能够配合。这种人内在比较和谐，比较容易平衡理性和感性。</p>
+<p><strong>金星六分火星</strong>：爱与欲望能够顺畅地配合。在感情中比较容易找到平衡，既有温柔也有激情。</p>
+<p><strong>水星六分木星</strong>：思维与视野能够合作。学习能力强，能够把细节和大局结合起来。</p>
+<h2>不要浪费六分相</h2>
+<p>六分相的挑战在于：因为它不像困难相位那样"逼"你，也不像强势吉相那样"给"你，它很容易被忽略。</p>
+<p>很多人有很好的六分相却没有发挥出来，因为他们没有主动去使用这个能量。六分相像是一张没有被使用的优惠券——好处在那里，但你需要去兑换。</p>
+<p>如果你的星盘中有六分相，问问自己：我有没有在利用这个优势？我有没有主动创造机会让这两种能量配合？也许只需要一点点主动，就能收获很多。</p>
+
+    </div>
+
+    <nav class="item-nav">
+        <a href="&#x2F;xavierxcn/astrology/aspects/" class="item-nav-link">
+            ← 返回相位
+        </a>
+    </nav>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

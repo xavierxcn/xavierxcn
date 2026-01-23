@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>对分相 - 相位 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="对立面的张力与寻求平衡的功课">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-item-page {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.item-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xl);
+}
+
+.item-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.item-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.item-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.item-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-hero-symbol {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-hero-attrs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.item-hero-attr {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-code-bg);
+}
+
+.item-hero-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.item-keywords-section {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+}
+
+.item-keyword-tag {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-border);
+}
+
+.item-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text);
+}
+
+.item-content h1,
+.item-content h2,
+.item-content h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+}
+
+.item-content h1 { font-size: 1.75rem; }
+.item-content h2 { font-size: 1.4rem; }
+.item-content h3 { font-size: 1.15rem; }
+
+.item-content p {
+    margin-bottom: var(--space-lg);
+}
+
+.item-content strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-content ul,
+.item-content ol {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+}
+
+.item-content li {
+    margin-bottom: var(--space-sm);
+}
+
+.item-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.item-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+    .item-hero-title {
+        font-size: 2rem;
+    }
+
+    .item-hero-symbol {
+        font-size: 3rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="astrology-item-page">
+    <nav class="item-breadcrumb">
+        <a href="&#x2F;xavierxcn/astrology/">占星</a>
+        <span>/</span>
+        <a href="&#x2F;xavierxcn/astrology/aspects/">相位</a>
+        <span>/</span>
+        对分相
+    </nav>
+
+    <header class="item-hero">
+        
+        <div class="item-hero-symbol">☍</div>
+        
+        <h1 class="item-hero-title">对分相</h1>
+        
+        
+        <p class="item-hero-summary">对立面的张力与寻求平衡的功课</p>
+        
+        
+        <div class="item-keywords-section">
+            
+            <span class="item-keyword-tag">对立</span>
+            
+            <span class="item-keyword-tag">平衡</span>
+            
+            <span class="item-keyword-tag">关系</span>
+            
+            <span class="item-keyword-tag">觉知</span>
+            
+        </div>
+        
+    </header>
+
+    <div class="item-content">
+        <h1>对分相</h1>
+<p>对分相（也叫冲相或对冲）是两颗行星相距180度时形成的相位——它们在黄道上彼此对望，形成一条直线。这是最"对立"的相位，但对立不一定意味着冲突，它也可能意味着平衡与完整。</p>
+<h2>对立面的镜子</h2>
+<p>对分相的两颗行星像是站在跷跷板的两端。它们代表着相反但互补的能量——一个人不可能同时在两端，但跷跷板需要两端才能运作。</p>
+<p>有趣的是，对分相常常与关系有关。因为对立面往往是我们投射到他人身上的东西——我们自己不太表达的那一面，却在别人身上清楚地看到。</p>
+<h2>对分相的意义</h2>
+<p><strong>两极之间的张力</strong>：对分相创造的是一种拉扯感。你被拉向两个相反的方向，需要在其中找到平衡。</p>
+<p><strong>觉知与客观性</strong>：因为对立，你能够同时看到两面。刑相是盲目的冲突，对分相是看得见的对立。这种觉知本身就是一种力量。</p>
+<p><strong>关系中的投射</strong>：对分相的能量常常在关系中显现。我们不太表达的那一极，可能会被我们吸引来的人所代表。</p>
+<p><strong>整合的功课</strong>：对分相的功课是整合对立面——不是选择其中一边而否定另一边，而是找到一种方式让两边都有空间。</p>
+<h2>对分相的轴线</h2>
+<p>对分相总是发生在相对的星座之间，形成六条轴线：</p>
+<p><strong>白羊-天秤</strong>：自我与关系、独立与合作
+<strong>金牛-天蝎</strong>：我的与我们的、拥有与放手
+<strong>双子-射手</strong>：细节与大局、学习与智慧
+<strong>巨蟹-摩羯</strong>：私人与公共、情感与成就
+<strong>狮子-水瓶</strong>：个人与群体、自我表达与服务他人
+<strong>处女-双鱼</strong>：实际与灵性、分析与直觉</p>
+<p>每条轴线的两端不是敌人，而是一枚硬币的两面。</p>
+<h2>常见的对分相</h2>
+<p><strong>太阳对分月亮（满月）</strong>：自我意志与情感需求处于张力中。可能感到内在的分裂，但也有机会获得对自己更完整的认识。</p>
+<p><strong>金星对分火星</strong>：爱与欲望的拉扯。在感情中可能经历吸引与排斥、亲近与疏远的循环。</p>
+<p><strong>木星对分土星</strong>：扩张与收缩、乐观与谨慎的对立。需要学会在冒险与谨慎之间找到平衡。</p>
+<h2>在关系中理解对分相</h2>
+<p>对分相是最"关系性"的相位。我们常常在他人身上看到自己对分相的另一端。</p>
+<p>比如，如果你的太阳与冥王星对分，你可能会被强势的、控制性的人吸引（或排斥）——因为他们代表了你自己不太表达的冥王星能量。</p>
+<p>理解这一点可以帮助你：不只是评判对方，也反思自己；不只是改变对方，也发展自己那未被表达的一面。</p>
+<h2>走向整合</h2>
+<p>对分相的最高表达是整合——能够同时容纳两极，根据情境灵活地运用两种能量。</p>
+<p>这不是说找到一个"中间点"然后待在那里。而是说：能够在需要时走向一极，也能够在需要时走向另一极；理解两边都是自己的一部分。</p>
+<p>对分相提醒我们：对立面需要彼此。没有黑夜就没有白天的意义，没有"你"就没有"我"的定义。在对立中，我们反而能更清楚地看见自己。</p>
+
+    </div>
+
+    <nav class="item-nav">
+        <a href="&#x2F;xavierxcn/astrology/aspects/" class="item-nav-link">
+            ← 返回相位
+        </a>
+    </nav>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

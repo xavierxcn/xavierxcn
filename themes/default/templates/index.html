@@ -9,7 +9,7 @@
     {% for post in posts %}
     <article class="post-preview">
         <header>
-            <h2><a href="{{ site.base_path }}{{ post.url }}">{{ post.title }}</a></h2>
+            <h2><a href="{{ site.base_path }}/{{ post.url }}">{{ post.title }}</a></h2>
             <time datetime="{{ post.date | date(format='%Y-%m-%d') }}">
                 {{ post.date | date(format='%Y年%m月%d日') }}
             </time>

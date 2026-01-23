@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>星座 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="星座 — 占星学基础知识">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.category-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0 var(--space-xl);
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.category-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-lg);
+}
+
+.category-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.category-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.category-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.category-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+.category-hero-en {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+    flex-wrap: wrap;
+}
+
+.filter-search {
+    position: relative;
+    flex: 0 1 280px;
+}
+
+.filter-search input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-lg);
+    padding-left: 2.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    outline: none;
+    transition: all var(--transition-base);
+}
+
+.filter-search input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.filter-search input:focus {
+    border-color: var(--color-accent);
+}
+
+.filter-search::before {
+    content: '⌕';
+    position: absolute;
+    left: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.filter-group {
+    display: flex;
+    gap: 2px;
+    background: var(--color-border);
+    padding: 2px;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: var(--color-bg-elevated);
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-btn:hover {
+    color: var(--color-text);
+}
+
+.filter-btn.active {
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+.filter-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.filter-dot.fire { background: #C45C4A; }
+.filter-dot.earth { background: #8B7355; }
+.filter-dot.air { background: #7A9E9F; }
+.filter-dot.water { background: #5B7B95; }
+
+/* Items Grid */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.item-card {
+    position: relative;
+    display: block;
+    padding: var(--space-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    text-decoration: none;
+    color: inherit;
+}
+
+.item-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 4px 20px var(--color-shadow);
+}
+
+.item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.item-symbol {
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    transition: color var(--transition-base);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-card:hover .item-symbol {
+    color: var(--color-accent);
+}
+
+.item-title-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.02em;
+}
+
+.item-attrs {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.item-attr {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px var(--space-xs);
+    background: var(--color-code-bg);
+}
+
+.item-summary {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: var(--space-md);
+}
+
+.item-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.item-keyword {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-card:hover .item-keyword {
+    border-color: var(--color-border-strong);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+@media (max-width: 640px) {
+    .category-hero-title {
+        font-size: 2rem;
+    }
+
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .filter-search {
+        width: 100%;
+        flex: none;
+    }
+
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<section class="category-page">
+    <header class="category-hero">
+        <nav class="category-breadcrumb">
+            <a href="&#x2F;xavierxcn/astrology/">占星</a>
+            <span>/</span>
+            星座
+        </nav>
+        <h1 class="category-hero-title">星座</h1>
+        <p class="category-hero-en">
+            Zodiac Signs
+            
+            
+            
+        </p>
+    </header>
+
+    <div class="filter-section">
+        <div class="filter-search">
+            <input type="text" id="filter-input" placeholder="搜索星座..." autocomplete="off">
+        </div>
+        
+        <div class="filter-group" data-filter="element">
+            <button class="filter-btn active" data-value="">全部</button>
+            <button class="filter-btn" data-value="火"><span class="filter-dot fire"></span>火象</button>
+            <button class="filter-btn" data-value="土"><span class="filter-dot earth"></span>土象</button>
+            <button class="filter-btn" data-value="风"><span class="filter-dot air"></span>风象</button>
+            <button class="filter-btn" data-value="水"><span class="filter-dot water"></span>水象</button>
+        </div>
+        
+    </div>
+
+    
+    <div class="items-grid" id="items-grid">
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/gemini/" class="item-card"
+             data-title="双子座"
+             data-keywords="好奇,沟通,灵活,多变"
+             data-element="风"
+             data-modality="变动">
+            <div class="item-header">
+                
+                <span class="item-symbol">♊</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">双子座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">风象</span>
+                        <span class="item-attr">变动宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">信息的使者，思想的探险家，永不停息的好奇心</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">好奇</span>
+                
+                <span class="item-keyword">沟通</span>
+                
+                <span class="item-keyword">灵活</span>
+                
+                <span class="item-keyword">多变</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/pisces/" class="item-card"
+             data-title="双鱼座"
+             data-keywords="直觉,梦想,同理,超越"
+             data-element="水"
+             data-modality="变动">
+            <div class="item-header">
+                
+                <span class="item-symbol">♓</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">双鱼座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">水象</span>
+                        <span class="item-attr">变动宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">梦境的旅人，边界的消融者，在共情中与万物相连</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">直觉</span>
+                
+                <span class="item-keyword">梦想</span>
+                
+                <span class="item-keyword">同理</span>
+                
+                <span class="item-keyword">超越</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/virgo/" class="item-card"
+             data-title="处女座"
+             data-keywords="分析,完美,服务,细节"
+             data-element="土"
+             data-modality="变动">
+            <div class="item-header">
+                
+                <span class="item-symbol">♍</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">处女座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">土象</span>
+                        <span class="item-attr">变动宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">细节的守护者，秩序的建筑师，在平凡中追求卓越</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">分析</span>
+                
+                <span class="item-keyword">完美</span>
+                
+                <span class="item-keyword">服务</span>
+                
+                <span class="item-keyword">细节</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/libra/" class="item-card"
+             data-title="天秤座"
+             data-keywords="平衡,美感,关系,和谐"
+             data-element="风"
+             data-modality="本位">
+            <div class="item-header">
+                
+                <span class="item-symbol">♎</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">天秤座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">风象</span>
+                        <span class="item-attr">本位宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">平衡的艺术家，关系的编织者，在对比中寻找美</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">平衡</span>
+                
+                <span class="item-keyword">美感</span>
+                
+                <span class="item-keyword">关系</span>
+                
+                <span class="item-keyword">和谐</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/scorpio/" class="item-card"
+             data-title="天蝎座"
+             data-keywords="深度,转化,洞察,执着"
+             data-element="水"
+             data-modality="固定">
+            <div class="item-header">
+                
+                <span class="item-symbol">♏</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">天蝎座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">水象</span>
+                        <span class="item-attr">固定宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">深渊的潜水者，秘密的守护者，在毁灭中重生</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">深度</span>
+                
+                <span class="item-keyword">转化</span>
+                
+                <span class="item-keyword">洞察</span>
+                
+                <span class="item-keyword">执着</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/sagittarius/" class="item-card"
+             data-title="射手座"
+             data-keywords="自由,探索,哲学,乐观"
+             data-element="火"
+             data-modality="变动">
+            <div class="item-header">
+                
+                <span class="item-symbol">♐</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">射手座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">火象</span>
+                        <span class="item-attr">变动宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">远方的追寻者，真理的猎手，永远在路上</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">自由</span>
+                
+                <span class="item-keyword">探索</span>
+                
+                <span class="item-keyword">哲学</span>
+                
+                <span class="item-keyword">乐观</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/cancer/" class="item-card"
+             data-title="巨蟹座"
+             data-keywords="情感,家庭,保护,直觉"
+             data-element="水"
+             data-modality="本位">
+            <div class="item-header">
+                
+                <span class="item-symbol">♋</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">巨蟹座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">水象</span>
+                        <span class="item-attr">本位宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">情感的守护者，家的港湾，用温柔包裹世界</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">情感</span>
+                
+                <span class="item-keyword">家庭</span>
+                
+                <span class="item-keyword">保护</span>
+                
+                <span class="item-keyword">直觉</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/capricorn/" class="item-card"
+             data-title="摩羯座"
+             data-keywords="责任,野心,耐力,成就"
+             data-element="土"
+             data-modality="本位">
+            <div class="item-header">
+                
+                <span class="item-symbol">♑</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">摩羯座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">土象</span>
+                        <span class="item-attr">本位宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">高峰的攀登者，时间的同盟，在坚持中抵达</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">责任</span>
+                
+                <span class="item-keyword">野心</span>
+                
+                <span class="item-keyword">耐力</span>
+                
+                <span class="item-keyword">成就</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/aquarius/" class="item-card"
+             data-title="水瓶座"
+             data-keywords="独立,创新,人道,反叛"
+             data-element="风"
+             data-modality="固定">
+            <div class="item-header">
+                
+                <span class="item-symbol">♒</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">水瓶座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">风象</span>
+                        <span class="item-attr">固定宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">未来的先知，边界的挑战者，为众人抱薪者</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">独立</span>
+                
+                <span class="item-keyword">创新</span>
+                
+                <span class="item-keyword">人道</span>
+                
+                <span class="item-keyword">反叛</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/leo/" class="item-card"
+             data-title="狮子座"
+             data-keywords="自信,创造,慷慨,骄傲"
+             data-element="火"
+             data-modality="固定">
+            <div class="item-header">
+                
+                <span class="item-symbol">♌</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">狮子座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">火象</span>
+                        <span class="item-attr">固定宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">黄道的王者，舞台的中心，用光芒照耀世界</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">自信</span>
+                
+                <span class="item-keyword">创造</span>
+                
+                <span class="item-keyword">慷慨</span>
+                
+                <span class="item-keyword">骄傲</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/aries/" class="item-card"
+             data-title="白羊座"
+             data-keywords="开创,勇气,直率,冲动"
+             data-element="火"
+             data-modality="本位">
+            <div class="item-header">
+                
+                <span class="item-symbol">♈</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">白羊座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">火象</span>
+                        <span class="item-attr">本位宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">黄道的起点，春天的使者，永远向前的先锋</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">开创</span>
+                
+                <span class="item-keyword">勇气</span>
+                
+                <span class="item-keyword">直率</span>
+                
+                <span class="item-keyword">冲动</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/taurus/" class="item-card"
+             data-title="金牛座"
+             data-keywords="稳定,感官,耐心,固执"
+             data-element="土"
+             data-modality="固定">
+            <div class="item-header">
+                
+                <span class="item-symbol">♉</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">金牛座</h2>
+                    
+                    <div class="item-attrs">
+                        <span class="item-attr">土象</span>
+                        <span class="item-attr">固定宫</span>
+                    </div>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">大地的守护者，感官的鉴赏家，慢工出细活的匠人</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">稳定</span>
+                
+                <span class="item-keyword">感官</span>
+                
+                <span class="item-keyword">耐心</span>
+                
+                <span class="item-keyword">固执</span>
+                
+            </div>
+            
+        </a>
+        
+    </div>
+    
+</section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+<script>
+(function() {
+    const input = document.getElementById('filter-input');
+    const grid = document.getElementById('items-grid');
+    const cards = grid ? Array.from(grid.querySelectorAll('.item-card')) : [];
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    let activeElement = '';
+
+    function filterCards() {
+        const query = input.value.toLowerCase().trim();
+
+        cards.forEach(card => {
+            const title = (card.dataset.title || '').toLowerCase();
+            const keywords = (card.dataset.keywords || '').toLowerCase();
+            const element = card.dataset.element || '';
+
+            const matchesQuery = !query || title.includes(query) || keywords.includes(query);
+            const matchesElement = !activeElement || element === activeElement;
+
+            card.style.display = (matchesQuery && matchesElement) ? '' : 'none';
+        });
+    }
+
+    if (input) {
+        input.addEventListener('input', filterCards);
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.closest('.filter-group');
+            if (group) {
+                group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            }
+            btn.classList.add('active');
+            activeElement = btn.dataset.value || '';
+            filterCards();
+        });
+    });
+})();
+</script>
+
+</body>
+</html>

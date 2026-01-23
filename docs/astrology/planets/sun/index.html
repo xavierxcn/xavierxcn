@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>太阳 - 行星 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="星盘的中心，照亮你是谁的那束光">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-item-page {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.item-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xl);
+}
+
+.item-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.item-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.item-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.item-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-hero-symbol {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-hero-attrs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.item-hero-attr {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-code-bg);
+}
+
+.item-hero-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.item-keywords-section {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+}
+
+.item-keyword-tag {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-border);
+}
+
+.item-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text);
+}
+
+.item-content h1,
+.item-content h2,
+.item-content h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+}
+
+.item-content h1 { font-size: 1.75rem; }
+.item-content h2 { font-size: 1.4rem; }
+.item-content h3 { font-size: 1.15rem; }
+
+.item-content p {
+    margin-bottom: var(--space-lg);
+}
+
+.item-content strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-content ul,
+.item-content ol {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+}
+
+.item-content li {
+    margin-bottom: var(--space-sm);
+}
+
+.item-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.item-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+    .item-hero-title {
+        font-size: 2rem;
+    }
+
+    .item-hero-symbol {
+        font-size: 3rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="astrology-item-page">
+    <nav class="item-breadcrumb">
+        <a href="&#x2F;xavierxcn/astrology/">占星</a>
+        <span>/</span>
+        <a href="&#x2F;xavierxcn/astrology/planets/">行星</a>
+        <span>/</span>
+        太阳
+    </nav>
+
+    <header class="item-hero">
+        
+        <div class="item-hero-symbol">☉</div>
+        
+        <h1 class="item-hero-title">太阳</h1>
+        
+        
+        <p class="item-hero-summary">星盘的中心，照亮你是谁的那束光</p>
+        
+        
+        <div class="item-keywords-section">
+            
+            <span class="item-keyword-tag">自我</span>
+            
+            <span class="item-keyword-tag">意志</span>
+            
+            <span class="item-keyword-tag">生命力</span>
+            
+            <span class="item-keyword-tag">光芒</span>
+            
+        </div>
+        
+    </header>
+
+    <div class="item-content">
+        <h1>太阳</h1>
+<p>当有人问"你是什么星座"的时候，他们问的其实就是你的太阳星座——太阳在你出生那一刻所在的星座。这颗燃烧的恒星，在占星学中代表着你最核心的自我。</p>
+<h2>星盘中的太阳</h2>
+<p>太阳不是行星，但在占星学中，我们把它当作行星来解读。这很合理——在太阳系中，太阳是中心，所有行星都围绕它运转；在星盘中，太阳同样是核心，所有其他配置都围绕着它展开。</p>
+<p>如果把星盘比作一部戏，太阳就是主角。其他行星可能贡献情节和张力，但太阳决定了这个故事究竟是关于谁的。</p>
+<h2>太阳代表什么</h2>
+<p>太阳代表的是你的"本我"——不是别人眼中的你，不是你扮演的角色，而是剥去所有面具之后，那个最真实的你。</p>
+<p>它关乎：</p>
+<p><strong>身份认同</strong>：你如何定义自己？什么让你觉得"这就是我"？太阳描述的是你的核心身份，那个无论环境如何变化都保持稳定的内在。</p>
+<p><strong>生命力</strong>：太阳是能量的来源。在身体层面，它关乎你的整体活力；在心理层面，它关乎你的意志和动力。太阳强健的人，通常有一种蓬勃的生命力。</p>
+<p><strong>创造力</strong>：太阳是关于"创造"的——不只是艺术创作，而是广义的创造，包括创造事业、创造关系、创造生活方式。太阳问的是：你想在这个世界上留下什么？</p>
+<p><strong>自我表达</strong>：太阳是你想要展现给世界的那个版本的自己。它是你走进房间时希望别人看到的形象。</p>
+<h2>太阳在不同星座</h2>
+<p>太阳每个月换一个星座，一年走完整个黄道。当我们说一个人是"狮子座"或"双鱼座"，指的就是他们出生时太阳所在的位置。</p>
+<p>每个太阳星座都有自己独特的生命课题：</p>
+<ul>
+<li>火象星座（白羊、狮子、射手）的太阳课题是关于行动、勇气和自信</li>
+<li>土象星座（金牛、处女、摩羯）的太阳课题是关于稳定、务实和成就</li>
+<li>风象星座（双子、天秤、水瓶）的太阳课题是关于沟通、关系和思想</li>
+<li>水象星座（巨蟹、天蝎、双鱼）的太阳课题是关于情感、直觉和连接</li>
+</ul>
+<h2>太阳所在的宫位</h2>
+<p>太阳不仅落在某个星座，还落在某个宫位。宫位告诉你的是：你会在生活的哪个领域最想表现自己、最能发光发热。</p>
+<p>比如，太阳在第十宫的人可能会在事业中找到最深的自我认同；太阳在第七宫的人可能通过关系来定义自己。</p>
+<h2>活出你的太阳</h2>
+<p>占星学中有一个说法：我们是来"活出"我们的太阳的。这意味着，太阳代表的特质不是自动获得的，而是需要我们有意识地去发展和表达的。</p>
+<p>有些人很早就找到了自己的光芒，有些人需要更长时间。但无论早晚，当你真正活出自己的太阳时，会有一种"对了，这就是我"的感觉——那是一种找到自己、成为自己的满足感。</p>
+<p>太阳说的不是你必须成为什么，而是你可以成为什么。它是一个邀请，邀请你成为最完整、最闪耀的自己。</p>
+
+    </div>
+
+    <nav class="item-nav">
+        <a href="&#x2F;xavierxcn/astrology/planets/" class="item-nav-link">
+            ← 返回行星
+        </a>
+    </nav>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

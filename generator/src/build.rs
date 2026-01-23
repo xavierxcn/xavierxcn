@@ -1,8 +1,8 @@
 use crate::config::Config;
-use crate::content::{load_pages, load_posts, load_tools, Page, Post, Tool};
+use crate::content::{load_astrology, load_pages, load_posts, load_tools, AstrologyData, Page, Post, Tool};
 use crate::render::template::{
-    CategoryContext, ConfigContext, ListContext, PageContext, Pagination, PostContext, TagContext,
-    TemplateEngine, ToolsListContext,
+    AstrologyCategoryContext, AstrologyIndexContext, AstrologyItemContext, CategoryContext, ConfigContext, ListContext,
+    PageContext, Pagination, PostContext, TagContext, TemplateEngine, ToolsListContext,
 };
 use anyhow::{Context, Result};
 use serde::Serialize;
@@ -30,6 +30,7 @@ pub struct Builder {
     posts: Vec<Post>,
     pages: Vec<Page>,
     tools: Vec<Tool>,
+    astrology: AstrologyData,
 }
 
 impl Builder {
@@ -40,12 +41,15 @@ impl Builder {
         let posts = load_posts(&config.build.content_dir)?;
         let pages = load_pages(&config.build.content_dir)?;
         let tools = load_tools(&config.build.content_dir)?;
+        let astrology = load_astrology(&config.build.content_dir)?;
 
+        let astrology_count: usize = astrology.categories.iter().map(|c| c.items.len()).sum();
         info!(
-            "Loaded {} posts, {} pages, and {} tools",
+            "Loaded {} posts, {} pages, {} tools, and {} astrology items",
             posts.len(),
             pages.len(),
-            tools.len()
+            tools.len(),
+            astrology_count
         );
 
         Ok(Self {
@@ -54,6 +58,7 @@ impl Builder {
             posts,
             pages,
             tools,
+            astrology,
         })
     }
 
@@ -71,6 +76,7 @@ impl Builder {
         self.generate_posts(output_dir)?;
         self.generate_pages(output_dir)?;
         self.generate_tools(output_dir)?;
+        self.generate_astrology(output_dir)?;
         self.generate_index(output_dir)?;
         self.generate_archive(output_dir)?;
         self.generate_tag_pages(output_dir)?;
@@ -168,6 +174,68 @@ impl Builder {
         fs::write(tools_dir.join("index.html"), html)?;
 
         info!("Generated tools list page");
+
+        Ok(())
+    }
+
+    /// Generate astrology pages (index, category pages, and individual item pages)
+    fn generate_astrology(&self, output_dir: &Path) -> Result<()> {
+        let astrology_dir = output_dir.join("astrology");
+        fs::create_dir_all(&astrology_dir)?;
+
+        // Generate astrology index page
+        let context = AstrologyIndexContext {
+            site: &self.config.site,
+            config: ConfigContext {
+                markdown: &self.config.markdown,
+            },
+            categories: &self.astrology.categories,
+            nav: &self.config.nav,
+        };
+
+        let html = self.template_engine.render("astrology.html", &context)?;
+        fs::write(astrology_dir.join("index.html"), html)?;
+        info!("Generated astrology index page");
+
+        // Generate category pages and individual item pages
+        for category in &self.astrology.categories {
+            let category_dir = astrology_dir.join(&category.id);
+            fs::create_dir_all(&category_dir)?;
+
+            let context = AstrologyCategoryContext {
+                site: &self.config.site,
+                config: ConfigContext {
+                    markdown: &self.config.markdown,
+                },
+                category,
+                items: &category.items,
+                nav: &self.config.nav,
+            };
+
+            let html = self.template_engine.render("astrology-category.html", &context)?;
+            fs::write(category_dir.join("index.html"), html)?;
+            info!("Generated astrology category page: /astrology/{}/", category.id);
+
+            // Generate individual item pages
+            for item in &category.items {
+                let item_dir = category_dir.join(&item.slug);
+                fs::create_dir_all(&item_dir)?;
+
+                let item_context = AstrologyItemContext {
+                    site: &self.config.site,
+                    config: ConfigContext {
+                        markdown: &self.config.markdown,
+                    },
+                    item,
+                    category,
+                    nav: &self.config.nav,
+                };
+
+                let item_html = self.template_engine.render("astrology-item.html", &item_context)?;
+                fs::write(item_dir.join("index.html"), item_html)?;
+            }
+            info!("Generated {} individual item pages in /astrology/{}/", category.items.len(), category.id);
+        }
 
         Ok(())
     }

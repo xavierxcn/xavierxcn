@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>水星 - 行星 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="你如何思考、说话和理解这个世界">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-item-page {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.item-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xl);
+}
+
+.item-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.item-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.item-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.item-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-hero-symbol {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-hero-attrs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.item-hero-attr {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-code-bg);
+}
+
+.item-hero-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.item-keywords-section {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+}
+
+.item-keyword-tag {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-border);
+}
+
+.item-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text);
+}
+
+.item-content h1,
+.item-content h2,
+.item-content h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+}
+
+.item-content h1 { font-size: 1.75rem; }
+.item-content h2 { font-size: 1.4rem; }
+.item-content h3 { font-size: 1.15rem; }
+
+.item-content p {
+    margin-bottom: var(--space-lg);
+}
+
+.item-content strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-content ul,
+.item-content ol {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+}
+
+.item-content li {
+    margin-bottom: var(--space-sm);
+}
+
+.item-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.item-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+    .item-hero-title {
+        font-size: 2rem;
+    }
+
+    .item-hero-symbol {
+        font-size: 3rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="astrology-item-page">
+    <nav class="item-breadcrumb">
+        <a href="&#x2F;xavierxcn/astrology/">占星</a>
+        <span>/</span>
+        <a href="&#x2F;xavierxcn/astrology/planets/">行星</a>
+        <span>/</span>
+        水星
+    </nav>
+
+    <header class="item-hero">
+        
+        <div class="item-hero-symbol">☿</div>
+        
+        <h1 class="item-hero-title">水星</h1>
+        
+        
+        <p class="item-hero-summary">你如何思考、说话和理解这个世界</p>
+        
+        
+        <div class="item-keywords-section">
+            
+            <span class="item-keyword-tag">沟通</span>
+            
+            <span class="item-keyword-tag">思维</span>
+            
+            <span class="item-keyword-tag">学习</span>
+            
+            <span class="item-keyword-tag">交流</span>
+            
+        </div>
+        
+    </header>
+
+    <div class="item-content">
+        <h1>水星</h1>
+<p>水星是太阳系中最小的行星，也是离太阳最近的行星。在神话中，水星是众神的信使，穿梭于天界与人间。在占星学中，水星管理的正是"信息的流动"——思考、学习、交流、沟通。</p>
+<h2>思维的运作方式</h2>
+<p>每个人的大脑都有自己的"操作系统"。有人思考时需要画图，有人需要列清单；有人想到什么说什么，有人要在心里过好几遍才开口。水星描述的就是这套操作系统的特性。</p>
+<p>这不是关于你有多聪明——智力是多维度的，不能用单一指标衡量。水星关乎的是你的思维风格：是快速直觉还是缓慢深思？是注重细节还是把握大局？是线性逻辑还是跳跃联想？</p>
+<h2>水星代表什么</h2>
+<p><strong>思维模式</strong>：你的大脑是怎么工作的？你是用语言思考还是用画面思考？你做决定时更依赖逻辑还是感觉？</p>
+<p><strong>沟通方式</strong>：你怎么表达自己？话多还是话少？直接还是委婉？你的幽默感是什么类型的？你在对话中是倾听者还是主导者？</p>
+<p><strong>学习风格</strong>：你怎样学东西最有效？是读书、听讲、动手做、还是讨论？你喜欢系统学习还是随机探索？</p>
+<p><strong>信息处理</strong>：你怎么处理接收到的信息？是全盘接收还是批判性筛选？你容易被说服还是坚持己见？</p>
+<p><strong>日常互动</strong>：水星也管理日常的琐碎沟通——邮件、短信、小对话、邻里关系。这些看似不重要的互动，构成了我们生活的质地。</p>
+<h2>水星在不同星座</h2>
+<p>水星从不远离太阳，所以你的水星只可能在你太阳星座的前后一个星座内。这意味着如果你是狮子座，你的水星只可能在巨蟹、狮子或处女座。</p>
+<p>不同元素的水星有不同的思维特点：</p>
+<ul>
+<li>火象水星（白羊、狮子、射手）思维快速、直接、自信，有时缺乏耐心</li>
+<li>土象水星（金牛、处女、摩羯）思维务实、系统、谨慎，有时过于保守</li>
+<li>风象水星（双子、天秤、水瓶）思维灵活、善于交流、客观，有时飘忽不定</li>
+<li>水象水星（巨蟹、天蝎、双鱼）思维直觉、深入、富有同理心，有时主观情绪化</li>
+</ul>
+<h2>水星逆行</h2>
+<p>水星逆行可能是占星学中最广为人知的现象——每年大约发生三到四次，每次持续三周左右。在这段时间，水星看起来像是在天空中倒退。</p>
+<p>传统上认为水星逆行期间容易出现沟通错误、交通延误、电子设备故障、旧事重提。不过，与其害怕这段时期，不如把它看作一个提醒：慢下来，检查细节，重新思考。</p>
+<p>水星逆行其实是回顾和修正的好时机——revisit、review、revise，这些以"re-"开头的词都很适合这个时期。</p>
+<h2>发展你的水星</h2>
+<p>无论你的水星配置如何，沟通和思维能力都是可以发展的。了解自己的水星风格，可以帮助你：</p>
+<ul>
+<li>选择适合自己的学习方法</li>
+<li>在沟通中发挥优势、弥补不足</li>
+<li>理解为什么和某些人特别聊得来，和某些人总是鸡同鸭讲</li>
+<li>找到最有效的信息处理方式</li>
+</ul>
+<p>水星提醒我们，思想是需要交流的，想法是需要表达的。在这个信息爆炸的时代，学会清晰地思考和有效地沟通，是一项越来越重要的能力。</p>
+
+    </div>
+
+    <nav class="item-nav">
+        <a href="&#x2F;xavierxcn/astrology/planets/" class="item-nav-link">
+            ← 返回行星
+        </a>
+    </nav>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

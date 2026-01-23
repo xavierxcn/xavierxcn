@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="探索占星学的奥秘：星座、行星、宫位与相位">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-hero {
+    text-align: center;
+    padding: var(--space-3xl) 0;
+    margin-bottom: var(--space-2xl);
+    position: relative;
+}
+
+.astrology-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, var(--color-border-strong));
+}
+
+.astrology-hero::after {
+    content: '☉';
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 1.5rem;
+    color: var(--color-text-muted);
+    opacity: 0.4;
+}
+
+.astrology-title {
+    font-family: var(--font-serif);
+    font-size: 3.5rem;
+    font-weight: 400;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin-bottom: var(--space-md);
+    margin-top: var(--space-xl);
+}
+
+.astrology-subtitle {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 400;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    letter-spacing: 0.02em;
+}
+
+.zodiac-band {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    margin: var(--space-2xl) 0;
+    font-size: 1.1rem;
+    color: var(--color-text-muted);
+    opacity: 0.5;
+    letter-spacing: 0.3em;
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.categories-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.category-card {
+    position: relative;
+    display: block;
+    padding: var(--space-2xl) var(--space-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    overflow: hidden;
+}
+
+.category-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-accent), transparent);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.category-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 32px var(--color-shadow);
+}
+
+.category-card:hover::before {
+    opacity: 1;
+}
+
+.category-symbol {
+    font-size: 2.5rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    display: block;
+    transition: color var(--transition-base);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.category-card:hover .category-symbol {
+    color: var(--color-accent);
+}
+
+.category-name {
+    font-family: var(--font-serif);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.05em;
+}
+
+.category-name-en {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    margin-bottom: var(--space-md);
+    display: block;
+}
+
+.category-desc {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.6;
+    margin-bottom: var(--space-md);
+}
+
+.category-count {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+}
+
+.category-arrow {
+    position: absolute;
+    bottom: var(--space-xl);
+    right: var(--space-xl);
+    font-size: 1.25rem;
+    color: var(--color-text-muted);
+    transition: all var(--transition-base);
+    opacity: 0;
+}
+
+.category-card:hover .category-arrow {
+    opacity: 1;
+    transform: translateX(4px);
+    color: var(--color-accent);
+}
+
+@media (max-width: 640px) {
+    .categories-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .astrology-title {
+        font-size: 2.5rem;
+        letter-spacing: 0.1em;
+    }
+
+    .zodiac-band {
+        font-size: 0.9rem;
+        letter-spacing: 0.2em;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<section class="astrology-page">
+    <header class="astrology-hero">
+        <h1 class="astrology-title">占星</h1>
+        <p class="astrology-subtitle">Astrology — 星辰的语言，命运的地图</p>
+    </header>
+
+    <div class="zodiac-band">
+        <span>♈</span><span>♉</span><span>♊</span><span>♋</span><span>♌</span><span>♍</span><span>♎</span><span>♏</span><span>♐</span><span>♑</span><span>♒</span><span>♓</span>
+    </div>
+
+    <div class="categories-grid">
+        
+        <a href="&#x2F;xavierxcn/astrology/signs/" class="category-card">
+            <span class="category-symbol">
+                ♈
+                
+                
+                
+            </span>
+            <h2 class="category-name">星座</h2>
+            <span class="category-name-en">
+                Zodiac Signs
+                
+                
+                
+            </span>
+            <p class="category-desc">
+                黄道十二宫，性格与命运的基本蓝图
+                
+                
+                
+            </p>
+            <span class="category-count">12 个条目</span>
+            <span class="category-arrow">→</span>
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/planets/" class="category-card">
+            <span class="category-symbol">
+                
+                ☉
+                
+                
+            </span>
+            <h2 class="category-name">行星</h2>
+            <span class="category-name-en">
+                
+                Planets
+                
+                
+            </span>
+            <p class="category-desc">
+                
+                天体能量，驱动生命的原始力量
+                
+                
+            </p>
+            <span class="category-count">10 个条目</span>
+            <span class="category-arrow">→</span>
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/houses/" class="category-card">
+            <span class="category-symbol">
+                
+                
+                I
+                
+            </span>
+            <h2 class="category-name">宫位</h2>
+            <span class="category-name-en">
+                
+                
+                Houses
+                
+            </span>
+            <p class="category-desc">
+                
+                
+                人生领域，生活舞台的十二个面向
+                
+            </p>
+            <span class="category-count">12 个条目</span>
+            <span class="category-arrow">→</span>
+        </a>
+        
+        <a href="&#x2F;xavierxcn/astrology/aspects/" class="category-card">
+            <span class="category-symbol">
+                
+                
+                
+                ☌
+            </span>
+            <h2 class="category-name">相位</h2>
+            <span class="category-name-en">
+                
+                
+                
+                Aspects
+            </span>
+            <p class="category-desc">
+                
+                
+                
+                行星对话，能量交织的几何密码
+            </p>
+            <span class="category-count">5 个条目</span>
+            <span class="category-arrow">→</span>
+        </a>
+        
+    </div>
+</section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

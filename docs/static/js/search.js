@@ -128,7 +128,7 @@ function displayResults(matches, query) {
         const highlightedSummary = highlightText(item.summary, query);
 
         return `
-            <a href="${basePath}${item.url}" class="search-result-item">
+            <a href="${basePath}/${item.url}" class="search-result-item">
                 <div class="search-result-title">${highlightedTitle}</div>
                 <div class="search-result-meta">
                     <span class="search-result-date">${item.date}</span>

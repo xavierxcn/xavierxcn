@@ -93,6 +93,35 @@ pub struct ToolsListContext<'a> {
     pub nav: &'a [crate::config::NavItem],
 }
 
+/// Context for rendering the astrology index page
+#[derive(Debug, Serialize)]
+pub struct AstrologyIndexContext<'a> {
+    pub site: &'a crate::config::SiteConfig,
+    pub config: ConfigContext<'a>,
+    pub categories: &'a [crate::content::AstrologyCategory],
+    pub nav: &'a [crate::config::NavItem],
+}
+
+/// Context for rendering an astrology category page
+#[derive(Debug, Serialize)]
+pub struct AstrologyCategoryContext<'a> {
+    pub site: &'a crate::config::SiteConfig,
+    pub config: ConfigContext<'a>,
+    pub category: &'a crate::content::AstrologyCategory,
+    pub items: &'a [crate::content::AstrologyItem],
+    pub nav: &'a [crate::config::NavItem],
+}
+
+/// Context for rendering an individual astrology item page
+#[derive(Debug, Serialize)]
+pub struct AstrologyItemContext<'a> {
+    pub site: &'a crate::config::SiteConfig,
+    pub config: ConfigContext<'a>,
+    pub item: &'a crate::content::AstrologyItem,
+    pub category: &'a crate::content::AstrologyCategory,
+    pub nav: &'a [crate::config::NavItem],
+}
+
 /// Subset of config exposed to templates
 #[derive(Debug, Serialize)]
 pub struct ConfigContext<'a> {
@@ -124,9 +153,18 @@ impl Pagination {
             (total_items + per_page - 1) / per_page
         };
 
+        // Normalize base_url: remove leading slash if present
+        let base_url = base_url.trim_start_matches('/');
+
         let prev_page = if current_page > 1 {
             if current_page == 2 {
-                Some(format!("{}/", base_url))
+                // Page 2's prev is the first page
+                if base_url.is_empty() {
+                    // Index root - prev is just empty (root)
+                    Some(String::new())
+                } else {
+                    Some(format!("{}/", base_url))
+                }
             } else {
                 Some(format!("{}/page/{}/", base_url, current_page - 1))
             }

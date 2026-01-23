@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>木星 - 行星 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="你的幸运领域，以及生命中追求&quot;更多&quot;的方向">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-item-page {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.item-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xl);
+}
+
+.item-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.item-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.item-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.item-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-hero-symbol {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-hero-attrs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.item-hero-attr {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-code-bg);
+}
+
+.item-hero-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.item-keywords-section {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+}
+
+.item-keyword-tag {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-border);
+}
+
+.item-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text);
+}
+
+.item-content h1,
+.item-content h2,
+.item-content h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+}
+
+.item-content h1 { font-size: 1.75rem; }
+.item-content h2 { font-size: 1.4rem; }
+.item-content h3 { font-size: 1.15rem; }
+
+.item-content p {
+    margin-bottom: var(--space-lg);
+}
+
+.item-content strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-content ul,
+.item-content ol {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+}
+
+.item-content li {
+    margin-bottom: var(--space-sm);
+}
+
+.item-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.item-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+    .item-hero-title {
+        font-size: 2rem;
+    }
+
+    .item-hero-symbol {
+        font-size: 3rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="astrology-item-page">
+    <nav class="item-breadcrumb">
+        <a href="&#x2F;xavierxcn/astrology/">占星</a>
+        <span>/</span>
+        <a href="&#x2F;xavierxcn/astrology/planets/">行星</a>
+        <span>/</span>
+        木星
+    </nav>
+
+    <header class="item-hero">
+        
+        <div class="item-hero-symbol">♃</div>
+        
+        <h1 class="item-hero-title">木星</h1>
+        
+        
+        <p class="item-hero-summary">你的幸运领域，以及生命中追求&quot;更多&quot;的方向</p>
+        
+        
+        <div class="item-keywords-section">
+            
+            <span class="item-keyword-tag">扩张</span>
+            
+            <span class="item-keyword-tag">幸运</span>
+            
+            <span class="item-keyword-tag">智慧</span>
+            
+            <span class="item-keyword-tag">信仰</span>
+            
+        </div>
+        
+    </header>
+
+    <div class="item-content">
+        <h1>木星</h1>
+<p>木星是太阳系中最大的行星，体积是地球的一千多倍。在占星学中，木星同样代表着"大"——扩张、增长、丰盛，以及那种相信一切都会更好的乐观精神。</p>
+<h2>幸运之星</h2>
+<p>在传统占星学中，木星被称为"大吉星"（金星是"小吉星"）。木星所在的领域，往往是我们感到幸运、容易获得机会的地方。</p>
+<p>但这种"幸运"不只是随机的好运。更准确地说，木星代表的是一种扩张的能量——在木星触及的领域，我们更愿意冒险、更相信可能性、更开放地接受机会。这种积极的态度本身就会吸引好的结果。</p>
+<h2>木星代表什么</h2>
+<p><strong>信仰与人生哲学</strong>：你相信什么？你如何理解生命的意义？你对世界持乐观还是悲观的基本态度？木星管理着我们最深层的信念系统。</p>
+<p><strong>成长与学习</strong>：木星是关于扩展视野的——通过旅行、教育、阅读、或者与不同背景的人交流。它是那种"还想知道更多"的求知欲。</p>
+<p><strong>幸运与机会</strong>：木星落入的星座和宫位，通常是我们比较"顺"的领域。不是不需要努力，而是努力更容易得到回报。</p>
+<p><strong>慷慨与给予</strong>：木星也关乎我们给予的能力——不只是物质上的，也包括精神上的。木星强的人往往大方、乐于分享、愿意帮助他人。</p>
+<p><strong>道德与正义</strong>：更高层面的木星与法律、伦理、宗教相关。它问的是：什么是对的？什么是应该追求的？</p>
+<h2>木星在不同星座</h2>
+<p>木星大约每年换一个星座，绕黄道一周需要约十二年。这就是为什么中国有"本命年"的说法——每隔十二年，木星回到出生时的位置。</p>
+<p>木星在射手座（它守护的星座）和巨蟹座（它"旺"的位置）被认为特别强势。在这些位置，木星的正面特质更容易发挥。</p>
+<p>不同元素的木星有不同的成长方式：</p>
+<ul>
+<li>火象木星（白羊、狮子、射手）通过冒险、创造和自我表达来成长</li>
+<li>土象木星（金牛、处女、摩羯）通过实际成就、建立和积累来成长</li>
+<li>风象木星（双子、天秤、水瓶）通过学习、社交和交流想法来成长</li>
+<li>水象木星（巨蟹、天蝎、双鱼）通过情感深化、直觉发展和灵性探索来成长</li>
+</ul>
+<h2>木星的阴影面</h2>
+<p>虽然木星被认为是"吉星"，但过多的木星能量也有问题。</p>
+<p>"扩张"如果失控，就变成了贪婪——想要更多、更大、永不满足。乐观如果过度，就变成了不切实际——只看好的可能，忽视风险和现实。自信如果膨胀，就变成了傲慢——以为自己什么都行，或者认为规则不适用于自己。</p>
+<p>木星的挑战是学会"适度"——知道什么时候已经"够了"。</p>
+<h2>活用你的木星</h2>
+<p>了解你的木星配置，可以帮助你：</p>
+<ul>
+<li>找到你天然的优势领域和幸运点</li>
+<li>明确什么样的成长路径最适合你</li>
+<li>理解你对生命意义的深层需求</li>
+<li>知道如何打开机会之门</li>
+</ul>
+<p>木星提醒我们，生命是有可能性的。即使在困难时期，也要保持一份对未来的信心。不是盲目乐观，而是相信：如果我们愿意学习、愿意成长、愿意保持开放，好的事情终会发生。</p>
+
+    </div>
+
+    <nav class="item-nav">
+        <a href="&#x2F;xavierxcn/astrology/planets/" class="item-nav-link">
+            ← 返回行星
+        </a>
+    </nav>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>火星 - 行星 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="你的驱动力、战斗方式和行动模式">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-item-page {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.item-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xl);
+}
+
+.item-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.item-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.item-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.item-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-hero-symbol {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-hero-attrs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.item-hero-attr {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-code-bg);
+}
+
+.item-hero-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.item-keywords-section {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+}
+
+.item-keyword-tag {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-border);
+}
+
+.item-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text);
+}
+
+.item-content h1,
+.item-content h2,
+.item-content h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+}
+
+.item-content h1 { font-size: 1.75rem; }
+.item-content h2 { font-size: 1.4rem; }
+.item-content h3 { font-size: 1.15rem; }
+
+.item-content p {
+    margin-bottom: var(--space-lg);
+}
+
+.item-content strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-content ul,
+.item-content ol {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+}
+
+.item-content li {
+    margin-bottom: var(--space-sm);
+}
+
+.item-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.item-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+    .item-hero-title {
+        font-size: 2rem;
+    }
+
+    .item-hero-symbol {
+        font-size: 3rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="astrology-item-page">
+    <nav class="item-breadcrumb">
+        <a href="&#x2F;xavierxcn/astrology/">占星</a>
+        <span>/</span>
+        <a href="&#x2F;xavierxcn/astrology/planets/">行星</a>
+        <span>/</span>
+        火星
+    </nav>
+
+    <header class="item-hero">
+        
+        <div class="item-hero-symbol">♂</div>
+        
+        <h1 class="item-hero-title">火星</h1>
+        
+        
+        <p class="item-hero-summary">你的驱动力、战斗方式和行动模式</p>
+        
+        
+        <div class="item-keywords-section">
+            
+            <span class="item-keyword-tag">行动</span>
+            
+            <span class="item-keyword-tag">欲望</span>
+            
+            <span class="item-keyword-tag">勇气</span>
+            
+            <span class="item-keyword-tag">冲突</span>
+            
+        </div>
+        
+    </header>
+
+    <div class="item-content">
+        <h1>火星</h1>
+<p>火星是天空中那颗红色的行星，以战神玛尔斯命名。在占星学中，火星代表着我们最原始的能量——欲望、行动、竞争、愤怒、以及去争取我们想要之物的冲动。</p>
+<h2>行动的能量</h2>
+<p>如果金星是"吸引"的能量，那么火星就是"追逐"的能量。金星问的是"我想要什么"，火星问的是"我怎么得到它"。</p>
+<p>火星是关于采取行动。不是思考、不是计划、不是感受——而是去做。它是那股让你从沙发上站起来、走出舒适区、面对挑战的力量。</p>
+<h2>火星代表什么</h2>
+<p><strong>驱动力</strong>：是什么驱动你行动？你的动力来源是什么？是竞争、成就、激情、还是证明自己？火星是你的内在引擎。</p>
+<p><strong>行动模式</strong>：你怎样采取行动？是快速果断还是谨慎缓慢？是正面冲锋还是迂回策略？是独自行动还是团队合作？</p>
+<p><strong>愤怒表达</strong>：每个人都会生气，但表达愤怒的方式各不相同。你是爆发型、压抑型、还是被动攻击型？你的愤怒会指向外部还是内部？</p>
+<p><strong>竞争态度</strong>：你怎么看待竞争？是享受还是回避？你在竞争中是什么风格？你如何处理输赢？</p>
+<p><strong>性能量</strong>：火星也与原始的性能量有关——不是金星那种浪漫的爱情，而是更本能的欲望和激情。</p>
+<p><strong>冲突处理</strong>：当利益冲突发生时，你会怎么做？是对抗、妥协、还是退让？你的战斗方式是什么？</p>
+<h2>火星在不同星座</h2>
+<p>火星大约每两年绕黄道一周，在每个星座停留六到八周。</p>
+<p>不同元素的火星有不同的行动风格：</p>
+<ul>
+<li>火象火星（白羊、狮子、射手）行动迅速、直接、热情，但可能缺乏持久力</li>
+<li>土象火星（金牛、处女、摩羯）行动稳健、有策略、持久，但可能启动较慢</li>
+<li>风象火星（双子、天秤、水瓶）行动灵活、善于沟通和协调，但可能犹豫不决</li>
+<li>水象火星（巨蟹、天蝎、双鱼）行动受情绪驱动、深层而持久，但可能被动反应式</li>
+</ul>
+<p>火星在白羊座被认为是"入庙"——也就是在最自然、最强势的位置。而火星在天秤座则是"落陷"——需要学习如何在考虑他人的同时保持自己的力量。</p>
+<h2>健康的火星表达</h2>
+<p>火星的能量是中性的——它可以用于创造，也可以用于破坏。问题不是有没有火星能量，而是如何使用它。</p>
+<p>压抑火星的人可能会变得被动、委屈、或者让愤怒以扭曲的方式爆发出来。而过度表达火星的人可能会变得好斗、冲动、或者伤害他人。</p>
+<p>健康的火星表达意味着：</p>
+<ul>
+<li>知道自己想要什么，并勇于追求</li>
+<li>能够设立边界，说"不"</li>
+<li>在必要时能够为自己和他人站出来</li>
+<li>把竞争能量用于自我提升而非打压他人</li>
+<li>承认愤怒是正当的情绪，并找到建设性的表达方式</li>
+</ul>
+<h2>给火星充能</h2>
+<p>火星需要出口。如果你感到烦躁、易怒、或者莫名的焦虑，可能是火星能量需要释放。</p>
+<p>运动是最直接的方式——尤其是竞技性或高强度的运动。但创业、挑战性的项目、为自己争取权益、甚至打扫房间，都可以是火星能量的出口。</p>
+<p>了解你的火星配置，可以帮助你找到最适合自己的行动方式。不是每个人都需要成为战士，但每个人都需要学会为自己的人生而战。</p>
+
+    </div>
+
+    <nav class="item-nav">
+        <a href="&#x2F;xavierxcn/astrology/planets/" class="item-nav-link">
+            ← 返回行星
+        </a>
+    </nav>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

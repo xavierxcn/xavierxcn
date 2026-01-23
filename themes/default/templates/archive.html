@@ -12,7 +12,7 @@
             <time datetime="{{ post.date | date(format='%Y-%m-%d') }}">
                 {{ post.date | date(format='%Y-%m-%d') }}
             </time>
-            <a href="{{ site.base_path }}{{ post.url }}">{{ post.title }}</a>
+            <a href="{{ site.base_path }}/{{ post.url }}">{{ post.title }}</a>
         </li>
         {% endfor %}
     </ul>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合相 - 相位 - 占星 - Xavier&#x27;s Blog</title>
+    <meta name="description" content="两颗行星能量的融合与集中">
+    <meta name="author" content="Xavier Fan">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.astrology-item-page {
+    max-width: 720px;
+    margin: 0 auto;
+}
+
+.item-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-xl);
+}
+
+.item-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.item-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.item-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.item-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0;
+    margin-bottom: var(--space-2xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.item-hero-symbol {
+    font-size: 4rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-lg);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-hero-attrs {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-bottom: var(--space-lg);
+}
+
+.item-hero-attr {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-code-bg);
+}
+
+.item-hero-summary {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-style: italic;
+    color: var(--color-text-secondary);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+.item-keywords-section {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    margin-top: var(--space-lg);
+}
+
+.item-keyword-tag {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-md);
+    border: 1px solid var(--color-border);
+}
+
+.item-content {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    line-height: 1.85;
+    color: var(--color-text);
+}
+
+.item-content h1,
+.item-content h2,
+.item-content h3 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    color: var(--color-text);
+    margin-top: var(--space-2xl);
+    margin-bottom: var(--space-md);
+}
+
+.item-content h1 { font-size: 1.75rem; }
+.item-content h2 { font-size: 1.4rem; }
+.item-content h3 { font-size: 1.15rem; }
+
+.item-content p {
+    margin-bottom: var(--space-lg);
+}
+
+.item-content strong {
+    font-weight: 600;
+    color: var(--color-text);
+}
+
+.item-content ul,
+.item-content ol {
+    margin-bottom: var(--space-lg);
+    padding-left: var(--space-xl);
+}
+
+.item-content li {
+    margin-bottom: var(--space-sm);
+}
+
+.item-nav {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-3xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
+}
+
+.item-nav-link {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-text-secondary);
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: var(--space-sm) var(--space-lg);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-nav-link:hover {
+    color: var(--color-text);
+    border-color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+    .item-hero-title {
+        font-size: 2rem;
+    }
+
+    .item-hero-symbol {
+        font-size: 3rem;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="astrology-item-page">
+    <nav class="item-breadcrumb">
+        <a href="&#x2F;xavierxcn/astrology/">占星</a>
+        <span>/</span>
+        <a href="&#x2F;xavierxcn/astrology/aspects/">相位</a>
+        <span>/</span>
+        合相
+    </nav>
+
+    <header class="item-hero">
+        
+        <div class="item-hero-symbol">☌</div>
+        
+        <h1 class="item-hero-title">合相</h1>
+        
+        
+        <p class="item-hero-summary">两颗行星能量的融合与集中</p>
+        
+        
+        <div class="item-keywords-section">
+            
+            <span class="item-keyword-tag">融合</span>
+            
+            <span class="item-keyword-tag">集中</span>
+            
+            <span class="item-keyword-tag">新周期</span>
+            
+            <span class="item-keyword-tag">强化</span>
+            
+        </div>
+        
+    </header>
+
+    <div class="item-content">
+        <h1>合相</h1>
+<p>合相是当两颗行星处于黄道上同一位置（或非常接近）时形成的相位。如果把行星比作对话中的声音，合相就是两个声音同时说话——它们融合在一起，难以分辨。</p>
+<h2>最基本的相位</h2>
+<p>合相是占星学中最原始、最有力的相位。它不是两颗行星在"互动"，而是两颗行星在同一个地方，它们的能量直接混合在一起。</p>
+<p>从角度上说，合相是0度——没有角度，只有重叠。</p>
+<h2>合相的意义</h2>
+<p><strong>能量的融合</strong>：两颗行星的能量被融为一体。你很难把它们分开来看。比如太阳合水星的人，自我认同和思维方式是绑在一起的；月亮合金星的人，情感需求和爱的方式是一回事。</p>
+<p><strong>能量的强化</strong>：合相让两颗行星的能量都被放大了。这可以是好事——力量加倍；也可以是挑战——问题也加倍。</p>
+<p><strong>新周期的开始</strong>：在行运中，两颗行星的合相往往标志着一个新周期的开始。最有名的例子是新月——太阳合月亮，代表着月亮周期的重新开始。</p>
+<h2>合相是好是坏？</h2>
+<p>合相本身是中性的。它是"好"是"坏"取决于：</p>
+<p><strong>哪两颗行星合相</strong>：金星合木星通常被认为是幸运的组合；火星合土星则可能带来挫折感。但每种组合都有自己的可能性。</p>
+<p><strong>合相在什么星座</strong>：同样的行星组合在不同星座会有不同的表现。</p>
+<p><strong>合相与星盘其他部分的关系</strong>：孤立地看一个合相意义有限，要放在整张星盘的背景下理解。</p>
+<h2>常见的合相</h2>
+<p><strong>太阳合月亮（新月）</strong>：自我意志与情感需求高度一致。这种人目标明确，但可能不容易看到自己的盲点。</p>
+<p><strong>金星合火星</strong>：爱与欲望融为一体。这种人在感情中热情直接，爱得炙热。</p>
+<p><strong>水星合金星</strong>：思维和审美相连。这种人可能有艺术天赋，或者说话很有魅力。</p>
+<p><strong>木星合土星</strong>：扩张与收缩、乐观与谨慎的结合。这个组合大约每20年发生一次，被认为是社会周期的重要标志。</p>
+<h2>活出你的合相</h2>
+<p>如果你的星盘中有重要的合相，试着理解这两种能量是如何在你身上融合的。它们不是分开的两样东西，而是你个性的一个整体部分。</p>
+<p>学会欣赏这种融合带来的力量，同时也意识到可能的盲点——当两种能量太紧密时，有时候很难从中抽离出来看清楚。</p>
+
+    </div>
+
+    <nav class="item-nav">
+        <a href="&#x2F;xavierxcn/astrology/aspects/" class="item-nav-link">
+            ← 返回相位
+        </a>
+    </nav>
+</article>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('/xavierxcn');
+        });
+    </script>
+
+    
+</body>
+</html>

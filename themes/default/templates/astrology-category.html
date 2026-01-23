@@ -1,0 +1,393 @@
+{% extends "base.html" %}
+
+{% block title %}{{ category.name }} - 占星 - {{ site.title }}{% endblock %}
+
+{% block description %}{{ category.name }} — 占星学基础知识{% endblock %}
+
+{% block head %}
+<style>
+.category-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0 var(--space-xl);
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.category-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-lg);
+}
+
+.category-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.category-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.category-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.category-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+.category-hero-en {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+    flex-wrap: wrap;
+}
+
+.filter-search {
+    position: relative;
+    flex: 0 1 280px;
+}
+
+.filter-search input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-lg);
+    padding-left: 2.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    outline: none;
+    transition: all var(--transition-base);
+}
+
+.filter-search input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.filter-search input:focus {
+    border-color: var(--color-accent);
+}
+
+.filter-search::before {
+    content: '⌕';
+    position: absolute;
+    left: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.filter-group {
+    display: flex;
+    gap: 2px;
+    background: var(--color-border);
+    padding: 2px;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: var(--color-bg-elevated);
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-btn:hover {
+    color: var(--color-text);
+}
+
+.filter-btn.active {
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+.filter-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.filter-dot.fire { background: #C45C4A; }
+.filter-dot.earth { background: #8B7355; }
+.filter-dot.air { background: #7A9E9F; }
+.filter-dot.water { background: #5B7B95; }
+
+/* Items Grid */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.item-card {
+    position: relative;
+    display: block;
+    padding: var(--space-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    text-decoration: none;
+    color: inherit;
+}
+
+.item-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 4px 20px var(--color-shadow);
+}
+
+.item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.item-symbol {
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    transition: color var(--transition-base);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-card:hover .item-symbol {
+    color: var(--color-accent);
+}
+
+.item-title-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.02em;
+}
+
+.item-attrs {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.item-attr {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px var(--space-xs);
+    background: var(--color-code-bg);
+}
+
+.item-summary {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: var(--space-md);
+}
+
+.item-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.item-keyword {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-card:hover .item-keyword {
+    border-color: var(--color-border-strong);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+@media (max-width: 640px) {
+    .category-hero-title {
+        font-size: 2rem;
+    }
+
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .filter-search {
+        width: 100%;
+        flex: none;
+    }
+
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<section class="category-page">
+    <header class="category-hero">
+        <nav class="category-breadcrumb">
+            <a href="{{ site.base_path }}/astrology/">占星</a>
+            <span>/</span>
+            {{ category.name }}
+        </nav>
+        <h1 class="category-hero-title">{{ category.name }}</h1>
+        <p class="category-hero-en">
+            {% if category.id == "signs" %}Zodiac Signs{% endif %}
+            {% if category.id == "planets" %}Celestial Bodies{% endif %}
+            {% if category.id == "houses" %}Astrological Houses{% endif %}
+            {% if category.id == "aspects" %}Planetary Aspects{% endif %}
+        </p>
+    </header>
+
+    <div class="filter-section">
+        <div class="filter-search">
+            <input type="text" id="filter-input" placeholder="搜索{{ category.name }}..." autocomplete="off">
+        </div>
+        {% if category.id == "signs" %}
+        <div class="filter-group" data-filter="element">
+            <button class="filter-btn active" data-value="">全部</button>
+            <button class="filter-btn" data-value="火"><span class="filter-dot fire"></span>火象</button>
+            <button class="filter-btn" data-value="土"><span class="filter-dot earth"></span>土象</button>
+            <button class="filter-btn" data-value="风"><span class="filter-dot air"></span>风象</button>
+            <button class="filter-btn" data-value="水"><span class="filter-dot water"></span>水象</button>
+        </div>
+        {% endif %}
+    </div>
+
+    {% if items | length > 0 %}
+    <div class="items-grid" id="items-grid">
+        {% for item in items %}
+        <a href="{{ site.base_path }}/astrology/{{ category.id }}/{{ item.slug }}/" class="item-card"
+             data-title="{{ item.title }}"
+             data-keywords="{{ item.keywords | join(sep=',') }}"
+             data-element="{{ item.element | default(value='') }}"
+             data-modality="{{ item.modality | default(value='') }}">
+            <div class="item-header">
+                {% if item.symbol %}
+                <span class="item-symbol">{{ item.symbol }}</span>
+                {% endif %}
+                <div class="item-title-group">
+                    <h2 class="item-title">{{ item.title }}</h2>
+                    {% if item.element or item.modality %}
+                    <div class="item-attrs">
+                        {% if item.element %}<span class="item-attr">{{ item.element }}象</span>{% endif %}
+                        {% if item.modality %}<span class="item-attr">{{ item.modality }}宫</span>{% endif %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% if item.summary %}
+            <p class="item-summary">{{ item.summary }}</p>
+            {% endif %}
+            {% if item.keywords | length > 0 %}
+            <div class="item-keywords">
+                {% for kw in item.keywords %}
+                <span class="item-keyword">{{ kw }}</span>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </a>
+        {% endfor %}
+    </div>
+    {% else %}
+    <p class="empty-state">暂无内容</p>
+    {% endif %}
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    const input = document.getElementById('filter-input');
+    const grid = document.getElementById('items-grid');
+    const cards = grid ? Array.from(grid.querySelectorAll('.item-card')) : [];
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    let activeElement = '';
+
+    function filterCards() {
+        const query = input.value.toLowerCase().trim();
+
+        cards.forEach(card => {
+            const title = (card.dataset.title || '').toLowerCase();
+            const keywords = (card.dataset.keywords || '').toLowerCase();
+            const element = card.dataset.element || '';
+
+            const matchesQuery = !query || title.includes(query) || keywords.includes(query);
+            const matchesElement = !activeElement || element === activeElement;
+
+            card.style.display = (matchesQuery && matchesElement) ? '' : 'none';
+        });
+    }
+
+    if (input) {
+        input.addEventListener('input', filterCards);
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.closest('.filter-group');
+            if (group) {
+                group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            }
+            btn.classList.add('active');
+            activeElement = btn.dataset.value || '';
+            filterCards();
+        });
+    });
+})();
+</script>
+{% endblock %}

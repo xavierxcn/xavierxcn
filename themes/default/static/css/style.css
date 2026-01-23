@@ -1074,3 +1074,175 @@ a.tag:hover {
         font-size: 1.65rem;
     }
 }
+
+/* ===== ASTROLOGY ===== */
+.astrology-section,
+.astrology-category-section {
+    animation: fadeIn var(--transition-slow) ease-out;
+}
+
+.astrology-header {
+    margin-bottom: var(--space-2xl);
+}
+
+.astrology-header h1 {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    margin-bottom: var(--space-sm);
+}
+
+.astrology-intro {
+    color: var(--color-text-secondary);
+    font-size: 1rem;
+}
+
+.breadcrumb {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+    margin-bottom: var(--space-md);
+}
+
+.breadcrumb a {
+    color: var(--color-accent);
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* Astrology Categories Grid */
+.astrology-categories {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+}
+
+.astrology-category-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: var(--space-2xl) var(--space-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    text-align: center;
+    transition: all var(--transition-base);
+    text-decoration: none;
+}
+
+.astrology-category-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 8px 24px var(--color-shadow-hover);
+    transform: translateY(-4px);
+}
+
+.category-icon {
+    font-size: 2.5rem;
+    margin-bottom: var(--space-md);
+}
+
+.category-title {
+    font-family: var(--font-serif);
+    font-size: 1.35rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+.category-count {
+    font-size: 0.85rem;
+    color: var(--color-text-muted);
+}
+
+/* Astrology Items Grid */
+.astrology-items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: var(--space-lg);
+}
+
+.astrology-item-card {
+    padding: var(--space-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    transition: all var(--transition-base);
+}
+
+.astrology-item-card:hover {
+    border-color: var(--color-accent);
+    box-shadow: 0 4px 16px var(--color-shadow);
+}
+
+.item-symbol {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: var(--space-sm);
+}
+
+.item-title {
+    font-family: var(--font-serif);
+    font-size: 1.15rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-sm);
+}
+
+.item-attrs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-sm);
+}
+
+.item-attrs .attr {
+    font-size: 0.75rem;
+    padding: var(--space-xs) var(--space-sm);
+    background: var(--color-accent-subtle);
+    color: var(--color-accent);
+    border-radius: var(--radius-sm);
+}
+
+.item-summary {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+    margin-bottom: var(--space-sm);
+}
+
+.item-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.item-keywords .keyword {
+    font-size: 0.7rem;
+    padding: 2px var(--space-xs);
+    background: var(--color-code-bg);
+    color: var(--color-text-muted);
+    border-radius: var(--radius-sm);
+}
+
+.no-content {
+    text-align: center;
+    color: var(--color-text-muted);
+    padding: var(--space-2xl);
+    font-style: italic;
+}
+
+@media (max-width: 768px) {
+    .astrology-categories {
+        grid-template-columns: 1fr;
+    }
+
+    .astrology-items-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .astrology-header h1 {
+        font-size: 1.65rem;
+    }
+}

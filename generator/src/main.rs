@@ -26,6 +26,9 @@ enum Commands {
         /// Path to config file
         #[arg(short, long, default_value = "config.yaml")]
         config: String,
+        /// Override base path (use "" for local development)
+        #[arg(long)]
+        base_path: Option<String>,
     },
 }
 
@@ -40,7 +43,7 @@ fn main() {
     let cli = Cli::parse();
 
     let result = match cli.command {
-        Commands::Build { config } => run_build(&config),
+        Commands::Build { config, base_path } => run_build(&config, base_path),
     };
 
     if let Err(e) = result {
@@ -49,8 +52,14 @@ fn main() {
     }
 }
 
-fn run_build(config_path: &str) -> Result<()> {
-    let config = Config::load(config_path)?;
+fn run_build(config_path: &str, base_path_override: Option<String>) -> Result<()> {
+    let mut config = Config::load(config_path)?;
+
+    // Override base_path if provided
+    if let Some(bp) = base_path_override {
+        config.site.base_path = bp;
+    }
+
     let builder = Builder::new(config)?;
     builder.build()?;
     Ok(())
