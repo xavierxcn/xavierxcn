@@ -3,3 +3,7 @@ tools:
     title: Markdown 转微信公众号
     description: 将 Markdown 转换为微信公众号兼容的 HTML 格式，支持代码高亮和 Mermaid 图表
     icon: 📝
+  - slug: decoration-budget
+    title: 装修预算助手
+    description: 规划装修预算，支持清包、半包、全包、全案四种装修方式，可导出 Excel
+    icon: 🏠
