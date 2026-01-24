@@ -1711,6 +1711,10 @@
             const resultStr = Module.UTF8ToString(resultPtr);
             const chartData = JSON.parse(resultStr);
 
+            // Debug: log house system and returned data
+            console.log('House system:', houseSystem.value, '-> ASCII:', hsys);
+            console.log('Chart data houses:', chartData.house || chartData.houses || chartData.cusps);
+
             if (chartData.error) {
                 throw new Error(chartData.error_msg || '计算错误');
             }
