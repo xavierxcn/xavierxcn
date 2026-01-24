@@ -132,7 +132,7 @@
     .budget-main {
         flex: 1;
         display: grid;
-        grid-template-columns: 320px 1fr;
+        grid-template-columns: 300px 1fr;
         gap: 20px;
         min-height: 0;
         overflow: hidden;
@@ -423,8 +423,8 @@
     /* Budget item row */
     .budget-item {
         display: grid;
-        grid-template-columns: 1fr 100px 120px 120px 32px;
-        gap: 12px;
+        grid-template-columns: 1fr 80px 100px 140px 100px;
+        gap: 10px;
         align-items: center;
         padding: 10px 12px;
         background: var(--budget-bg);
@@ -436,14 +436,20 @@
         background: var(--budget-border);
     }
 
-    .budget-item.disabled {
-        opacity: 0.5;
-        pointer-events: none;
-    }
-
     .item-name {
         font-size: 14px;
         color: var(--budget-text);
+    }
+
+    .item-name-wrapper {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+    }
+
+    .item-ref-price {
+        font-size: 11px;
+        color: var(--budget-text-secondary);
     }
 
     .item-input {
@@ -461,6 +467,16 @@
         border-color: var(--budget-primary);
     }
 
+    .item-input.item-note {
+        text-align: left;
+        font-size: 12px;
+    }
+
+    .item-input::placeholder {
+        color: var(--budget-text-secondary);
+        opacity: 0.6;
+    }
+
     .item-subtotal {
         font-size: 14px;
         font-weight: 600;
@@ -468,58 +484,11 @@
         text-align: right;
     }
 
-    .item-delete {
-        padding: 6px;
-        border: none;
-        background: transparent;
-        color: var(--budget-text-secondary);
-        cursor: pointer;
-        border-radius: 6px;
-        transition: all 0.2s;
-    }
-
-    .item-delete:hover {
-        background: rgba(239, 68, 68, 0.1);
-        color: var(--budget-error);
-    }
-
-    .item-delete svg {
-        width: 16px;
-        height: 16px;
-    }
-
-    .add-item-btn {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 6px;
-        padding: 10px;
-        border: 2px dashed var(--budget-border);
-        border-radius: 8px;
-        background: transparent;
-        color: var(--budget-text-secondary);
-        cursor: pointer;
-        font-size: 13px;
-        transition: all 0.2s;
-        width: 100%;
-        margin-top: 8px;
-    }
-
-    .add-item-btn:hover {
-        border-color: var(--budget-primary);
-        color: var(--budget-primary);
-    }
-
-    .add-item-btn svg {
-        width: 16px;
-        height: 16px;
-    }
-
     /* Column headers */
     .items-header {
         display: grid;
-        grid-template-columns: 1fr 100px 120px 120px 32px;
-        gap: 12px;
+        grid-template-columns: 1fr 80px 100px 140px 100px;
+        gap: 10px;
         padding: 0 12px 8px;
         font-size: 12px;
         font-weight: 600;
@@ -530,7 +499,7 @@
 
     .items-header span:nth-child(2),
     .items-header span:nth-child(3),
-    .items-header span:nth-child(4) {
+    .items-header span:nth-child(5) {
         text-align: right;
     }
 
@@ -571,7 +540,7 @@
         }
 
         .settings-panel {
-            max-height: 300px;
+            max-height: 280px;
         }
     }
 
@@ -608,9 +577,12 @@
             display: none;
         }
 
-        .item-name {
+        .item-name-wrapper {
             grid-column: 1 / -1;
-            font-weight: 500;
+        }
+
+        .item-input.item-note {
+            grid-column: 1 / -1;
         }
     }
 </style>
@@ -652,23 +624,6 @@
                         <input type="number" id="area" placeholder="100" min="1" max="1000">
                         <span class="input-unit">平方米</span>
                     </div>
-                </div>
-                <div class="form-group">
-                    <label for="city-tier">城市级别</label>
-                    <select id="city-tier">
-                        <option value="tier1">一线城市</option>
-                        <option value="tier2" selected>二线城市</option>
-                        <option value="tier3">三线城市</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="grade">装修档次</label>
-                    <select id="grade">
-                        <option value="economy">经济型</option>
-                        <option value="moderate" selected>中档</option>
-                        <option value="high">高档</option>
-                        <option value="luxury">豪华</option>
-                    </select>
                 </div>
             </div>
 
@@ -721,6 +676,7 @@
         <main class="budget-panel">
             <div class="budget-panel-header">
                 <h2 class="budget-panel-title">预算明细</h2>
+                <span style="font-size: 12px; color: var(--budget-text-secondary);">参考价格仅供参考，请根据实际报价填写</span>
             </div>
             <div class="budget-panel-body" id="budget-list">
                 <!-- Dynamic content -->
@@ -735,16 +691,16 @@
 {% block scripts %}
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
-// Budget data structure
+// Budget data structure with reference prices
 const budgetCategories = {
     demolition: {
         name: '拆改工程',
         icon: '&#x1F6A7;',
         items: [
-            { id: 'demo_wall', name: '拆墙', unit: '平方米', defaultQty: 0, prices: { economy: 30, moderate: 40, high: 50, luxury: 60 } },
-            { id: 'demo_build', name: '砌墙', unit: '平方米', defaultQty: 0, prices: { economy: 80, moderate: 100, high: 120, luxury: 150 } },
-            { id: 'demo_scrape', name: '铲墙皮', unit: '平方米', defaultQty: 0, prices: { economy: 8, moderate: 12, high: 15, luxury: 20 } },
-            { id: 'demo_trash', name: '垃圾清运', unit: '项', defaultQty: 1, prices: { economy: 500, moderate: 800, high: 1200, luxury: 1500 } },
+            { id: 'demo_wall', name: '拆墙', unit: '平方米', defaultQty: 0, refPrice: '30-60' },
+            { id: 'demo_build', name: '砌墙', unit: '平方米', defaultQty: 0, refPrice: '80-150' },
+            { id: 'demo_scrape', name: '铲墙皮', unit: '平方米', defaultQty: 0, refPrice: '8-20' },
+            { id: 'demo_trash', name: '垃圾清运', unit: '项', defaultQty: 1, refPrice: '500-1500' },
         ],
         modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
     },
@@ -752,9 +708,9 @@ const budgetCategories = {
         name: '水电工程',
         icon: '&#x1F4A1;',
         items: [
-            { id: 'elec_wire', name: '电路改造', unit: '米', defaultQty: 0, prices: { economy: 25, moderate: 35, high: 50, luxury: 70 } },
-            { id: 'water_pipe', name: '水路改造', unit: '米', defaultQty: 0, prices: { economy: 45, moderate: 60, high: 80, luxury: 100 } },
-            { id: 'switch_panel', name: '开关插座安装', unit: '个', defaultQty: 30, prices: { economy: 8, moderate: 12, high: 18, luxury: 25 } },
+            { id: 'elec_wire', name: '电路改造', unit: '米', defaultQty: 0, refPrice: '25-70' },
+            { id: 'water_pipe', name: '水路改造', unit: '米', defaultQty: 0, refPrice: '45-100' },
+            { id: 'switch_panel', name: '开关插座安装', unit: '个', defaultQty: 30, refPrice: '8-25' },
         ],
         modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
     },
@@ -762,10 +718,10 @@ const budgetCategories = {
         name: '瓦工工程',
         icon: '&#x1F9F1;',
         items: [
-            { id: 'waterproof', name: '防水处理', unit: '平方米', defaultQty: 0, prices: { economy: 40, moderate: 60, high: 80, luxury: 100 } },
-            { id: 'tile_floor', name: '地面贴砖', unit: '平方米', defaultQty: 0, prices: { economy: 35, moderate: 50, high: 70, luxury: 90 } },
-            { id: 'tile_wall', name: '墙面贴砖', unit: '平方米', defaultQty: 0, prices: { economy: 40, moderate: 55, high: 75, luxury: 95 } },
-            { id: 'level', name: '地面找平', unit: '平方米', defaultQty: 0, prices: { economy: 20, moderate: 30, high: 40, luxury: 50 } },
+            { id: 'waterproof', name: '防水处理', unit: '平方米', defaultQty: 0, refPrice: '40-100' },
+            { id: 'tile_floor', name: '地面贴砖', unit: '平方米', defaultQty: 0, refPrice: '35-90' },
+            { id: 'tile_wall', name: '墙面贴砖', unit: '平方米', defaultQty: 0, refPrice: '40-95' },
+            { id: 'level', name: '地面找平', unit: '平方米', defaultQty: 0, refPrice: '20-50' },
         ],
         modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
     },
@@ -773,9 +729,9 @@ const budgetCategories = {
         name: '木工工程',
         icon: '&#x1FA9A;',
         items: [
-            { id: 'ceiling', name: '吊顶', unit: '平方米', defaultQty: 0, prices: { economy: 100, moderate: 150, high: 200, luxury: 280 } },
-            { id: 'backdrop', name: '电视背景墙', unit: '项', defaultQty: 0, prices: { economy: 1500, moderate: 3000, high: 5000, luxury: 8000 } },
-            { id: 'curtain_box', name: '窗帘盒', unit: '米', defaultQty: 0, prices: { economy: 80, moderate: 120, high: 160, luxury: 200 } },
+            { id: 'ceiling', name: '吊顶', unit: '平方米', defaultQty: 0, refPrice: '100-280' },
+            { id: 'backdrop', name: '电视背景墙', unit: '项', defaultQty: 0, refPrice: '1500-8000' },
+            { id: 'curtain_box', name: '窗帘盒', unit: '米', defaultQty: 0, refPrice: '80-200' },
         ],
         modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
     },
@@ -783,8 +739,8 @@ const budgetCategories = {
         name: '油漆工程',
         icon: '&#x1F3A8;',
         items: [
-            { id: 'wall_base', name: '墙面基层处理', unit: '平方米', defaultQty: 0, prices: { economy: 15, moderate: 22, high: 30, luxury: 40 } },
-            { id: 'latex_paint', name: '乳胶漆', unit: '平方米', defaultQty: 0, prices: { economy: 18, moderate: 28, high: 40, luxury: 55 } },
+            { id: 'wall_base', name: '墙面基层处理', unit: '平方米', defaultQty: 0, refPrice: '15-40' },
+            { id: 'latex_paint', name: '乳胶漆', unit: '平方米', defaultQty: 0, refPrice: '18-55' },
         ],
         modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
     },
@@ -792,12 +748,12 @@ const budgetCategories = {
         name: '主材',
         icon: '&#x1F4E6;',
         items: [
-            { id: 'mat_tile', name: '瓷砖', unit: '平方米', defaultQty: 0, prices: { economy: 65, moderate: 120, high: 200, luxury: 350 } },
-            { id: 'mat_floor', name: '地板', unit: '平方米', defaultQty: 0, prices: { economy: 80, moderate: 150, high: 250, luxury: 400 } },
-            { id: 'mat_door', name: '室内门', unit: '扇', defaultQty: 4, prices: { economy: 800, moderate: 1500, high: 2500, luxury: 4000 } },
-            { id: 'mat_cabinet', name: '橱柜', unit: '延米', defaultQty: 4, prices: { economy: 800, moderate: 1500, high: 2500, luxury: 4000 } },
-            { id: 'mat_sanitary', name: '洁具套装', unit: '套', defaultQty: 2, prices: { economy: 3000, moderate: 6000, high: 10000, luxury: 18000 } },
-            { id: 'mat_light', name: '灯具', unit: '套', defaultQty: 1, prices: { economy: 2000, moderate: 4000, high: 8000, luxury: 15000 } },
+            { id: 'mat_tile', name: '瓷砖', unit: '平方米', defaultQty: 0, refPrice: '65-350' },
+            { id: 'mat_floor', name: '地板', unit: '平方米', defaultQty: 0, refPrice: '80-400' },
+            { id: 'mat_door', name: '室内门', unit: '扇', defaultQty: 4, refPrice: '800-4000' },
+            { id: 'mat_cabinet', name: '橱柜', unit: '延米', defaultQty: 4, refPrice: '800-4000' },
+            { id: 'mat_sanitary', name: '洁具套装', unit: '套', defaultQty: 2, refPrice: '3000-18000' },
+            { id: 'mat_light', name: '灯具', unit: '套', defaultQty: 1, refPrice: '2000-15000' },
         ],
         modeConfig: { qingbao: 'self', banbao: 'self', quanbao: 'included', quanan: 'included' }
     },
@@ -805,14 +761,14 @@ const budgetCategories = {
         name: '家具家电',
         icon: '&#x1F6CB;',
         items: [
-            { id: 'furn_sofa', name: '沙发', unit: '套', defaultQty: 1, prices: { economy: 3000, moderate: 6000, high: 12000, luxury: 25000 } },
-            { id: 'furn_bed', name: '床+床垫', unit: '套', defaultQty: 2, prices: { economy: 3000, moderate: 6000, high: 12000, luxury: 20000 } },
-            { id: 'furn_dining', name: '餐桌椅', unit: '套', defaultQty: 1, prices: { economy: 2000, moderate: 4000, high: 8000, luxury: 15000 } },
-            { id: 'furn_wardrobe', name: '衣柜', unit: '组', defaultQty: 2, prices: { economy: 3000, moderate: 6000, high: 12000, luxury: 20000 } },
-            { id: 'elec_ac', name: '空调', unit: '台', defaultQty: 3, prices: { economy: 3000, moderate: 5000, high: 8000, luxury: 12000 } },
-            { id: 'elec_fridge', name: '冰箱', unit: '台', defaultQty: 1, prices: { economy: 2500, moderate: 5000, high: 8000, luxury: 15000 } },
-            { id: 'elec_washer', name: '洗衣机', unit: '台', defaultQty: 1, prices: { economy: 2000, moderate: 4000, high: 6000, luxury: 10000 } },
-            { id: 'elec_tv', name: '电视', unit: '台', defaultQty: 1, prices: { economy: 2000, moderate: 4000, high: 8000, luxury: 15000 } },
+            { id: 'furn_sofa', name: '沙发', unit: '套', defaultQty: 1, refPrice: '3000-25000' },
+            { id: 'furn_bed', name: '床+床垫', unit: '套', defaultQty: 2, refPrice: '3000-20000' },
+            { id: 'furn_dining', name: '餐桌椅', unit: '套', defaultQty: 1, refPrice: '2000-15000' },
+            { id: 'furn_wardrobe', name: '衣柜', unit: '组', defaultQty: 2, refPrice: '3000-20000' },
+            { id: 'elec_ac', name: '空调', unit: '台', defaultQty: 3, refPrice: '3000-12000' },
+            { id: 'elec_fridge', name: '冰箱', unit: '台', defaultQty: 1, refPrice: '2500-15000' },
+            { id: 'elec_washer', name: '洗衣机', unit: '台', defaultQty: 1, refPrice: '2000-10000' },
+            { id: 'elec_tv', name: '电视', unit: '台', defaultQty: 1, refPrice: '2000-15000' },
         ],
         modeConfig: { qingbao: 'self', banbao: 'self', quanbao: 'self', quanan: 'self' }
     },
@@ -820,26 +776,17 @@ const budgetCategories = {
         name: '软装配饰',
         icon: '&#x1F3A0;',
         items: [
-            { id: 'soft_curtain', name: '窗帘', unit: '套', defaultQty: 1, prices: { economy: 2000, moderate: 4000, high: 8000, luxury: 15000 } },
-            { id: 'soft_carpet', name: '地毯', unit: '块', defaultQty: 1, prices: { economy: 500, moderate: 1500, high: 3000, luxury: 6000 } },
-            { id: 'soft_decor', name: '装饰品', unit: '项', defaultQty: 1, prices: { economy: 1000, moderate: 3000, high: 6000, luxury: 12000 } },
+            { id: 'soft_curtain', name: '窗帘', unit: '套', defaultQty: 1, refPrice: '2000-15000' },
+            { id: 'soft_carpet', name: '地毯', unit: '块', defaultQty: 1, refPrice: '500-6000' },
+            { id: 'soft_decor', name: '装饰品', unit: '项', defaultQty: 1, refPrice: '1000-12000' },
         ],
         modeConfig: { qingbao: 'self', banbao: 'self', quanbao: 'self', quanan: 'self' }
     }
 };
 
-// City tier price multipliers
-const cityMultipliers = {
-    tier1: 1.3,
-    tier2: 1.0,
-    tier3: 0.8
-};
-
 class DecorationBudget {
     constructor() {
         this.mode = 'banbao';
-        this.grade = 'moderate';
-        this.cityTier = 'tier2';
         this.area = 100;
         this.budgetData = {};
         this.collapsedCategories = new Set();
@@ -853,19 +800,15 @@ class DecorationBudget {
 
     loadFromStorage() {
         try {
-            const saved = localStorage.getItem('decoration-budget');
+            const saved = localStorage.getItem('decoration-budget-v2');
             if (saved) {
                 const data = JSON.parse(saved);
                 this.mode = data.mode || 'banbao';
-                this.grade = data.grade || 'moderate';
-                this.cityTier = data.cityTier || 'tier2';
                 this.area = data.area || 100;
                 this.budgetData = data.budgetData || {};
 
                 // Update UI
                 document.getElementById('area').value = this.area;
-                document.getElementById('city-tier').value = this.cityTier;
-                document.getElementById('grade').value = this.grade;
                 document.querySelectorAll('.mode-option').forEach(opt => {
                     opt.classList.toggle('active', opt.dataset.mode === this.mode);
                 });
@@ -877,10 +820,8 @@ class DecorationBudget {
 
     saveToStorage() {
         try {
-            localStorage.setItem('decoration-budget', JSON.stringify({
+            localStorage.setItem('decoration-budget-v2', JSON.stringify({
                 mode: this.mode,
-                grade: this.grade,
-                cityTier: this.cityTier,
                 area: this.area,
                 budgetData: this.budgetData
             }));
@@ -901,22 +842,10 @@ class DecorationBudget {
             });
         });
 
-        // Settings inputs
+        // Area input
         document.getElementById('area').addEventListener('input', (e) => {
             this.area = parseFloat(e.target.value) || 0;
             this.calculateTotals();
-            this.saveToStorage();
-        });
-
-        document.getElementById('city-tier').addEventListener('change', (e) => {
-            this.cityTier = e.target.value;
-            this.render();
-            this.saveToStorage();
-        });
-
-        document.getElementById('grade').addEventListener('change', (e) => {
-            this.grade = e.target.value;
-            this.render();
             this.saveToStorage();
         });
 
@@ -925,16 +854,12 @@ class DecorationBudget {
             if (confirm('确定要重置所有预算数据吗？')) {
                 this.budgetData = {};
                 this.mode = 'banbao';
-                this.grade = 'moderate';
-                this.cityTier = 'tier2';
                 this.area = 100;
                 document.getElementById('area').value = 100;
-                document.getElementById('city-tier').value = 'tier2';
-                document.getElementById('grade').value = 'moderate';
                 document.querySelectorAll('.mode-option').forEach(opt => {
                     opt.classList.toggle('active', opt.dataset.mode === 'banbao');
                 });
-                this.saveToStorage();
+                localStorage.removeItem('decoration-budget-v2');
                 this.render();
                 this.showToast('已重置预算数据', 'success');
             }
@@ -944,11 +869,6 @@ class DecorationBudget {
         document.getElementById('export-btn').addEventListener('click', () => this.exportToExcel());
     }
 
-    getItemPrice(item) {
-        const basePrice = item.prices[this.grade];
-        return Math.round(basePrice * cityMultipliers[this.cityTier]);
-    }
-
     getItemData(categoryKey, itemId) {
         const key = `${categoryKey}_${itemId}`;
         if (!this.budgetData[key]) {
@@ -956,7 +876,8 @@ class DecorationBudget {
             const item = category.items.find(i => i.id === itemId);
             this.budgetData[key] = {
                 qty: item.defaultQty,
-                price: this.getItemPrice(item)
+                price: 0,
+                note: ''
             };
         }
         return this.budgetData[key];
@@ -965,7 +886,7 @@ class DecorationBudget {
     setItemData(categoryKey, itemId, field, value) {
         const key = `${categoryKey}_${itemId}`;
         if (!this.budgetData[key]) {
-            this.budgetData[key] = { qty: 0, price: 0 };
+            this.budgetData[key] = { qty: 0, price: 0, note: '' };
         }
         this.budgetData[key][field] = value;
         this.calculateTotals();
@@ -1012,8 +933,8 @@ class DecorationBudget {
                             <span>项目名称</span>
                             <span>数量</span>
                             <span>单价 (元)</span>
+                            <span>品牌/备注</span>
                             <span>小计</span>
-                            <span></span>
                         </div>
                         ${category.items.map(item => this.renderItem(categoryKey, item)).join('')}
                     </div>
@@ -1056,6 +977,13 @@ class DecorationBudget {
             });
         });
 
+        container.querySelectorAll('.item-note').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const { category, item } = e.target.dataset;
+                this.setItemData(category, item, 'note', e.target.value);
+            });
+        });
+
         this.calculateTotals();
     }
 
@@ -1065,20 +993,28 @@ class DecorationBudget {
 
         return `
             <div class="budget-item" data-category="${categoryKey}" data-item="${item.id}">
-                <div class="item-name">${item.name}</div>
+                <div class="item-name-wrapper">
+                    <div class="item-name">${item.name}</div>
+                    <div class="item-ref-price">参考: ${item.refPrice} 元/${item.unit}</div>
+                </div>
                 <input type="number" class="item-input item-qty"
                     data-category="${categoryKey}"
                     data-item="${item.id}"
-                    value="${data.qty}"
+                    value="${data.qty || ''}"
                     min="0"
                     placeholder="${item.unit}">
                 <input type="number" class="item-input item-price"
                     data-category="${categoryKey}"
                     data-item="${item.id}"
-                    value="${data.price}"
-                    min="0">
+                    value="${data.price || ''}"
+                    min="0"
+                    placeholder="单价">
+                <input type="text" class="item-input item-note"
+                    data-category="${categoryKey}"
+                    data-item="${item.id}"
+                    value="${data.note || ''}"
+                    placeholder="品牌/工艺">
                 <div class="item-subtotal" data-category="${categoryKey}" data-item="${item.id}">¥${subtotal.toLocaleString()}</div>
-                <div style="width: 32px;"></div>
             </div>
         `;
     }
@@ -1105,16 +1041,16 @@ class DecorationBudget {
         let subtotal = 0;
         for (const item of category.items) {
             const data = this.getItemData(categoryKey, item.id);
-            subtotal += data.qty * data.price;
+            subtotal += (data.qty || 0) * (data.price || 0);
         }
         return subtotal;
     }
 
     calculateTotals() {
-        let hardfit = 0;  // 硬装
-        let materials = 0; // 主材
-        let furniture = 0; // 家具家电
-        let soft = 0;      // 软装
+        let hardfit = 0;
+        let materials = 0;
+        let furniture = 0;
+        let soft = 0;
 
         const hardCategories = ['demolition', 'plumbing', 'tiling', 'carpentry', 'painting'];
 
@@ -1138,19 +1074,14 @@ class DecorationBudget {
     exportToExcel() {
         const wb = XLSX.utils.book_new();
 
-        // Summary sheet
         const modeNames = { qingbao: '清包', banbao: '半包', quanbao: '全包', quanan: '全案' };
-        const gradeNames = { economy: '经济型', moderate: '中档', high: '高档', luxury: '豪华' };
-        const cityNames = { tier1: '一线城市', tier2: '二线城市', tier3: '三线城市' };
 
         const summaryData = [
             ['装修预算汇总表'],
             [],
             ['基础信息'],
             ['房屋面积', `${this.area} 平方米`],
-            ['所在城市', cityNames[this.cityTier]],
             ['装修方式', modeNames[this.mode]],
-            ['装修档次', gradeNames[this.grade]],
             [],
             ['费用汇总'],
         ];
@@ -1179,21 +1110,22 @@ class DecorationBudget {
         const detailData = [
             ['装修预算明细表'],
             [],
-            ['分类', '项目', '数量', '单价 (元)', '小计 (元)']
+            ['分类', '项目', '数量', '单价 (元)', '品牌/备注', '小计 (元)']
         ];
 
         for (const [categoryKey, category] of Object.entries(budgetCategories)) {
             for (const item of category.items) {
                 const data = this.getItemData(categoryKey, item.id);
-                const subtotal = data.qty * data.price;
-                detailData.push([category.name, item.name, data.qty, data.price, subtotal]);
+                const subtotal = (data.qty || 0) * (data.price || 0);
+                if (data.qty > 0 || data.price > 0) {
+                    detailData.push([category.name, item.name, data.qty || 0, data.price || 0, data.note || '', subtotal]);
+                }
             }
         }
 
         const detailWs = XLSX.utils.aoa_to_sheet(detailData);
         XLSX.utils.book_append_sheet(wb, detailWs, '预算明细');
 
-        // Download
         const fileName = `装修预算_${this.area}平米_${modeNames[this.mode]}_${new Date().toLocaleDateString().replace(/\//g, '-')}.xlsx`;
         XLSX.writeFile(wb, fileName);
         this.showToast('Excel 导出成功', 'success');
