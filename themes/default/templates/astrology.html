@@ -195,6 +195,79 @@
     }
 }
 
+/* Featured Tool */
+.astro-tool {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    margin-bottom: var(--space-xl);
+    background: linear-gradient(135deg, var(--color-bg-elevated) 0%, var(--color-bg) 100%);
+    border: 1px solid var(--color-border);
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.astro-tool:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 4px 16px var(--color-shadow);
+    transform: translateY(-1px);
+}
+
+.astro-tool-icon {
+    font-size: 2rem;
+    color: var(--color-text-muted);
+    transition: color var(--transition-fast);
+}
+
+.astro-tool:hover .astro-tool-icon {
+    color: var(--color-accent);
+}
+
+.astro-tool-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.astro-tool-title {
+    font-family: var(--font-serif);
+    font-size: 1.1rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0 0 var(--space-xs);
+}
+
+.astro-tool-desc {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    margin: 0;
+    line-height: 1.5;
+}
+
+.astro-tool-arrow {
+    font-size: 1.2rem;
+    color: var(--color-text-muted);
+    transition: all var(--transition-fast);
+}
+
+.astro-tool:hover .astro-tool-arrow {
+    color: var(--color-accent);
+    transform: translateX(4px);
+}
+
+@media (max-width: 640px) {
+    .astro-tool {
+        flex-direction: column;
+        text-align: center;
+        gap: var(--space-md);
+    }
+
+    .astro-tool-arrow {
+        display: none;
+    }
+}
+
 /* Stats footer */
 .astro-footer {
     text-align: center;
@@ -242,6 +315,15 @@
         <h1 class="astro-title">占星</h1>
         <p class="astro-tagline">星辰的语言，命运的地图</p>
     </header>
+
+    <a href="{{ site.base_path }}/tools/natal-chart/" class="astro-tool">
+        <span class="astro-tool-icon">✧</span>
+        <div class="astro-tool-content">
+            <h2 class="astro-tool-title">本命星盘</h2>
+            <p class="astro-tool-desc">输入出生日期、时间和地点，生成专业级本命星盘图</p>
+        </div>
+        <span class="astro-tool-arrow">→</span>
+    </a>
 
     <nav class="astro-tabs" role="tablist">
         <button class="astro-tab active" data-category="all" role="tab" aria-selected="true">
