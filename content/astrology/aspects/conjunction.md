@@ -8,6 +8,9 @@ keywords:
   - 新周期
   - 强化
 summary: 两颗行星能量的融合与集中
+chart:
+  type: aspect
+  highlight: conjunction
 ---
 
 # 合相

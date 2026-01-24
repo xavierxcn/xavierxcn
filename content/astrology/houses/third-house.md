@@ -7,6 +7,9 @@ keywords:
   - 兄弟姐妹
   - 日常
 summary: 你如何思考、交流和探索身边的世界
+chart:
+  type: house
+  highlight: 3
 ---
 
 # 第三宫

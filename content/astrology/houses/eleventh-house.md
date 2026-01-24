@@ -7,6 +7,9 @@ keywords:
   - 理想
   - 未来
 summary: 你所属的群体和你对未来的愿景
+chart:
+  type: house
+  highlight: 11
 ---
 
 # 第十一宫

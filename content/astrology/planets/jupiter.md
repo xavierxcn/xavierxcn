@@ -7,6 +7,9 @@ keywords:
   - 智慧
   - 信仰
 summary: 你的幸运领域，以及生命中追求"更多"的方向
+chart:
+  type: planet
+  highlight: jupiter
 ---
 
 # 木星

@@ -6,6 +6,9 @@ modality: 变动
 ruling_planet: 木星
 date_range: "11.23 - 12.21"
 order: 9
+chart:
+  type: sign
+  highlight: sagittarius
 keywords:
   - 自由
   - 探索

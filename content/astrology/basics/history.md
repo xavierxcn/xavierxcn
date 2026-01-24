@@ -8,6 +8,9 @@ keywords:
   - 希腊
   - 阿拉伯
 summary: 从古巴比伦到现代，占星术经历了四千年的演变
+chart:
+  type: full
+  highlight: ""
 ---
 
 # 占星术的历史

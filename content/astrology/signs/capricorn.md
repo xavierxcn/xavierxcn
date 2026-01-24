@@ -6,6 +6,9 @@ modality: 本位
 ruling_planet: 土星
 date_range: "12.22 - 1.19"
 order: 10
+chart:
+  type: sign
+  highlight: capricorn
 keywords:
   - 责任
   - 野心

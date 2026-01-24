@@ -7,6 +7,9 @@ keywords:
   - 灵性
   - 消融
 summary: 超越现实的渴望，以及你灵魂深处的诗意
+chart:
+  type: planet
+  highlight: neptune
 ---
 
 # 海王星

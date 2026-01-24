@@ -7,6 +7,9 @@ keywords:
   - 安全感
   - 内在
 summary: 你的情感底色，内心深处的那个孩子
+chart:
+  type: planet
+  highlight: moon
 ---
 
 # 月亮

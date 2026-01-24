@@ -6,6 +6,9 @@ modality: 固定
 ruling_planet: 天王星
 date_range: "1.20 - 2.18"
 order: 11
+chart:
+  type: sign
+  highlight: aquarius
 keywords:
   - 独立
   - 创新

@@ -7,6 +7,9 @@ keywords:
   - 超越
   - 臣服
 summary: 隐藏的深层，以及通往灵性与超越的门
+chart:
+  type: house
+  highlight: 12
 ---
 
 # 第十二宫

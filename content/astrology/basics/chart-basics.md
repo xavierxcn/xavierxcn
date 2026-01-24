@@ -8,6 +8,9 @@ keywords:
   - 行星
   - 宫位
 summary: 星盘是一张人生可能性的地图，记录了出生时刻的天空配置
+chart:
+  type: full
+  highlight: ""
 ---
 
 # 星盘

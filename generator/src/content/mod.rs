@@ -87,6 +87,17 @@ pub struct Tool {
     pub icon: Option<String>,
 }
 
+/// Chart configuration for astrology visualization
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ChartConfig {
+    /// Chart type: sign, planet, house, aspect, full
+    #[serde(rename = "type")]
+    pub chart_type: String,
+    /// Element to highlight (e.g., "aries", "sun", "1")
+    #[serde(default)]
+    pub highlight: Option<String>,
+}
+
 /// Astrology item metadata from front matter
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct AstrologyMeta {
@@ -109,6 +120,9 @@ pub struct AstrologyMeta {
     /// Sort order within category (lower numbers first)
     #[serde(default)]
     pub order: Option<i32>,
+    /// Chart visualization configuration
+    #[serde(default)]
+    pub chart: Option<ChartConfig>,
 }
 
 /// An astrology item (sign, planet, house, or aspect)

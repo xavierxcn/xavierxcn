@@ -24,6 +24,14 @@
 
     
 <style>
+@font-face {
+    font-family: 'Astronomicon';
+    src: url('&#x2F;xavierxcn/static/fonts/Astronomicon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .astrology-item-page {
     max-width: 720px;
     margin: 0 auto;
@@ -199,6 +207,32 @@
         font-size: 3rem;
     }
 }
+
+/* Astrology Chart Styles */
+.chart-section {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl) 0;
+    margin: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+#astro-chart {
+    width: 100%;
+    max-width: 400px;
+}
+
+#astro-chart svg {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 640px) {
+    #astro-chart {
+        max-width: 320px;
+    }
+}
 </style>
 
 </head>
@@ -265,6 +299,12 @@
         
     </header>
 
+    
+    <section class="chart-section">
+        <div id="astro-chart"></div>
+    </section>
+    
+
     <div class="item-content">
         <h1>占星术的分支</h1>
 <p>占星术并非单一的学问，而是一个包含多个分支的知识体系，不同的分支针对不同类型的问题，运用不同的技术手法，但都建立在同样的核心原理之上——天体位置与地上事务之间存在的象征对应关系。</p>
@@ -320,5 +360,17 @@
     </script>
 
     
+
+<script src="&#x2F;xavierxcn/static/js/astrochart2.js"></script>
+<script>
+    window.CHART_CONFIG = {
+        type: "full",
+        highlight: "",
+        category: "basics"
+    };
+</script>
+<script src="&#x2F;xavierxcn/static/js/astro-chart.js"></script>
+
+
 </body>
 </html>

@@ -6,6 +6,9 @@ modality: 变动
 ruling_planet: 水星
 date_range: "5.21 - 6.21"
 order: 3
+chart:
+  type: sign
+  highlight: gemini
 keywords:
   - 好奇
   - 沟通

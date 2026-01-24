@@ -7,6 +7,9 @@ keywords:
   - 智慧
   - 远方
 summary: 你对意义的追寻和视野的扩展
+chart:
+  type: house
+  highlight: 9
 ---
 
 # 第九宫

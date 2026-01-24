@@ -7,6 +7,9 @@ keywords:
   - 日常
   - 服务
 summary: 你的日常习惯、工作态度和身心健康
+chart:
+  type: house
+  highlight: 6
 ---
 
 # 第六宫

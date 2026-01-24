@@ -7,6 +7,9 @@ keywords:
   - 重生
   - 权力
 summary: 深层的转变，以及在毁灭中重生的力量
+chart:
+  type: planet
+  highlight: pluto
 ---
 
 # 冥王星

@@ -6,6 +6,9 @@ modality: 固定
 ruling_planet: 金星
 date_range: "4.20 - 5.20"
 order: 2
+chart:
+  type: sign
+  highlight: taurus
 keywords:
   - 稳定
   - 感官

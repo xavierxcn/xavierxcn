@@ -7,6 +7,9 @@ keywords:
   - 资源
   - 安全感
 summary: 你拥有什么，以及什么让你感到安全
+chart:
+  type: house
+  highlight: 2
 ---
 
 # 第二宫

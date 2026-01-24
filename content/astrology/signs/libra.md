@@ -6,6 +6,9 @@ modality: 本位
 ruling_planet: 金星
 date_range: "9.23 - 10.23"
 order: 7
+chart:
+  type: sign
+  highlight: libra
 keywords:
   - 平衡
   - 美感

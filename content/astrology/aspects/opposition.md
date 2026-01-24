@@ -8,6 +8,9 @@ keywords:
   - 关系
   - 觉知
 summary: 对立面的张力与寻求平衡的功课
+chart:
+  type: aspect
+  highlight: opposition
 ---
 
 # 对分相

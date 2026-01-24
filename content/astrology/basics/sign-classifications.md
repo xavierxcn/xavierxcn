@@ -8,6 +8,9 @@ keywords:
   - 阴阳
   - 分类
 summary: 十二星座按照阴阳、模式和元素进行系统分类
+chart:
+  type: full
+  highlight: ""
 ---
 
 # 星座的分类

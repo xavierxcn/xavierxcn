@@ -24,6 +24,14 @@
 
     
 <style>
+@font-face {
+    font-family: 'Astronomicon';
+    src: url('&#x2F;xavierxcn/static/fonts/Astronomicon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .astrology-item-page {
     max-width: 720px;
     margin: 0 auto;
@@ -199,6 +207,32 @@
         font-size: 3rem;
     }
 }
+
+/* Astrology Chart Styles */
+.chart-section {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl) 0;
+    margin: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+#astro-chart {
+    width: 100%;
+    max-width: 400px;
+}
+
+#astro-chart svg {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 640px) {
+    #astro-chart {
+        max-width: 320px;
+    }
+}
 </style>
 
 </head>
@@ -263,6 +297,12 @@
         
     </header>
 
+    
+    <section class="chart-section">
+        <div id="astro-chart"></div>
+    </section>
+    
+
     <div class="item-content">
         <h1>第三宫</h1>
 <p>第三宫是关于"交流"的宫位——不是深刻的灵魂对话，而是日常的信息往来、学习、短途旅行、以及与周围环境的互动。</p>
@@ -320,5 +360,17 @@
     </script>
 
     
+
+<script src="&#x2F;xavierxcn/static/js/astrochart2.js"></script>
+<script>
+    window.CHART_CONFIG = {
+        type: "house",
+        highlight: "3",
+        category: "houses"
+    };
+</script>
+<script src="&#x2F;xavierxcn/static/js/astro-chart.js"></script>
+
+
 </body>
 </html>

@@ -8,6 +8,9 @@ keywords:
   - 合作
   - 顺畅
 summary: 温和的支持与顺畅的机会
+chart:
+  type: aspect
+  highlight: sextile
 ---
 
 # 六分相

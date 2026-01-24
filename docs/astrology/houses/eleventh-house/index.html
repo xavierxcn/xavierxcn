@@ -24,6 +24,14 @@
 
     
 <style>
+@font-face {
+    font-family: 'Astronomicon';
+    src: url('&#x2F;xavierxcn/static/fonts/Astronomicon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .astrology-item-page {
     max-width: 720px;
     margin: 0 auto;
@@ -199,6 +207,32 @@
         font-size: 3rem;
     }
 }
+
+/* Astrology Chart Styles */
+.chart-section {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl) 0;
+    margin: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+#astro-chart {
+    width: 100%;
+    max-width: 400px;
+}
+
+#astro-chart svg {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 640px) {
+    #astro-chart {
+        max-width: 320px;
+    }
+}
 </style>
 
 </head>
@@ -263,6 +297,12 @@
         
     </header>
 
+    
+    <section class="chart-section">
+        <div id="astro-chart"></div>
+    </section>
+    
+
     <div class="item-content">
         <h1>第十一宫</h1>
 <p>第十一宫是关于"我们"的宫位——不是第七宫那种一对一的"我们"，而是更大的群体。它是关于朋友、社群、共同的理想，以及我们对更美好未来的愿景。</p>
@@ -321,5 +361,17 @@
     </script>
 
     
+
+<script src="&#x2F;xavierxcn/static/js/astrochart2.js"></script>
+<script>
+    window.CHART_CONFIG = {
+        type: "house",
+        highlight: "11",
+        category: "houses"
+    };
+</script>
+<script src="&#x2F;xavierxcn/static/js/astro-chart.js"></script>
+
+
 </body>
 </html>

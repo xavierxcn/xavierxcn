@@ -7,6 +7,9 @@ keywords:
   - 他人
   - 关系
 summary: 你如何与他人建立深度连接
+chart:
+  type: house
+  highlight: 7
 ---
 
 # 第七宫

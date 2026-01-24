@@ -6,6 +6,9 @@ modality: 变动
 ruling_planet: 海王星
 date_range: "2.19 - 3.20"
 order: 12
+chart:
+  type: sign
+  highlight: pisces
 keywords:
   - 直觉
   - 梦想

@@ -9,6 +9,9 @@ keywords:
   - 卜卦
   - 推运
 summary: 占星术包含多个分支，各自针对不同类型的问题
+chart:
+  type: full
+  highlight: ""
 ---
 
 # 占星术的分支

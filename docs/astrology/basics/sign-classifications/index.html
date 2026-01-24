@@ -24,6 +24,14 @@
 
     
 <style>
+@font-face {
+    font-family: 'Astronomicon';
+    src: url('&#x2F;xavierxcn/static/fonts/Astronomicon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .astrology-item-page {
     max-width: 720px;
     margin: 0 auto;
@@ -199,6 +207,32 @@
         font-size: 3rem;
     }
 }
+
+/* Astrology Chart Styles */
+.chart-section {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl) 0;
+    margin: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+#astro-chart {
+    width: 100%;
+    max-width: 400px;
+}
+
+#astro-chart svg {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 640px) {
+    #astro-chart {
+        max-width: 320px;
+    }
+}
 </style>
 
 </head>
@@ -263,6 +297,12 @@
         
     </header>
 
+    
+    <section class="chart-section">
+        <div id="astro-chart"></div>
+    </section>
+    
+
     <div class="item-content">
         <h1>星座的分类</h1>
 <p>十二星座的排列遵循着严密的内在逻辑，它们可以通过不同的分类维度被组织成若干组别，每一种分类方式都揭示出星座特质的不同层面，使我们得以超越对单个星座的表面印象，看到整个体系背后的深层结构。</p>
@@ -317,5 +357,17 @@
     </script>
 
     
+
+<script src="&#x2F;xavierxcn/static/js/astrochart2.js"></script>
+<script>
+    window.CHART_CONFIG = {
+        type: "full",
+        highlight: "",
+        category: "basics"
+    };
+</script>
+<script src="&#x2F;xavierxcn/static/js/astro-chart.js"></script>
+
+
 </body>
 </html>

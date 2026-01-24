@@ -7,6 +7,9 @@ keywords:
   - 身份
   - 开始
 summary: 你与世界相遇的方式，别人眼中的你
+chart:
+  type: house
+  highlight: 1
 ---
 
 # 第一宫

@@ -24,6 +24,14 @@
 
     
 <style>
+@font-face {
+    font-family: 'Astronomicon';
+    src: url('&#x2F;xavierxcn/static/fonts/Astronomicon.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
 .astrology-item-page {
     max-width: 720px;
     margin: 0 auto;
@@ -199,6 +207,32 @@
         font-size: 3rem;
     }
 }
+
+/* Astrology Chart Styles */
+.chart-section {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-xl) 0;
+    margin: var(--space-xl) 0;
+    border-top: 1px solid var(--color-border);
+    border-bottom: 1px solid var(--color-border);
+}
+
+#astro-chart {
+    width: 100%;
+    max-width: 400px;
+}
+
+#astro-chart svg {
+    width: 100%;
+    height: auto;
+}
+
+@media (max-width: 640px) {
+    #astro-chart {
+        max-width: 320px;
+    }
+}
 </style>
 
 </head>
@@ -269,6 +303,12 @@
         
     </header>
 
+    
+    <section class="chart-section">
+        <div id="astro-chart"></div>
+    </section>
+    
+
     <div class="item-content">
         <h1>双鱼座</h1>
 <p>双鱼座的符号是两条鱼，头尾相连，分别游向不同的方向。这个意象道出了双鱼座的本质：他们同时活在两个世界——现实的世界和梦想的世界——而这两个世界的边界对他们来说从来都不是清晰的。</p>
@@ -325,5 +365,17 @@
     </script>
 
     
+
+<script src="&#x2F;xavierxcn/static/js/astrochart2.js"></script>
+<script>
+    window.CHART_CONFIG = {
+        type: "sign",
+        highlight: "pisces",
+        category: "signs"
+    };
+</script>
+<script src="&#x2F;xavierxcn/static/js/astro-chart.js"></script>
+
+
 </body>
 </html>

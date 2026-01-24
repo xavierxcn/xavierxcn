@@ -7,6 +7,9 @@ keywords:
   - 学习
   - 交流
 summary: 你如何思考、说话和理解这个世界
+chart:
+  type: planet
+  highlight: mercury
 ---
 
 # 水星

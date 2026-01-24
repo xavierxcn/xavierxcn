@@ -7,6 +7,9 @@ keywords:
   - 勇气
   - 冲突
 summary: 你的驱动力、战斗方式和行动模式
+chart:
+  type: planet
+  highlight: mars
 ---
 
 # 火星

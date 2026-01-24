@@ -7,6 +7,9 @@ keywords:
   - 时间
   - 成熟
 summary: 你的功课、恐惧，以及通往成熟的道路
+chart:
+  type: planet
+  highlight: saturn
 ---
 
 # 土星

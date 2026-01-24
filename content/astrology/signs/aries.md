@@ -6,6 +6,9 @@ modality: 本位
 ruling_planet: 火星
 date_range: "3.21 - 4.19"
 order: 1
+chart:
+  type: sign
+  highlight: aries
 keywords:
   - 开创
   - 勇气

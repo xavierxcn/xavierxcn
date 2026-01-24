@@ -8,6 +8,9 @@ keywords:
   - 行动
   - 成长
 summary: 推动你行动的张力与挑战
+chart:
+  type: aspect
+  highlight: square
 ---
 
 # 刑相

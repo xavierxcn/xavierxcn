@@ -7,6 +7,9 @@ keywords:
   - 价值
   - 愉悦
 summary: 你爱什么、你觉得什么是美的、什么让你快乐
+chart:
+  type: planet
+  highlight: venus
 ---
 
 # 金星

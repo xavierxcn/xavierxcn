@@ -7,6 +7,9 @@ keywords:
   - 创新
   - 叛逆
 summary: 打破规则的力量，以及你独特不羁的那一面
+chart:
+  type: planet
+  highlight: uranus
 ---
 
 # 天王星

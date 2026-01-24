@@ -7,6 +7,9 @@ keywords:
   - 内心
   - 归属
 summary: 你的根在哪里，你的内心深处是什么样
+chart:
+  type: house
+  highlight: 4
 ---
 
 # 第四宫

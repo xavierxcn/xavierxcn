@@ -7,6 +7,9 @@ keywords:
   - 声誉
   - 使命
 summary: 你在世界上的位置和你想留下的印记
+chart:
+  type: house
+  highlight: 10
 ---
 
 # 第十宫

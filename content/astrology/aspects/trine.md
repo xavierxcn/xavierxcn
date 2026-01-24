@@ -8,6 +8,9 @@ keywords:
   - 流畅
   - 幸运
 summary: 自然流动的和谐与天生的天赋
+chart:
+  type: aspect
+  highlight: trine
 ---
 
 # 三分相

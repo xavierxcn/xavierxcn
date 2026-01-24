@@ -7,6 +7,9 @@ keywords:
   - 生命力
   - 光芒
 summary: 星盘的中心，照亮你是谁的那束光
+chart:
+  type: planet
+  highlight: sun
 ---
 
 # 太阳

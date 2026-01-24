@@ -6,6 +6,9 @@ keywords:
   - 占星术
   - 定义
 summary: 占星术通过观察天体位置来理解人间事务
+chart:
+  type: full
+  highlight: ""
 ---
 
 # 占星术

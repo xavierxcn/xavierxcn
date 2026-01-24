@@ -7,6 +7,9 @@ keywords:
   - 恋爱
   - 子女
 summary: 你的创造力、快乐源泉和心之所向
+chart:
+  type: house
+  highlight: 5
 ---
 
 # 第五宫

@@ -7,6 +7,9 @@ keywords:
   - 深层
   - 亲密
 summary: 深度连接、转化与共享资源的领域
+chart:
+  type: house
+  highlight: 8
 ---
 
 # 第八宫
