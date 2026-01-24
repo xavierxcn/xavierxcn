@@ -16,7 +16,7 @@
         gtag('config', 'G-D2CY9FNGTC');
     </script>
 
-    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -441,7 +441,7 @@
     /* Budget item row */
     .budget-item {
         display: grid;
-        grid-template-columns: 1fr 80px 100px 140px 100px;
+        grid-template-columns: 140px 80px 100px 1fr 100px;
         gap: 10px;
         align-items: center;
         padding: 10px 12px;
@@ -457,17 +457,10 @@
     .item-name {
         font-size: 14px;
         color: var(--budget-text);
-    }
-
-    .item-name-wrapper {
-        display: flex;
-        flex-direction: column;
-        gap: 2px;
-    }
-
-    .item-ref-price {
-        font-size: 11px;
-        color: var(--budget-text-secondary);
+        font-weight: 500;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .item-input {
@@ -505,7 +498,7 @@
     /* Column headers */
     .items-header {
         display: grid;
-        grid-template-columns: 1fr 80px 100px 140px 100px;
+        grid-template-columns: 140px 80px 100px 1fr 100px;
         gap: 10px;
         padding: 0 12px 8px;
         font-size: 12px;
@@ -519,6 +512,159 @@
     .items-header span:nth-child(3),
     .items-header span:nth-child(5) {
         text-align: right;
+    }
+
+    /* Simple mode headers and items */
+    .items-header-simple {
+        grid-template-columns: 140px 1fr 100px 40px;
+    }
+
+    .items-header-simple span:nth-child(3) {
+        text-align: right;
+    }
+
+    .budget-item-simple {
+        grid-template-columns: 140px 1fr 100px 40px;
+    }
+
+    .item-note-wide {
+        text-align: left;
+    }
+
+    .item-subtotal-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 8px;
+    }
+
+    .item-action-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+    }
+
+    /* Add item button */
+    .add-item-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
+        padding: 10px 12px;
+        margin-top: 8px;
+        background: transparent;
+        border: 2px dashed var(--budget-border);
+        border-radius: 8px;
+        color: var(--budget-text-secondary);
+        font-size: 13px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-family: inherit;
+    }
+
+    .add-item-btn:hover {
+        border-color: var(--budget-primary);
+        color: var(--budget-primary);
+        background: rgba(5, 150, 105, 0.05);
+    }
+
+    .add-item-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Delete item button */
+    .delete-item-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 28px;
+        height: 28px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 6px;
+        color: var(--budget-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+        opacity: 0;
+        position: relative;
+    }
+
+    .budget-item:hover .delete-item-btn {
+        opacity: 1;
+    }
+
+    .delete-item-btn:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--budget-error);
+    }
+
+    .delete-item-btn svg {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Quick quote section */
+    .quick-quote-section {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .quick-quote-toggle-row {
+        display: flex;
+        align-items: center;
+    }
+
+    .toggle-label {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+    }
+
+    .toggle-label input[type="checkbox"] {
+        width: 18px;
+        height: 18px;
+        accent-color: var(--budget-primary);
+    }
+
+    .toggle-text {
+        font-size: 14px;
+        color: var(--budget-text);
+    }
+
+    .quick-quote-calc {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 10px;
+        background: var(--budget-bg);
+        border-radius: 8px;
+    }
+
+    .quick-quote-coverage {
+        font-size: 12px;
+        color: var(--budget-text-secondary);
+    }
+
+    .quick-quote-total {
+        font-size: 16px;
+        font-weight: 600;
+        color: var(--budget-primary);
+    }
+
+    /* Empty category hint */
+    .empty-category-hint {
+        text-align: center;
+        padding: 16px;
+        color: var(--budget-text-secondary);
+        font-size: 13px;
+        font-style: italic;
     }
 
     /* Toast */
@@ -548,6 +694,350 @@
 
     .toast.error {
         background: var(--budget-error);
+    }
+
+    /* Modal */
+    .modal-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.5);
+        backdrop-filter: blur(4px);
+        z-index: 1000;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.25s ease;
+    }
+
+    .modal-overlay.active {
+        opacity: 1;
+        visibility: visible;
+    }
+
+    .modal {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0.9);
+        background: var(--budget-surface);
+        border-radius: 16px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        z-index: 1001;
+        width: 90%;
+        max-width: 480px;
+        max-height: 80vh;
+        display: flex;
+        flex-direction: column;
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.25s ease;
+    }
+
+    .modal-overlay.active + .modal,
+    .modal.active {
+        opacity: 1;
+        visibility: visible;
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    .modal-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 24px;
+        border-bottom: 1px solid var(--budget-border);
+    }
+
+    .modal-title {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--budget-text);
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .modal-title-icon {
+        font-size: 20px;
+        font-variant-emoji: text;
+    }
+
+    .modal-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 36px;
+        height: 36px;
+        border: none;
+        background: transparent;
+        border-radius: 8px;
+        color: var(--budget-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .modal-close:hover {
+        background: var(--budget-bg);
+        color: var(--budget-text);
+    }
+
+    .modal-close svg {
+        width: 20px;
+        height: 20px;
+    }
+
+    .modal-body {
+        flex: 1;
+        overflow-y: auto;
+        padding: 20px 24px;
+    }
+
+    .modal-section {
+        margin-bottom: 20px;
+    }
+
+    .modal-section:last-child {
+        margin-bottom: 0;
+    }
+
+    .modal-section-title {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--budget-text-secondary);
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        margin-bottom: 12px;
+    }
+
+    .suggestion-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 10px;
+    }
+
+    .suggestion-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 14px;
+        background: var(--budget-bg);
+        border: 2px solid transparent;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.2s;
+        font-size: 14px;
+        color: var(--budget-text);
+    }
+
+    .suggestion-item:hover {
+        border-color: var(--budget-primary-light);
+        background: rgba(5, 150, 105, 0.05);
+    }
+
+    .suggestion-item.selected {
+        border-color: var(--budget-primary);
+        background: rgba(5, 150, 105, 0.1);
+    }
+
+    .suggestion-checkbox {
+        width: 18px;
+        height: 18px;
+        border: 2px solid var(--budget-border);
+        border-radius: 4px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        transition: all 0.2s;
+    }
+
+    .suggestion-item.selected .suggestion-checkbox {
+        background: var(--budget-primary);
+        border-color: var(--budget-primary);
+    }
+
+    .suggestion-checkbox svg {
+        width: 12px;
+        height: 12px;
+        color: white;
+        opacity: 0;
+        transition: opacity 0.2s;
+    }
+
+    .suggestion-item.selected .suggestion-checkbox svg {
+        opacity: 1;
+    }
+
+    .suggestion-item.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .suggestion-item.disabled .suggestion-checkbox {
+        background: var(--budget-border);
+        border-color: var(--budget-border);
+    }
+
+    .suggestion-item.disabled .suggestion-checkbox svg {
+        opacity: 1;
+        color: var(--budget-text-secondary);
+    }
+
+    .suggestion-name {
+        flex: 1;
+        word-break: break-word;
+        line-height: 1.3;
+    }
+
+    .custom-item-input-wrapper {
+        display: flex;
+        gap: 8px;
+    }
+
+    .custom-item-input {
+        flex: 1;
+        padding: 12px 14px;
+        border: 2px solid var(--budget-border);
+        border-radius: 8px;
+        font-size: 14px;
+        background: var(--budget-surface);
+        color: var(--budget-text);
+        transition: border-color 0.2s;
+    }
+
+    .custom-item-input:focus {
+        outline: none;
+        border-color: var(--budget-primary);
+    }
+
+    .custom-item-input::placeholder {
+        color: var(--budget-text-secondary);
+    }
+
+    .add-custom-btn {
+        padding: 12px 16px;
+        background: var(--budget-bg);
+        border: 2px solid var(--budget-border);
+        border-radius: 8px;
+        color: var(--budget-text-secondary);
+        font-size: 14px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: all 0.2s;
+        white-space: nowrap;
+    }
+
+    .add-custom-btn:hover {
+        border-color: var(--budget-primary);
+        color: var(--budget-primary);
+    }
+
+    .modal-footer {
+        display: flex;
+        gap: 12px;
+        padding: 20px 24px;
+        border-top: 1px solid var(--budget-border);
+    }
+
+    .modal-footer .btn {
+        flex: 1;
+    }
+
+    .selected-count {
+        font-size: 13px;
+        color: var(--budget-text-secondary);
+        padding: 8px 0;
+    }
+
+    /* Delete confirmation */
+    .delete-item-btn.confirming {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--budget-error);
+        opacity: 1;
+    }
+
+    .delete-item-btn.confirming::after {
+        content: '?';
+        font-size: 10px;
+        font-weight: 600;
+        position: absolute;
+        top: 2px;
+        right: 2px;
+    }
+
+    /* Item delete animation */
+    .budget-item {
+        transition: all 0.3s ease;
+    }
+
+    .budget-item.deleting {
+        opacity: 0;
+        transform: translateX(-20px);
+        max-height: 0;
+        padding-top: 0;
+        padding-bottom: 0;
+        margin-bottom: 0;
+        overflow: hidden;
+    }
+
+    /* Fullscreen mode */
+    .fullscreen-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        background: var(--budget-surface);
+        border: 1px solid var(--budget-border);
+        border-radius: 8px;
+        color: var(--budget-text-secondary);
+        cursor: pointer;
+        transition: all 0.2s;
+    }
+
+    .fullscreen-btn:hover {
+        background: var(--budget-bg);
+        color: var(--budget-text);
+        border-color: var(--budget-primary-light);
+    }
+
+    .fullscreen-btn svg {
+        width: 18px;
+        height: 18px;
+    }
+
+    body.fullscreen-mode {
+        overflow: hidden;
+    }
+
+    body.fullscreen-mode .site-header,
+    body.fullscreen-mode .site-footer {
+        display: none !important;
+    }
+
+    body.fullscreen-mode .main-content {
+        position: fixed;
+        inset: 0;
+        z-index: 999;
+        padding: 0;
+    }
+
+    body.fullscreen-mode .budget-container {
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    body.fullscreen-mode .fullscreen-btn svg.icon-expand {
+        display: none;
+    }
+
+    body.fullscreen-mode .fullscreen-btn svg.icon-collapse {
+        display: block;
+    }
+
+    .fullscreen-btn svg.icon-collapse {
+        display: none;
     }
 
     /* Responsive */
@@ -591,16 +1081,46 @@
             gap: 8px;
         }
 
-        .items-header {
+        .budget-item-simple {
+            grid-template-columns: 1fr;
+            gap: 8px;
+        }
+
+        .items-header,
+        .items-header-simple {
             display: none;
         }
 
-        .item-name-wrapper {
+        .item-name {
+            grid-column: 1 / -1;
+            margin-bottom: 4px;
+        }
+
+        .item-input.item-note,
+        .item-input.item-note-wide {
             grid-column: 1 / -1;
         }
 
-        .item-input.item-note {
+        .item-subtotal-wrapper {
             grid-column: 1 / -1;
+            justify-content: space-between;
+        }
+
+        .item-action-wrapper {
+            width: auto;
+        }
+
+        .delete-item-btn {
+            opacity: 1;
+        }
+
+        .modal {
+            width: 95%;
+            max-height: 90vh;
+        }
+
+        .suggestion-grid {
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
         }
     }
 </style>
@@ -609,7 +1129,7 @@
 <body>
     <header class="site-header">
         <nav class="nav">
-            <a href="&#x2F;xavierxcn/" class="site-title">Xavier的即兴发挥</a>
+            <a href="/" class="site-title">Xavier的即兴发挥</a>
             <div class="nav-right">
                 <div class="search-container">
                     <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
@@ -617,15 +1137,15 @@
                 </div>
                 <ul class="nav-links">
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    <li><a href="&#x2F;">首页</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    <li><a href="&#x2F;astrology&#x2F;">占星</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    <li><a href="&#x2F;tools&#x2F;">工具</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    <li><a href="&#x2F;archive&#x2F;">归档</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    <li><a href="&#x2F;about&#x2F;">关于</a></li>
                     
                 </ul>
             </div>
@@ -641,6 +1161,20 @@
             装修预算助手
         </h1>
         <div class="header-actions">
+            <button id="fullscreen-btn" class="fullscreen-btn" title="全屏模式">
+                <svg class="icon-expand" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
+                    <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+                    <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
+                    <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+                </svg>
+                <svg class="icon-collapse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M8 3v3a2 2 0 0 1-2 2H3"/>
+                    <path d="M21 8h-3a2 2 0 0 1-2-2V3"/>
+                    <path d="M3 16h3a2 2 0 0 1 2 2v3"/>
+                    <path d="M16 21v-3a2 2 0 0 1 2-2h3"/>
+                </svg>
+            </button>
             <button id="reset-btn" class="btn btn-secondary">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
@@ -694,10 +1228,41 @@
                 </div>
             </div>
 
+            <div class="settings-section">
+                <h2 class="settings-section-title">快捷报价</h2>
+                <div class="quick-quote-section">
+                    <div class="quick-quote-toggle-row">
+                        <label class="toggle-label">
+                            <input type="checkbox" id="quick-quote-toggle">
+                            <span class="toggle-text">启用快捷报价</span>
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label for="quick-quote-price">单价</label>
+                        <div class="input-with-unit">
+                            <input type="number" id="quick-quote-price" placeholder="500" min="0">
+                            <span class="input-unit">元/平米</span>
+                        </div>
+                    </div>
+                    <div class="quick-quote-calc">
+                        <span id="quick-quote-coverage" class="quick-quote-coverage">覆盖: 基装部分</span>
+                        <span id="quick-quote-total" class="quick-quote-total">= ¥0</span>
+                    </div>
+                </div>
+            </div>
+
             <div class="summary-card">
                 <div class="summary-total-label">预算总计</div>
                 <div class="summary-total-amount" id="total-amount">¥0</div>
                 <div class="summary-breakdown">
+                    <div class="summary-row" id="summary-quick-quote-row" style="display: none;">
+                        <span class="summary-row-label">快捷报价</span>
+                        <span class="summary-row-value" id="summary-quick-quote">¥0</span>
+                    </div>
+                    <div class="summary-row" id="summary-design-row">
+                        <span class="summary-row-label">设计</span>
+                        <span class="summary-row-value" id="summary-design">¥0</span>
+                    </div>
                     <div class="summary-row">
                         <span class="summary-row-label">硬装部分</span>
                         <span class="summary-row-value" id="summary-hardfit">¥0</span>
@@ -705,6 +1270,10 @@
                     <div class="summary-row">
                         <span class="summary-row-label">主材部分</span>
                         <span class="summary-row-value" id="summary-materials">¥0</span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-row-label">全屋定制</span>
+                        <span class="summary-row-value" id="summary-custom-furniture">¥0</span>
                     </div>
                     <div class="summary-row">
                         <span class="summary-row-label">家具家电</span>
@@ -732,6 +1301,43 @@
 
 <div id="toast" class="toast"></div>
 
+<!-- Add Item Modal -->
+<div id="modal-overlay" class="modal-overlay"></div>
+<div id="add-item-modal" class="modal">
+    <div class="modal-header">
+        <h3 class="modal-title">
+            <span class="modal-title-icon" id="modal-category-icon">&#x1F4E6;</span>
+            <span id="modal-category-name">添加项目</span>
+        </h3>
+        <button class="modal-close" id="modal-close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="18" y1="6" x2="6" y2="18"/>
+                <line x1="6" y1="6" x2="18" y2="18"/>
+            </svg>
+        </button>
+    </div>
+    <div class="modal-body">
+        <div class="modal-section">
+            <div class="modal-section-title">选择项目</div>
+            <div class="suggestion-grid" id="suggestion-grid">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+        <div class="modal-section">
+            <div class="modal-section-title">自定义项目</div>
+            <div class="custom-item-input-wrapper">
+                <input type="text" class="custom-item-input" id="custom-item-input" placeholder="输入自定义项目名称">
+                <button class="add-custom-btn" id="add-custom-btn">添加</button>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <div class="selected-count" id="selected-count">已选择 0 个项目</div>
+        <button class="btn btn-secondary" id="modal-cancel">取消</button>
+        <button class="btn btn-primary" id="modal-confirm">确认添加</button>
+    </div>
+</div>
+
     </main>
 
     <footer class="site-footer">
@@ -749,106 +1355,148 @@
         onload="renderMathInElement(document.body);"></script>
     
 
-    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script src="/static/js/search.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            initSearch('/xavierxcn');
+            initSearch('');
         });
     </script>
 
     
 <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
 <script>
-// Budget data structure with reference prices
+// Budget categories with suggestions (no preset items - user adds as needed)
+// modeConfig: { tag: 'included'|'self'|'labor', display: 'detailed'|'simple' }
 const budgetCategories = {
+    design: {
+        name: '设计',
+        icon: '&#x270F;',
+        suggestions: ['设计费', '效果图', '施工图', '量房费', '设计方案修改'],
+        modeConfig: {
+            qingbao: { tag: 'self', display: 'detailed' },
+            banbao: { tag: 'self', display: 'detailed' },
+            quanbao: { tag: 'self', display: 'detailed' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
+    },
     demolition: {
         name: '拆改工程',
         icon: '&#x1F6A7;',
-        items: [
-            { id: 'demo_wall', name: '拆墙', unit: '平方米', defaultQty: 0, refPrice: '30-60' },
-            { id: 'demo_build', name: '砌墙', unit: '平方米', defaultQty: 0, refPrice: '80-150' },
-            { id: 'demo_scrape', name: '铲墙皮', unit: '平方米', defaultQty: 0, refPrice: '8-20' },
-            { id: 'demo_trash', name: '垃圾清运', unit: '项', defaultQty: 1, refPrice: '500-1500' },
-        ],
-        modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
+        suggestions: ['拆墙', '砌墙', '铲墙皮', '垃圾清运', '拆除门窗', '拆除地板', '拆除吊顶', '开槽'],
+        modeConfig: {
+            qingbao: { tag: 'labor', display: 'detailed' },
+            banbao: { tag: 'included', display: 'detailed' },
+            quanbao: { tag: 'included', display: 'simple' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
     },
     plumbing: {
         name: '水电工程',
         icon: '&#x1F4A1;',
-        items: [
-            { id: 'elec_wire', name: '电路改造', unit: '米', defaultQty: 0, refPrice: '25-70' },
-            { id: 'water_pipe', name: '水路改造', unit: '米', defaultQty: 0, refPrice: '45-100' },
-            { id: 'switch_panel', name: '开关插座安装', unit: '个', defaultQty: 30, refPrice: '8-25' },
-        ],
-        modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
+        suggestions: ['电路改造', '水路改造', '开关插座安装', '弱电布线', '网线布置', '强电箱', '地暖铺设', '新风系统'],
+        modeConfig: {
+            qingbao: { tag: 'labor', display: 'detailed' },
+            banbao: { tag: 'included', display: 'detailed' },
+            quanbao: { tag: 'included', display: 'simple' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
     },
     tiling: {
         name: '瓦工工程',
         icon: '&#x1F9F1;',
-        items: [
-            { id: 'waterproof', name: '防水处理', unit: '平方米', defaultQty: 0, refPrice: '40-100' },
-            { id: 'tile_floor', name: '地面贴砖', unit: '平方米', defaultQty: 0, refPrice: '35-90' },
-            { id: 'tile_wall', name: '墙面贴砖', unit: '平方米', defaultQty: 0, refPrice: '40-95' },
-            { id: 'level', name: '地面找平', unit: '平方米', defaultQty: 0, refPrice: '20-50' },
-        ],
-        modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
+        suggestions: ['防水处理', '地面贴砖', '墙面贴砖', '地面找平', '过门石', '门槛石', '窗台石', '美缝'],
+        modeConfig: {
+            qingbao: { tag: 'labor', display: 'detailed' },
+            banbao: { tag: 'included', display: 'detailed' },
+            quanbao: { tag: 'included', display: 'simple' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
     },
     carpentry: {
         name: '木工工程',
         icon: '&#x1FA9A;',
-        items: [
-            { id: 'ceiling', name: '吊顶', unit: '平方米', defaultQty: 0, refPrice: '100-280' },
-            { id: 'backdrop', name: '电视背景墙', unit: '项', defaultQty: 0, refPrice: '1500-8000' },
-            { id: 'curtain_box', name: '窗帘盒', unit: '米', defaultQty: 0, refPrice: '80-200' },
-        ],
-        modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
+        suggestions: ['吊顶', '电视背景墙', '窗帘盒', '石膏线', '隔断墙', '造型墙'],
+        modeConfig: {
+            qingbao: { tag: 'labor', display: 'detailed' },
+            banbao: { tag: 'included', display: 'detailed' },
+            quanbao: { tag: 'included', display: 'simple' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
     },
     painting: {
         name: '油漆工程',
         icon: '&#x1F3A8;',
-        items: [
-            { id: 'wall_base', name: '墙面基层处理', unit: '平方米', defaultQty: 0, refPrice: '15-40' },
-            { id: 'latex_paint', name: '乳胶漆', unit: '平方米', defaultQty: 0, refPrice: '18-55' },
-        ],
-        modeConfig: { qingbao: 'labor', banbao: 'included', quanbao: 'included', quanan: 'included' }
+        suggestions: ['墙面基层处理', '乳胶漆', '墙面批腻子', '墙面打磨', '艺术漆', '木器漆'],
+        modeConfig: {
+            qingbao: { tag: 'labor', display: 'detailed' },
+            banbao: { tag: 'included', display: 'detailed' },
+            quanbao: { tag: 'included', display: 'simple' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
     },
     materials: {
         name: '主材',
         icon: '&#x1F4E6;',
-        items: [
-            { id: 'mat_tile', name: '瓷砖', unit: '平方米', defaultQty: 0, refPrice: '65-350' },
-            { id: 'mat_floor', name: '地板', unit: '平方米', defaultQty: 0, refPrice: '80-400' },
-            { id: 'mat_door', name: '室内门', unit: '扇', defaultQty: 4, refPrice: '800-4000' },
-            { id: 'mat_cabinet', name: '橱柜', unit: '延米', defaultQty: 4, refPrice: '800-4000' },
-            { id: 'mat_sanitary', name: '洁具套装', unit: '套', defaultQty: 2, refPrice: '3000-18000' },
-            { id: 'mat_light', name: '灯具', unit: '套', defaultQty: 1, refPrice: '2000-15000' },
-        ],
-        modeConfig: { qingbao: 'self', banbao: 'self', quanbao: 'included', quanan: 'included' }
+        suggestions: ['瓷砖', '地板', '室内门', '橱柜', '洁具套装', '灯具', '五金件', '开关面板', '窗户', '防盗门'],
+        modeConfig: {
+            qingbao: { tag: 'self', display: 'detailed' },
+            banbao: { tag: 'self', display: 'detailed' },
+            quanbao: { tag: 'included', display: 'simple' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
+    },
+    customFurniture: {
+        name: '全屋定制',
+        icon: '&#x1FA91;',
+        suggestions: ['衣柜', '橱柜', '书柜', '书桌', '榻榻米', '鞋柜', '阳台柜', '浴室柜', '餐边柜', '玄关柜'],
+        modeConfig: {
+            qingbao: { tag: 'self', display: 'detailed' },
+            banbao: { tag: 'self', display: 'detailed' },
+            quanbao: { tag: 'self', display: 'detailed' },
+            quanan: { tag: 'included', display: 'simple' }
+        }
     },
     furniture: {
         name: '家具家电',
         icon: '&#x1F6CB;',
-        items: [
-            { id: 'furn_sofa', name: '沙发', unit: '套', defaultQty: 1, refPrice: '3000-25000' },
-            { id: 'furn_bed', name: '床+床垫', unit: '套', defaultQty: 2, refPrice: '3000-20000' },
-            { id: 'furn_dining', name: '餐桌椅', unit: '套', defaultQty: 1, refPrice: '2000-15000' },
-            { id: 'furn_wardrobe', name: '衣柜', unit: '组', defaultQty: 2, refPrice: '3000-20000' },
-            { id: 'elec_ac', name: '空调', unit: '台', defaultQty: 3, refPrice: '3000-12000' },
-            { id: 'elec_fridge', name: '冰箱', unit: '台', defaultQty: 1, refPrice: '2500-15000' },
-            { id: 'elec_washer', name: '洗衣机', unit: '台', defaultQty: 1, refPrice: '2000-10000' },
-            { id: 'elec_tv', name: '电视', unit: '台', defaultQty: 1, refPrice: '2000-15000' },
-        ],
-        modeConfig: { qingbao: 'self', banbao: 'self', quanbao: 'self', quanan: 'self' }
+        suggestions: ['沙发', '床', '床垫', '餐桌椅', '空调', '冰箱', '洗衣机', '电视', '油烟机', '燃气灶', '热水器', '洗碗机'],
+        modeConfig: {
+            qingbao: { tag: 'self', display: 'detailed' },
+            banbao: { tag: 'self', display: 'detailed' },
+            quanbao: { tag: 'self', display: 'detailed' },
+            quanan: { tag: 'self', display: 'detailed' }
+        }
     },
     soft: {
         name: '软装配饰',
         icon: '&#x1F3A0;',
-        items: [
-            { id: 'soft_curtain', name: '窗帘', unit: '套', defaultQty: 1, refPrice: '2000-15000' },
-            { id: 'soft_carpet', name: '地毯', unit: '块', defaultQty: 1, refPrice: '500-6000' },
-            { id: 'soft_decor', name: '装饰品', unit: '项', defaultQty: 1, refPrice: '1000-12000' },
-        ],
-        modeConfig: { qingbao: 'self', banbao: 'self', quanbao: 'self', quanan: 'self' }
+        suggestions: ['窗帘', '地毯', '装饰画', '绿植', '抱枕', '床品', '餐具', '摆件'],
+        modeConfig: {
+            qingbao: { tag: 'self', display: 'detailed' },
+            banbao: { tag: 'self', display: 'detailed' },
+            quanbao: { tag: 'self', display: 'detailed' },
+            quanan: { tag: 'self', display: 'detailed' }
+        }
+    }
+};
+
+// Quick quote coverage by decoration mode
+const quickQuoteCoverage = {
+    qingbao: {
+        name: '基装人工',
+        categories: ['demolition', 'plumbing', 'tiling', 'carpentry', 'painting']
+    },
+    banbao: {
+        name: '基装部分',
+        categories: ['demolition', 'plumbing', 'tiling', 'carpentry', 'painting']
+    },
+    quanbao: {
+        name: '硬装部分',
+        categories: ['demolition', 'plumbing', 'tiling', 'carpentry', 'painting', 'materials']
+    },
+    quanan: {
+        name: '全案部分',
+        categories: ['design', 'demolition', 'plumbing', 'tiling', 'carpentry', 'painting', 'materials', 'customFurniture']
     }
 };
 
@@ -856,8 +1504,18 @@ class DecorationBudget {
     constructor() {
         this.mode = 'banbao';
         this.area = 100;
-        this.budgetData = {};
+        this.items = {}; // Store all items per category (user-added)
         this.collapsedCategories = new Set();
+        this.itemCounter = 0;
+        this.quickQuote = {
+            enabled: false,
+            unitPrice: 0
+        };
+        this.customSuggestions = {}; // User-added custom suggestions
+        this.isFullscreen = false;
+        this.pendingDeleteBtn = null; // For delete confirmation
+        this.currentModalCategory = null; // For add item modal
+        this.selectedSuggestions = new Set(); // Selected items in modal
     }
 
     init() {
@@ -868,18 +1526,30 @@ class DecorationBudget {
 
     loadFromStorage() {
         try {
-            const saved = localStorage.getItem('decoration-budget-v2');
+            const saved = localStorage.getItem('decoration-budget-v4');
             if (saved) {
                 const data = JSON.parse(saved);
                 this.mode = data.mode || 'banbao';
                 this.area = data.area || 100;
-                this.budgetData = data.budgetData || {};
+                this.items = data.items || {};
+                this.itemCounter = data.itemCounter || 0;
+                this.quickQuote = data.quickQuote || { enabled: false, unitPrice: 0 };
+                this.customSuggestions = data.customSuggestions || {};
+                this.collapsedCategories = new Set(data.collapsedCategories || []);
+                this.isFullscreen = data.isFullscreen || false;
 
                 // Update UI
                 document.getElementById('area').value = this.area;
                 document.querySelectorAll('.mode-option').forEach(opt => {
                     opt.classList.toggle('active', opt.dataset.mode === this.mode);
                 });
+                document.getElementById('quick-quote-price').value = this.quickQuote.unitPrice || '';
+                document.getElementById('quick-quote-toggle').checked = this.quickQuote.enabled;
+
+                // Restore fullscreen mode
+                if (this.isFullscreen) {
+                    document.body.classList.add('fullscreen-mode');
+                }
             }
         } catch (e) {
             console.error('Failed to load from storage:', e);
@@ -888,10 +1558,15 @@ class DecorationBudget {
 
     saveToStorage() {
         try {
-            localStorage.setItem('decoration-budget-v2', JSON.stringify({
+            localStorage.setItem('decoration-budget-v4', JSON.stringify({
                 mode: this.mode,
                 area: this.area,
-                budgetData: this.budgetData
+                items: this.items,
+                itemCounter: this.itemCounter,
+                quickQuote: this.quickQuote,
+                customSuggestions: this.customSuggestions,
+                collapsedCategories: Array.from(this.collapsedCategories),
+                isFullscreen: this.isFullscreen
             }));
         } catch (e) {
             console.error('Failed to save to storage:', e);
@@ -905,6 +1580,7 @@ class DecorationBudget {
                 document.querySelectorAll('.mode-option').forEach(o => o.classList.remove('active'));
                 opt.classList.add('active');
                 this.mode = opt.dataset.mode;
+                this.updateQuickQuoteInfo();
                 this.render();
                 this.saveToStorage();
             });
@@ -913,6 +1589,23 @@ class DecorationBudget {
         // Area input
         document.getElementById('area').addEventListener('input', (e) => {
             this.area = parseFloat(e.target.value) || 0;
+            this.updateQuickQuoteTotal();
+            this.calculateTotals();
+            this.saveToStorage();
+        });
+
+        // Quick quote toggle
+        document.getElementById('quick-quote-toggle').addEventListener('change', (e) => {
+            this.quickQuote.enabled = e.target.checked;
+            this.updateQuickQuoteTotal();
+            this.calculateTotals();
+            this.saveToStorage();
+        });
+
+        // Quick quote price input
+        document.getElementById('quick-quote-price').addEventListener('input', (e) => {
+            this.quickQuote.unitPrice = parseFloat(e.target.value) || 0;
+            this.updateQuickQuoteTotal();
             this.calculateTotals();
             this.saveToStorage();
         });
@@ -920,14 +1613,20 @@ class DecorationBudget {
         // Reset button
         document.getElementById('reset-btn').addEventListener('click', () => {
             if (confirm('确定要重置所有预算数据吗？')) {
-                this.budgetData = {};
+                this.items = {};
+                this.itemCounter = 0;
+                this.quickQuote = { enabled: false, unitPrice: 0 };
+                this.customSuggestions = {};
                 this.mode = 'banbao';
                 this.area = 100;
                 document.getElementById('area').value = 100;
+                document.getElementById('quick-quote-price').value = '';
+                document.getElementById('quick-quote-toggle').checked = false;
                 document.querySelectorAll('.mode-option').forEach(opt => {
                     opt.classList.toggle('active', opt.dataset.mode === 'banbao');
                 });
-                localStorage.removeItem('decoration-budget-v2');
+                localStorage.removeItem('decoration-budget-v4');
+                this.updateQuickQuoteInfo();
                 this.render();
                 this.showToast('已重置预算数据', 'success');
             }
@@ -935,39 +1634,327 @@ class DecorationBudget {
 
         // Export button
         document.getElementById('export-btn').addEventListener('click', () => this.exportToExcel());
+
+        // Fullscreen button
+        document.getElementById('fullscreen-btn').addEventListener('click', () => this.toggleFullscreen());
+
+        // Modal events
+        document.getElementById('modal-overlay').addEventListener('click', () => this.closeModal());
+        document.getElementById('modal-close').addEventListener('click', () => this.closeModal());
+        document.getElementById('modal-cancel').addEventListener('click', () => this.closeModal());
+        document.getElementById('modal-confirm').addEventListener('click', () => this.confirmAddItems());
+        document.getElementById('add-custom-btn').addEventListener('click', () => this.addCustomItemToModal());
+        document.getElementById('custom-item-input').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                this.addCustomItemToModal();
+            }
+        });
+
+        // Global keyboard events
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                if (this.isModalOpen()) {
+                    this.closeModal();
+                } else if (this.isFullscreen) {
+                    this.toggleFullscreen();
+                }
+                // Clear pending delete confirmation
+                if (this.pendingDeleteBtn) {
+                    this.pendingDeleteBtn.classList.remove('confirming');
+                    this.pendingDeleteBtn = null;
+                }
+            }
+        });
+
+        // Click outside to cancel delete confirmation
+        document.addEventListener('click', (e) => {
+            if (this.pendingDeleteBtn && !e.target.closest('.delete-item-btn')) {
+                this.pendingDeleteBtn.classList.remove('confirming');
+                this.pendingDeleteBtn = null;
+            }
+        });
+
+        // Initialize quick quote info
+        this.updateQuickQuoteInfo();
     }
 
-    getItemData(categoryKey, itemId) {
-        const key = `${categoryKey}_${itemId}`;
-        if (!this.budgetData[key]) {
-            const category = budgetCategories[categoryKey];
-            const item = category.items.find(i => i.id === itemId);
-            this.budgetData[key] = {
-                qty: item.defaultQty,
-                price: 0,
-                note: ''
-            };
-        }
-        return this.budgetData[key];
+    updateQuickQuoteInfo() {
+        const coverage = quickQuoteCoverage[this.mode];
+        const coverageNames = coverage.categories.map(k => budgetCategories[k].name).join('、');
+        document.getElementById('quick-quote-coverage').textContent = `覆盖: ${coverageNames}`;
+        this.updateQuickQuoteTotal();
     }
 
-    setItemData(categoryKey, itemId, field, value) {
-        const key = `${categoryKey}_${itemId}`;
-        if (!this.budgetData[key]) {
-            this.budgetData[key] = { qty: 0, price: 0, note: '' };
-        }
-        this.budgetData[key][field] = value;
-        this.calculateTotals();
+    updateQuickQuoteTotal() {
+        const total = this.quickQuote.enabled ? this.area * this.quickQuote.unitPrice : 0;
+        document.getElementById('quick-quote-total').textContent = `= ¥${total.toLocaleString()}`;
+    }
+
+    getDisplayMode(categoryKey) {
+        const category = budgetCategories[categoryKey];
+        const config = category.modeConfig[this.mode];
+        return config ? config.display : 'detailed';
+    }
+
+    isCategoryVisible(categoryKey) {
+        const category = budgetCategories[categoryKey];
+        return !!category.modeConfig[this.mode];
+    }
+
+    getSuggestions(categoryKey) {
+        const base = budgetCategories[categoryKey].suggestions || [];
+        const custom = this.customSuggestions[categoryKey] || [];
+        return [...new Set([...base, ...custom])];
+    }
+
+    // Fullscreen mode
+    toggleFullscreen() {
+        this.isFullscreen = !this.isFullscreen;
+        document.body.classList.toggle('fullscreen-mode', this.isFullscreen);
         this.saveToStorage();
+    }
+
+    // Modal methods
+    isModalOpen() {
+        return document.getElementById('modal-overlay').classList.contains('active');
+    }
+
+    showAddItemModal(categoryKey) {
+        const category = budgetCategories[categoryKey];
+        this.currentModalCategory = categoryKey;
+        this.selectedSuggestions = new Set();
+
+        // Update modal header
+        document.getElementById('modal-category-icon').innerHTML = category.icon;
+        document.getElementById('modal-category-name').textContent = `添加${category.name}项目`;
+
+        // Render suggestions grid
+        const suggestions = this.getSuggestions(categoryKey);
+        const existingNames = (this.items[categoryKey] || []).map(i => i.name);
+        const grid = document.getElementById('suggestion-grid');
+
+        grid.innerHTML = suggestions.map(name => {
+            const isExisting = existingNames.includes(name);
+            return `
+                <div class="suggestion-item ${isExisting ? 'disabled' : ''}"
+                     data-name="${name}"
+                     ${isExisting ? 'title="已添加"' : ''}>
+                    <div class="suggestion-checkbox">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                            <polyline points="20,6 9,17 4,12"/>
+                        </svg>
+                    </div>
+                    <span class="suggestion-name">${name}</span>
+                </div>
+            `;
+        }).join('');
+
+        // Bind suggestion click events
+        grid.querySelectorAll('.suggestion-item:not(.disabled)').forEach(item => {
+            item.addEventListener('click', () => {
+                const name = item.dataset.name;
+                if (this.selectedSuggestions.has(name)) {
+                    this.selectedSuggestions.delete(name);
+                    item.classList.remove('selected');
+                } else {
+                    this.selectedSuggestions.add(name);
+                    item.classList.add('selected');
+                }
+                this.updateSelectedCount();
+            });
+        });
+
+        // Clear custom input
+        document.getElementById('custom-item-input').value = '';
+        this.updateSelectedCount();
+
+        // Show modal
+        document.getElementById('modal-overlay').classList.add('active');
+        document.getElementById('add-item-modal').classList.add('active');
+    }
+
+    closeModal() {
+        document.getElementById('modal-overlay').classList.remove('active');
+        document.getElementById('add-item-modal').classList.remove('active');
+        this.currentModalCategory = null;
+        this.selectedSuggestions = new Set();
+    }
+
+    updateSelectedCount() {
+        const count = this.selectedSuggestions.size;
+        document.getElementById('selected-count').textContent = `已选择 ${count} 个项目`;
+    }
+
+    addCustomItemToModal() {
+        const input = document.getElementById('custom-item-input');
+        const name = input.value.trim();
+        if (!name) return;
+
+        // Add to selected
+        this.selectedSuggestions.add(name);
+
+        // Add to suggestions grid
+        const grid = document.getElementById('suggestion-grid');
+        const existingItem = grid.querySelector(`[data-name="${name}"]`);
+
+        if (existingItem) {
+            existingItem.classList.add('selected');
+        } else {
+            const newItem = document.createElement('div');
+            newItem.className = 'suggestion-item selected';
+            newItem.dataset.name = name;
+            newItem.innerHTML = `
+                <div class="suggestion-checkbox">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3">
+                        <polyline points="20,6 9,17 4,12"/>
+                    </svg>
+                </div>
+                <span class="suggestion-name">${name}</span>
+            `;
+            newItem.addEventListener('click', () => {
+                if (this.selectedSuggestions.has(name)) {
+                    this.selectedSuggestions.delete(name);
+                    newItem.classList.remove('selected');
+                } else {
+                    this.selectedSuggestions.add(name);
+                    newItem.classList.add('selected');
+                }
+                this.updateSelectedCount();
+            });
+            grid.appendChild(newItem);
+        }
+
+        input.value = '';
+        this.updateSelectedCount();
+    }
+
+    confirmAddItems() {
+        if (this.selectedSuggestions.size === 0) {
+            this.showToast('请选择至少一个项目', 'error');
+            return;
+        }
+
+        const categoryKey = this.currentModalCategory;
+        if (!this.items[categoryKey]) {
+            this.items[categoryKey] = [];
+        }
+
+        // Add all selected items
+        for (const name of this.selectedSuggestions) {
+            const id = `item_${++this.itemCounter}`;
+            this.items[categoryKey].push({
+                id,
+                name,
+                unit: '项',
+                qty: 0,
+                price: 0,
+                note: '',
+                total: 0
+            });
+
+            // Add to custom suggestions if not in base suggestions
+            const baseSuggestions = budgetCategories[categoryKey].suggestions || [];
+            if (!baseSuggestions.includes(name)) {
+                if (!this.customSuggestions[categoryKey]) {
+                    this.customSuggestions[categoryKey] = [];
+                }
+                if (!this.customSuggestions[categoryKey].includes(name)) {
+                    this.customSuggestions[categoryKey].push(name);
+                }
+            }
+        }
+
+        this.saveToStorage();
+        this.closeModal();
+        this.render();
+        this.showToast(`已添加 ${this.selectedSuggestions.size} 个项目`, 'success');
+    }
+
+    // Delete with confirmation
+    handleDeleteClick(btn, categoryKey, itemId) {
+        if (this.pendingDeleteBtn === btn) {
+            // Second click - confirm delete
+            this.pendingDeleteBtn = null;
+            this.deleteItemWithAnimation(categoryKey, itemId, btn);
+        } else {
+            // First click - show confirmation
+            if (this.pendingDeleteBtn) {
+                this.pendingDeleteBtn.classList.remove('confirming');
+            }
+            this.pendingDeleteBtn = btn;
+            btn.classList.add('confirming');
+        }
+    }
+
+    deleteItemWithAnimation(categoryKey, itemId, btn) {
+        const itemEl = btn.closest('.budget-item');
+        if (itemEl) {
+            itemEl.classList.add('deleting');
+            setTimeout(() => {
+                this.deleteItem(categoryKey, itemId);
+            }, 300);
+        } else {
+            this.deleteItem(categoryKey, itemId);
+        }
+    }
+
+    // Items management (all items are user-added now)
+    addItem(categoryKey, name = '') {
+        if (!this.items[categoryKey]) {
+            this.items[categoryKey] = [];
+        }
+        const id = `item_${++this.itemCounter}`;
+        const displayMode = this.getDisplayMode(categoryKey);
+        this.items[categoryKey].push({
+            id,
+            name: name,
+            unit: '项',
+            qty: 0,
+            price: 0,
+            note: '',
+            total: 0
+        });
+        this.saveToStorage();
+        this.render();
+    }
+
+    deleteItem(categoryKey, itemId) {
+        if (this.items[categoryKey]) {
+            this.items[categoryKey] = this.items[categoryKey].filter(i => i.id !== itemId);
+            this.saveToStorage();
+            this.render();
+        }
+    }
+
+    updateItem(categoryKey, itemId, field, value) {
+        const items = this.items[categoryKey];
+        if (items) {
+            const item = items.find(i => i.id === itemId);
+            if (item) {
+                item[field] = value;
+                // Add to custom suggestions if it's a new name
+                if (field === 'name' && value && !this.getSuggestions(categoryKey).includes(value)) {
+                    if (!this.customSuggestions[categoryKey]) {
+                        this.customSuggestions[categoryKey] = [];
+                    }
+                    if (!this.customSuggestions[categoryKey].includes(value)) {
+                        this.customSuggestions[categoryKey].push(value);
+                    }
+                }
+                this.saveToStorage();
+            }
+        }
     }
 
     getModeTag(modeConfig) {
         const config = modeConfig[this.mode];
-        if (config === 'included') {
+        if (!config) return '';
+        const tag = config.tag;
+        if (tag === 'included') {
             return '<span class="category-tag included">包含</span>';
-        } else if (config === 'self') {
+        } else if (tag === 'self') {
             return '<span class="category-tag self-purchase">自购</span>';
-        } else if (config === 'labor') {
+        } else if (tag === 'labor') {
             return '<span class="category-tag self-purchase">仅人工</span>';
         }
         return '';
@@ -978,8 +1965,12 @@ class DecorationBudget {
         let html = '';
 
         for (const [categoryKey, category] of Object.entries(budgetCategories)) {
+            if (!this.isCategoryVisible(categoryKey)) continue;
+
             const isCollapsed = this.collapsedCategories.has(categoryKey);
-            const subtotal = this.calculateCategorySubtotal(categoryKey, category);
+            const displayMode = this.getDisplayMode(categoryKey);
+            const subtotal = this.calculateCategorySubtotal(categoryKey);
+            const items = this.items[categoryKey] || [];
 
             html += `
                 <div class="budget-category" data-category="${categoryKey}">
@@ -997,24 +1988,123 @@ class DecorationBudget {
                         </div>
                     </div>
                     <div class="category-items ${isCollapsed ? 'collapsed' : ''}">
-                        <div class="items-header">
-                            <span>项目名称</span>
-                            <span>数量</span>
-                            <span>单价 (元)</span>
-                            <span>品牌/备注</span>
-                            <span>小计</span>
-                        </div>
-                        ${category.items.map(item => this.renderItem(categoryKey, item)).join('')}
+                        ${items.length > 0 ? this.renderItemsHeader(displayMode) : ''}
+                        ${items.map(item => this.renderItem(categoryKey, item, displayMode)).join('')}
+                        ${items.length === 0 ? '<div class="empty-category-hint">点击下方按钮添加项目</div>' : ''}
+                        <button class="add-item-btn" data-category="${categoryKey}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            添加项目
+                        </button>
                     </div>
                 </div>
             `;
         }
 
         container.innerHTML = html;
+        this.bindDynamicEvents(container);
+        this.calculateTotals();
+    }
 
-        // Bind category collapse events
+    renderItemsHeader(displayMode) {
+        if (displayMode === 'simple') {
+            return `
+                <div class="items-header items-header-simple">
+                    <span>项目名称</span>
+                    <span>工艺说明</span>
+                    <span>总价</span>
+                    <span></span>
+                </div>
+            `;
+        }
+        return `
+            <div class="items-header">
+                <span>项目名称</span>
+                <span>数量</span>
+                <span>单价 (元)</span>
+                <span>品牌/备注</span>
+                <span>小计</span>
+            </div>
+        `;
+    }
+
+    renderItem(categoryKey, item, displayMode) {
+        if (displayMode === 'simple') {
+            return this.renderSimpleItem(categoryKey, item);
+        }
+        return this.renderDetailedItem(categoryKey, item);
+    }
+
+    renderDetailedItem(categoryKey, item) {
+        const subtotal = (item.qty || 0) * (item.price || 0);
+
+        return `
+            <div class="budget-item" data-category="${categoryKey}" data-item="${item.id}">
+                <span class="item-name" title="${item.name || '未命名'}">${item.name || '未命名'}</span>
+                <input type="number" class="item-input item-qty"
+                    data-category="${categoryKey}"
+                    data-item="${item.id}"
+                    value="${item.qty || ''}"
+                    min="0"
+                    placeholder="数量">
+                <input type="number" class="item-input item-price"
+                    data-category="${categoryKey}"
+                    data-item="${item.id}"
+                    value="${item.price || ''}"
+                    min="0"
+                    placeholder="单价">
+                <input type="text" class="item-input item-note"
+                    data-category="${categoryKey}"
+                    data-item="${item.id}"
+                    value="${item.note || ''}"
+                    placeholder="品牌/备注">
+                <div class="item-subtotal-wrapper">
+                    <span class="item-subtotal" data-category="${categoryKey}" data-item="${item.id}">¥${subtotal.toLocaleString()}</span>
+                    <button class="delete-item-btn" data-category="${categoryKey}" data-item="${item.id}" title="删除项目">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    renderSimpleItem(categoryKey, item) {
+        return `
+            <div class="budget-item budget-item-simple" data-category="${categoryKey}" data-item="${item.id}">
+                <span class="item-name" title="${item.name || '未命名'}">${item.name || '未命名'}</span>
+                <input type="text" class="item-input item-note item-note-wide"
+                    data-category="${categoryKey}"
+                    data-item="${item.id}"
+                    value="${item.note || ''}"
+                    placeholder="工艺说明（如：东方雨虹，厨卫刷三遍）">
+                <input type="number" class="item-input item-total"
+                    data-category="${categoryKey}"
+                    data-item="${item.id}"
+                    value="${item.total || ''}"
+                    min="0"
+                    placeholder="总价">
+                <div class="item-action-wrapper">
+                    <button class="delete-item-btn" data-category="${categoryKey}" data-item="${item.id}" title="删除项目">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="18" y1="6" x2="6" y2="18"/>
+                            <line x1="6" y1="6" x2="18" y2="18"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+
+    bindDynamicEvents(container) {
+        // Category collapse events
         container.querySelectorAll('.category-header').forEach(header => {
-            header.addEventListener('click', () => {
+            header.addEventListener('click', (e) => {
+                if (e.target.closest('.add-item-btn') || e.target.closest('.delete-item-btn')) return;
                 const categoryKey = header.dataset.category;
                 if (this.collapsedCategories.has(categoryKey)) {
                     this.collapsedCategories.delete(categoryKey);
@@ -1023,14 +2113,32 @@ class DecorationBudget {
                 }
                 header.classList.toggle('collapsed');
                 header.nextElementSibling.classList.toggle('collapsed');
+                this.saveToStorage(); // Save collapse state
             });
         });
 
-        // Bind input events
+        // Add item buttons - now open modal
+        container.querySelectorAll('.add-item-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.showAddItemModal(btn.dataset.category);
+            });
+        });
+
+        // Delete item buttons - now use confirmation
+        container.querySelectorAll('.delete-item-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.handleDeleteClick(btn, btn.dataset.category, btn.dataset.item);
+            });
+        });
+
+        // Input events for detailed mode
         container.querySelectorAll('.item-qty').forEach(input => {
             input.addEventListener('input', (e) => {
                 const { category, item } = e.target.dataset;
-                this.setItemData(category, item, 'qty', parseFloat(e.target.value) || 0);
+                const value = parseFloat(e.target.value) || 0;
+                this.updateItem(category, item, 'qty', value);
                 this.updateItemSubtotal(category, item);
                 this.updateCategorySubtotal(category);
             });
@@ -1039,7 +2147,8 @@ class DecorationBudget {
         container.querySelectorAll('.item-price').forEach(input => {
             input.addEventListener('input', (e) => {
                 const { category, item } = e.target.dataset;
-                this.setItemData(category, item, 'price', parseFloat(e.target.value) || 0);
+                const value = parseFloat(e.target.value) || 0;
+                this.updateItem(category, item, 'price', value);
                 this.updateItemSubtotal(category, item);
                 this.updateCategorySubtotal(category);
             });
@@ -1048,93 +2157,126 @@ class DecorationBudget {
         container.querySelectorAll('.item-note').forEach(input => {
             input.addEventListener('input', (e) => {
                 const { category, item } = e.target.dataset;
-                this.setItemData(category, item, 'note', e.target.value);
+                this.updateItem(category, item, 'note', e.target.value);
             });
         });
 
-        this.calculateTotals();
-    }
-
-    renderItem(categoryKey, item) {
-        const data = this.getItemData(categoryKey, item.id);
-        const subtotal = data.qty * data.price;
-
-        return `
-            <div class="budget-item" data-category="${categoryKey}" data-item="${item.id}">
-                <div class="item-name-wrapper">
-                    <div class="item-name">${item.name}</div>
-                    <div class="item-ref-price">参考: ${item.refPrice} 元/${item.unit}</div>
-                </div>
-                <input type="number" class="item-input item-qty"
-                    data-category="${categoryKey}"
-                    data-item="${item.id}"
-                    value="${data.qty || ''}"
-                    min="0"
-                    placeholder="${item.unit}">
-                <input type="number" class="item-input item-price"
-                    data-category="${categoryKey}"
-                    data-item="${item.id}"
-                    value="${data.price || ''}"
-                    min="0"
-                    placeholder="单价">
-                <input type="text" class="item-input item-note"
-                    data-category="${categoryKey}"
-                    data-item="${item.id}"
-                    value="${data.note || ''}"
-                    placeholder="品牌/工艺">
-                <div class="item-subtotal" data-category="${categoryKey}" data-item="${item.id}">¥${subtotal.toLocaleString()}</div>
-            </div>
-        `;
+        // Input events for simple mode total
+        container.querySelectorAll('.item-total').forEach(input => {
+            input.addEventListener('input', (e) => {
+                const { category, item } = e.target.dataset;
+                const value = parseFloat(e.target.value) || 0;
+                this.updateItem(category, item, 'total', value);
+                this.updateCategorySubtotal(category);
+                this.calculateTotals();
+            });
+        });
     }
 
     updateItemSubtotal(categoryKey, itemId) {
-        const data = this.getItemData(categoryKey, itemId);
-        const subtotal = data.qty * data.price;
-        const el = document.querySelector(`.item-subtotal[data-category="${categoryKey}"][data-item="${itemId}"]`);
-        if (el) {
-            el.textContent = `¥${subtotal.toLocaleString()}`;
+        const items = this.items[categoryKey];
+        const item = items?.find(i => i.id === itemId);
+        if (item) {
+            const subtotal = (item.qty || 0) * (item.price || 0);
+            const el = document.querySelector(`.item-subtotal[data-category="${categoryKey}"][data-item="${itemId}"]`);
+            if (el) {
+                el.textContent = `¥${subtotal.toLocaleString()}`;
+            }
         }
     }
 
     updateCategorySubtotal(categoryKey) {
-        const category = budgetCategories[categoryKey];
-        const subtotal = this.calculateCategorySubtotal(categoryKey, category);
+        const subtotal = this.calculateCategorySubtotal(categoryKey);
         const el = document.querySelector(`.category-header[data-category="${categoryKey}"] .category-subtotal`);
         if (el) {
             el.textContent = `¥${subtotal.toLocaleString()}`;
         }
+        this.calculateTotals();
     }
 
-    calculateCategorySubtotal(categoryKey, category) {
+    calculateCategorySubtotal(categoryKey) {
         let subtotal = 0;
-        for (const item of category.items) {
-            const data = this.getItemData(categoryKey, item.id);
-            subtotal += (data.qty || 0) * (data.price || 0);
+        const displayMode = this.getDisplayMode(categoryKey);
+        const items = this.items[categoryKey] || [];
+
+        for (const item of items) {
+            if (displayMode === 'simple') {
+                subtotal += item.total || 0;
+            } else {
+                subtotal += (item.qty || 0) * (item.price || 0);
+            }
         }
+
         return subtotal;
     }
 
     calculateTotals() {
+        let design = 0;
         let hardfit = 0;
         let materials = 0;
+        let customFurniture = 0;
         let furniture = 0;
         let soft = 0;
+        let quickQuoteTotal = 0;
 
         const hardCategories = ['demolition', 'plumbing', 'tiling', 'carpentry', 'painting'];
 
-        for (const categoryKey of hardCategories) {
-            hardfit += this.calculateCategorySubtotal(categoryKey, budgetCategories[categoryKey]);
+        // Calculate quick quote total
+        if (this.quickQuote.enabled && this.quickQuote.unitPrice > 0) {
+            quickQuoteTotal = this.area * this.quickQuote.unitPrice;
         }
 
-        materials = this.calculateCategorySubtotal('materials', budgetCategories.materials);
-        furniture = this.calculateCategorySubtotal('furniture', budgetCategories.furniture);
-        soft = this.calculateCategorySubtotal('soft', budgetCategories.soft);
+        // Calculate detail totals
+        if (this.isCategoryVisible('design')) {
+            design = this.calculateCategorySubtotal('design');
+        }
 
-        const total = hardfit + materials + furniture + soft;
+        for (const categoryKey of hardCategories) {
+            if (this.isCategoryVisible(categoryKey)) {
+                hardfit += this.calculateCategorySubtotal(categoryKey);
+            }
+        }
+
+        if (this.isCategoryVisible('materials')) {
+            materials = this.calculateCategorySubtotal('materials');
+        }
+        if (this.isCategoryVisible('customFurniture')) {
+            customFurniture = this.calculateCategorySubtotal('customFurniture');
+        }
+        if (this.isCategoryVisible('furniture')) {
+            furniture = this.calculateCategorySubtotal('furniture');
+        }
+        if (this.isCategoryVisible('soft')) {
+            soft = this.calculateCategorySubtotal('soft');
+        }
+
+        const detailTotal = design + hardfit + materials + customFurniture + furniture + soft;
+        const total = quickQuoteTotal + detailTotal;
 
         document.getElementById('total-amount').textContent = `¥${total.toLocaleString()}`;
+
+        // Update quick quote row
+        const quickQuoteRow = document.getElementById('summary-quick-quote-row');
+        if (quickQuoteRow) {
+            quickQuoteRow.style.display = this.quickQuote.enabled ? 'flex' : 'none';
+            document.getElementById('summary-quick-quote').textContent = `¥${quickQuoteTotal.toLocaleString()}`;
+        }
+
+        // Update design row (always visible now)
+        const designRow = document.getElementById('summary-design-row');
+        if (designRow) {
+            designRow.style.display = 'flex';
+            document.getElementById('summary-design').textContent = `¥${design.toLocaleString()}`;
+        }
+
         document.getElementById('summary-hardfit').textContent = `¥${hardfit.toLocaleString()}`;
         document.getElementById('summary-materials').textContent = `¥${materials.toLocaleString()}`;
+
+        const customFurnitureEl = document.getElementById('summary-custom-furniture');
+        if (customFurnitureEl) {
+            customFurnitureEl.textContent = `¥${customFurniture.toLocaleString()}`;
+        }
+
         document.getElementById('summary-furniture').textContent = `¥${furniture.toLocaleString()}`;
         document.getElementById('summary-soft').textContent = `¥${soft.toLocaleString()}`;
     }
@@ -1143,6 +2285,36 @@ class DecorationBudget {
         const wb = XLSX.utils.book_new();
 
         const modeNames = { qingbao: '清包', banbao: '半包', quanbao: '全包', quanan: '全案' };
+
+        // Calculate totals
+        let design = 0, hardfit = 0, materials = 0, customFurniture = 0, furniture = 0, soft = 0;
+        let quickQuoteTotal = 0;
+        const hardCategories = ['demolition', 'plumbing', 'tiling', 'carpentry', 'painting'];
+
+        if (this.quickQuote.enabled && this.quickQuote.unitPrice > 0) {
+            quickQuoteTotal = this.area * this.quickQuote.unitPrice;
+        }
+
+        if (this.isCategoryVisible('design')) {
+            design = this.calculateCategorySubtotal('design');
+        }
+        for (const categoryKey of hardCategories) {
+            if (this.isCategoryVisible(categoryKey)) {
+                hardfit += this.calculateCategorySubtotal(categoryKey);
+            }
+        }
+        if (this.isCategoryVisible('materials')) {
+            materials = this.calculateCategorySubtotal('materials');
+        }
+        if (this.isCategoryVisible('customFurniture')) {
+            customFurniture = this.calculateCategorySubtotal('customFurniture');
+        }
+        if (this.isCategoryVisible('furniture')) {
+            furniture = this.calculateCategorySubtotal('furniture');
+        }
+        if (this.isCategoryVisible('soft')) {
+            soft = this.calculateCategorySubtotal('soft');
+        }
 
         const summaryData = [
             ['装修预算汇总表'],
@@ -1154,22 +2326,19 @@ class DecorationBudget {
             ['费用汇总'],
         ];
 
-        let hardfit = 0, materials = 0, furniture = 0, soft = 0;
-        const hardCategories = ['demolition', 'plumbing', 'tiling', 'carpentry', 'painting'];
-
-        for (const categoryKey of hardCategories) {
-            hardfit += this.calculateCategorySubtotal(categoryKey, budgetCategories[categoryKey]);
+        if (this.quickQuote.enabled) {
+            const coverage = quickQuoteCoverage[this.mode];
+            summaryData.push([`快捷报价 (${coverage.name})`, quickQuoteTotal, `${this.quickQuote.unitPrice} 元/平米`]);
         }
-        materials = this.calculateCategorySubtotal('materials', budgetCategories.materials);
-        furniture = this.calculateCategorySubtotal('furniture', budgetCategories.furniture);
-        soft = this.calculateCategorySubtotal('soft', budgetCategories.soft);
 
+        summaryData.push(['设计费', design]);
         summaryData.push(['硬装部分', hardfit]);
         summaryData.push(['主材部分', materials]);
+        summaryData.push(['全屋定制', customFurniture]);
         summaryData.push(['家具家电', furniture]);
         summaryData.push(['软装配饰', soft]);
         summaryData.push([]);
-        summaryData.push(['预算总计', hardfit + materials + furniture + soft]);
+        summaryData.push(['预算总计', quickQuoteTotal + design + hardfit + materials + customFurniture + furniture + soft]);
 
         const summaryWs = XLSX.utils.aoa_to_sheet(summaryData);
         XLSX.utils.book_append_sheet(wb, summaryWs, '预算汇总');
@@ -1178,15 +2347,51 @@ class DecorationBudget {
         const detailData = [
             ['装修预算明细表'],
             [],
-            ['分类', '项目', '数量', '单价 (元)', '品牌/备注', '小计 (元)']
         ];
 
+        // Check display modes
+        const hasDetailedMode = Object.keys(budgetCategories).some(k =>
+            this.isCategoryVisible(k) && this.getDisplayMode(k) === 'detailed'
+        );
+        const hasSimpleMode = Object.keys(budgetCategories).some(k =>
+            this.isCategoryVisible(k) && this.getDisplayMode(k) === 'simple'
+        );
+
+        if (hasDetailedMode && hasSimpleMode) {
+            detailData.push(['分类', '项目', '显示模式', '数量', '单价 (元)', '工艺说明', '总价 (元)']);
+        } else if (hasSimpleMode) {
+            detailData.push(['分类', '项目', '工艺说明', '总价 (元)']);
+        } else {
+            detailData.push(['分类', '项目', '数量', '单价 (元)', '品牌/备注', '小计 (元)']);
+        }
+
         for (const [categoryKey, category] of Object.entries(budgetCategories)) {
-            for (const item of category.items) {
-                const data = this.getItemData(categoryKey, item.id);
-                const subtotal = (data.qty || 0) * (data.price || 0);
-                if (data.qty > 0 || data.price > 0) {
-                    detailData.push([category.name, item.name, data.qty || 0, data.price || 0, data.note || '', subtotal]);
+            if (!this.isCategoryVisible(categoryKey)) continue;
+
+            const displayMode = this.getDisplayMode(categoryKey);
+            const items = this.items[categoryKey] || [];
+
+            for (const item of items) {
+                const itemName = item.name || '未命名项目';
+
+                if (displayMode === 'simple') {
+                    const total = item.total || 0;
+                    if (total > 0 || item.note) {
+                        if (hasDetailedMode && hasSimpleMode) {
+                            detailData.push([category.name, itemName, '简化', '', '', item.note || '', total]);
+                        } else {
+                            detailData.push([category.name, itemName, item.note || '', total]);
+                        }
+                    }
+                } else {
+                    const subtotal = (item.qty || 0) * (item.price || 0);
+                    if (item.qty > 0 || item.price > 0) {
+                        if (hasDetailedMode && hasSimpleMode) {
+                            detailData.push([category.name, itemName, '详细', item.qty || 0, item.price || 0, item.note || '', subtotal]);
+                        } else {
+                            detailData.push([category.name, itemName, item.qty || 0, item.price || 0, item.note || '', subtotal]);
+                        }
+                    }
                 }
             }
         }
