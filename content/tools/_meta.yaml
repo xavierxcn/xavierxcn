@@ -7,3 +7,7 @@ tools:
     title: 装修预算助手
     description: 规划装修预算，支持清包、半包、全包、全案四种装修方式，可导出 Excel
     icon: 🏠
+  - slug: natal-chart
+    title: 本命星盘
+    description: 输入出生日期、时间和地点，生成专业级本命星盘图，显示行星位置和相位
+    icon: ✧
