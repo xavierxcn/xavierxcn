@@ -4,6 +4,8 @@ symbol: "♍"
 element: 土
 modality: 变动
 ruling_planet: 水星
+date_range: "8.23 - 9.22"
+order: 6
 keywords:
   - 分析
   - 完美

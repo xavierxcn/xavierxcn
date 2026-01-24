@@ -118,7 +118,7 @@ function displayResults(matches, query) {
     const results = document.getElementById('search-results');
 
     if (matches.length === 0) {
-        results.innerHTML = '<div class="search-no-results">未找到相关文章</div>';
+        results.innerHTML = '<div class="search-no-results">未找到相关内容</div>';
         results.classList.add('active');
         return;
     }
@@ -126,14 +126,17 @@ function displayResults(matches, query) {
     const html = matches.map(item => {
         const highlightedTitle = highlightText(item.title, query);
         const highlightedSummary = highlightText(item.summary, query);
+        const isAstrology = item.item_type === 'astrology';
+        const typeLabel = isAstrology ? item.category : '文章';
+        const typeClass = isAstrology ? 'search-type-astrology' : 'search-type-post';
 
         return `
             <a href="${basePath}/${item.url}" class="search-result-item">
-                <div class="search-result-title">${highlightedTitle}</div>
-                <div class="search-result-meta">
-                    <span class="search-result-date">${item.date}</span>
-                    ${item.tags.length > 0 ? `<span class="search-result-tags">${item.tags.join(', ')}</span>` : ''}
+                <div class="search-result-header">
+                    <span class="search-result-type ${typeClass}">${typeLabel}</span>
+                    ${item.date ? `<span class="search-result-date">${item.date}</span>` : ''}
                 </div>
+                <div class="search-result-title">${highlightedTitle}</div>
                 <div class="search-result-summary">${highlightedSummary}</div>
             </a>
         `;

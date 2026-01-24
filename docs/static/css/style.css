@@ -125,9 +125,7 @@ a:hover {
 }
 
 .nav {
-    max-width: var(--max-width-wide);
-    margin: 0 auto;
-    padding: 0 var(--space-lg);
+    padding: 0 var(--space-xl);
     height: var(--header-height);
     display: flex;
     justify-content: space-between;
@@ -321,6 +319,32 @@ a:hover {
     text-align: center;
     color: var(--color-text-muted);
     font-style: italic;
+}
+
+.search-result-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-xs);
+}
+
+.search-result-type {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 2px 6px;
+    border-radius: 3px;
+}
+
+.search-type-post {
+    background: var(--color-code-bg);
+    color: var(--color-text-muted);
+}
+
+.search-type-astrology {
+    background: rgba(42, 124, 111, 0.15);
+    color: var(--color-accent);
 }
 
 /* ===== MAIN CONTENT ===== */

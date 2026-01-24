@@ -29,6 +29,25 @@ impl TemplateEngine {
             .render(template, &tera_context)
             .with_context(|| format!("Failed to render template: {}", template))
     }
+
+    /// Render a tool template from the content directory
+    /// The template can extend base.html from the theme
+    pub fn render_tool_template<T: Serialize>(&self, template_path: &Path, template_name: &str, context: &T) -> Result<String> {
+        let template_content = std::fs::read_to_string(template_path)
+            .with_context(|| format!("Failed to read tool template: {}", template_path.display()))?;
+
+        // Create a new Tera instance that inherits from the existing templates
+        let mut tool_tera = self.tera.clone();
+        tool_tera.add_raw_template(template_name, &template_content)
+            .with_context(|| format!("Failed to parse tool template: {}", template_path.display()))?;
+
+        let tera_context = tera::Context::from_serialize(context)
+            .context("Failed to serialize template context")?;
+
+        tool_tera
+            .render(template_name, &tera_context)
+            .with_context(|| format!("Failed to render tool template: {}", template_name))
+    }
 }
 
 /// Context for rendering a post page
@@ -90,6 +109,15 @@ pub struct ToolsListContext<'a> {
     pub site: &'a crate::config::SiteConfig,
     pub config: ConfigContext<'a>,
     pub tools: &'a [crate::content::Tool],
+    pub nav: &'a [crate::config::NavItem],
+}
+
+/// Context for rendering an individual tool page
+#[derive(Debug, Serialize)]
+pub struct ToolPageContext<'a> {
+    pub site: &'a crate::config::SiteConfig,
+    pub config: ConfigContext<'a>,
+    pub tool: &'a crate::content::Tool,
     pub nav: &'a [crate::config::NavItem],
 }
 

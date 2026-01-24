@@ -4,6 +4,8 @@ symbol: "♉"
 element: 土
 modality: 固定
 ruling_planet: 金星
+date_range: "4.20 - 5.20"
+order: 2
 keywords:
   - 稳定
   - 感官

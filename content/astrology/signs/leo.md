@@ -4,6 +4,8 @@ symbol: "♌"
 element: 火
 modality: 固定
 ruling_planet: 太阳
+date_range: "7.23 - 8.22"
+order: 5
 keywords:
   - 自信
   - 创造

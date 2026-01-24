@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>占星 - Xavier&#x27;s Blog</title>
+    <title>占星 - Xavier的即兴发挥</title>
     <meta name="description" content="探索占星学的奥秘：星座、行星、宫位与相位">
-    <meta name="author" content="Xavier Fan">
+    <meta name="author" content="Xavier Xiang">
 
     <!-- Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
@@ -16,7 +16,7 @@
         gtag('config', 'G-D2CY9FNGTC');
     </script>
 
-    <link rel="stylesheet" href="&#x2F;xavierxcn/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
 
     
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
@@ -24,185 +24,231 @@
 
     
 <style>
-.astrology-hero {
-    text-align: center;
-    padding: var(--space-3xl) 0;
-    margin-bottom: var(--space-2xl);
-    position: relative;
-}
-
-.astrology-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--color-border-strong));
-}
-
-.astrology-hero::after {
-    content: '☉';
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    color: var(--color-text-muted);
-    opacity: 0.4;
-}
-
-.astrology-title {
-    font-family: var(--font-serif);
-    font-size: 3.5rem;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-text);
-    margin-bottom: var(--space-md);
-    margin-top: var(--space-xl);
-}
-
-.astrology-subtitle {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-weight: 400;
-    font-style: italic;
-    color: var(--color-text-secondary);
-    letter-spacing: 0.02em;
-}
-
-.zodiac-band {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-sm);
-    margin: var(--space-2xl) 0;
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    opacity: 0.5;
-    letter-spacing: 0.3em;
-    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
-    font-variant-emoji: text;
-}
-
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
-    max-width: 800px;
+/* ===== ASTROLOGY INDEX - CELESTIAL CATALOG ===== */
+.astrology-index {
+    max-width: 1100px;
     margin: 0 auto;
 }
 
-.category-card {
-    position: relative;
+/* Compact Header */
+.astro-header {
+    text-align: center;
+    padding: var(--space-xl) 0 var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-xl);
+}
+
+.astro-header::before {
+    content: '✦';
     display: block;
-    padding: var(--space-2xl) var(--space-xl);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.5em;
+}
+
+.astro-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--color-text);
+    margin: 0 0 var(--space-xs);
+}
+
+.astro-tagline {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* Tab Navigation */
+.astro-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: var(--space-xl);
+    background: var(--color-border);
+    padding: 3px;
+    border-radius: 2px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.astro-tab {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-bg);
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.astro-tab:hover {
+    color: var(--color-text);
+}
+
+.astro-tab.active {
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+.astro-tab-count {
+    font-size: 0.65rem;
+    opacity: 0.6;
+    margin-left: 4px;
+}
+
+/* Items Grid */
+.astro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-md);
+}
+
+/* Item Card */
+.astro-card {
+    display: block;
+    padding: var(--space-lg);
     background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     text-decoration: none;
     transition: all var(--transition-base);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.astro-card[data-hidden="true"] {
+    display: none;
+}
+
+.astro-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px var(--color-shadow);
+}
+
+.astro-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.astro-card-symbol {
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+    transition: color var(--transition-fast);
+}
+
+.astro-card:hover .astro-card-symbol {
+    color: var(--color-accent);
+}
+
+.astro-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.astro-card-category {
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+}
+
+.astro-card-date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+}
+
+.astro-card-summary {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.category-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-accent), transparent);
-    opacity: 0;
-    transition: opacity var(--transition-base);
+/* Fade animation for filtering */
+.astro-grid.filtering .astro-card {
+    animation: cardFadeIn 0.25s ease-out forwards;
 }
 
-.category-card:hover {
-    border-color: var(--color-border-strong);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px var(--color-shadow);
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.category-card:hover::before {
-    opacity: 1;
+/* Stats footer */
+.astro-footer {
+    text-align: center;
+    padding: var(--space-xl) 0;
+    margin-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
 }
 
-.category-symbol {
-    font-size: 2.5rem;
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-lg);
-    display: block;
-    transition: color var(--transition-base);
-    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
-    font-variant-emoji: text;
-}
-
-.category-card:hover .category-symbol {
-    color: var(--color-accent);
-}
-
-.category-name {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--color-text);
-    margin-bottom: var(--space-xs);
-    letter-spacing: 0.05em;
-}
-
-.category-name-en {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: var(--space-md);
-    display: block;
-}
-
-.category-desc {
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    margin-bottom: var(--space-md);
-}
-
-.category-count {
+.astro-stats {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--color-text-muted);
+    letter-spacing: 0.05em;
 }
 
-.category-arrow {
-    position: absolute;
-    bottom: var(--space-xl);
-    right: var(--space-xl);
-    font-size: 1.25rem;
-    color: var(--color-text-muted);
-    transition: all var(--transition-base);
-    opacity: 0;
-}
-
-.category-card:hover .category-arrow {
-    opacity: 1;
-    transform: translateX(4px);
-    color: var(--color-accent);
-}
-
+/* Responsive */
 @media (max-width: 640px) {
-    .categories-grid {
+    .astro-title {
+        font-size: 1.5rem;
+        letter-spacing: 0.15em;
+    }
+
+    .astro-tabs {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .astro-tab {
+        padding: var(--space-sm) var(--space-md);
+        white-space: nowrap;
+    }
+
+    .astro-grid {
         grid-template-columns: 1fr;
-    }
-
-    .astrology-title {
-        font-size: 2.5rem;
-        letter-spacing: 0.1em;
-    }
-
-    .zodiac-band {
-        font-size: 0.9rem;
-        letter-spacing: 0.2em;
     }
 }
 </style>
@@ -211,7 +257,7 @@
 <body>
     <header class="site-header">
         <nav class="nav">
-            <a href="&#x2F;xavierxcn/" class="site-title">Xavier&#x27;s Blog</a>
+            <a href="/" class="site-title">Xavier的即兴发挥</a>
             <div class="nav-right">
                 <div class="search-container">
                     <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
@@ -219,15 +265,15 @@
                 </div>
                 <ul class="nav-links">
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;">首页</a></li>
+                    <li><a href="&#x2F;">首页</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;astrology&#x2F;">占星</a></li>
+                    <li><a href="&#x2F;astrology&#x2F;">占星</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;tools&#x2F;">工具</a></li>
+                    <li><a href="&#x2F;tools&#x2F;">工具</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;archive&#x2F;">归档</a></li>
+                    <li><a href="&#x2F;archive&#x2F;">归档</a></li>
                     
-                    <li><a href="&#x2F;xavierxcn&#x2F;about&#x2F;">关于</a></li>
+                    <li><a href="&#x2F;about&#x2F;">关于</a></li>
                     
                 </ul>
             </div>
@@ -236,121 +282,898 @@
 
     <main class="main-content">
         
-<section class="astrology-page">
-    <header class="astrology-hero">
-        <h1 class="astrology-title">占星</h1>
-        <p class="astrology-subtitle">Astrology — 星辰的语言，命运的地图</p>
+<section class="astrology-index">
+    <header class="astro-header">
+        <h1 class="astro-title">占星</h1>
+        <p class="astro-tagline">星辰的语言，命运的地图</p>
     </header>
 
-    <div class="zodiac-band">
-        <span>♈</span><span>♉</span><span>♊</span><span>♋</span><span>♌</span><span>♍</span><span>♎</span><span>♏</span><span>♐</span><span>♑</span><span>♒</span><span>♓</span>
+    <nav class="astro-tabs" role="tablist">
+        <button class="astro-tab active" data-category="all" role="tab" aria-selected="true">
+            全部<span class="astro-tab-count" id="total-count"></span>
+        </button>
+        
+        <button class="astro-tab" data-category="basics" role="tab" aria-selected="false">
+            占星常识<span class="astro-tab-count">5</span>
+        </button>
+        
+        <button class="astro-tab" data-category="signs" role="tab" aria-selected="false">
+            星座<span class="astro-tab-count">12</span>
+        </button>
+        
+        <button class="astro-tab" data-category="planets" role="tab" aria-selected="false">
+            行星<span class="astro-tab-count">10</span>
+        </button>
+        
+        <button class="astro-tab" data-category="houses" role="tab" aria-selected="false">
+            宫位<span class="astro-tab-count">12</span>
+        </button>
+        
+        <button class="astro-tab" data-category="aspects" role="tab" aria-selected="false">
+            相位<span class="astro-tab-count">5</span>
+        </button>
+        
+    </nav>
+
+    <div class="astro-grid" id="astro-grid">
+        
+            
+            <a href="/astrology/basics/intro/"
+               class="astro-card"
+               data-category="basics">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">✧</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">占星术</h2>
+                        
+                        <span class="astro-card-category">占星常识</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">占星术通过观察天体位置来理解人间事务</p>
+                
+            </a>
+            
+            <a href="/astrology/basics/history/"
+               class="astro-card"
+               data-category="basics">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">☉</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">占星术的历史</h2>
+                        
+                        <span class="astro-card-category">占星常识</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">从古巴比伦到现代，占星术经历了四千年的演变</p>
+                
+            </a>
+            
+            <a href="/astrology/basics/chart-basics/"
+               class="astro-card"
+               data-category="basics">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">⊛</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">星盘</h2>
+                        
+                        <span class="astro-card-category">占星常识</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">星盘记录了一个人出生时刻从出生地点观察到的天空配置</p>
+                
+            </a>
+            
+            <a href="/astrology/basics/branches/"
+               class="astro-card"
+               data-category="basics">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">❂</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">占星术的分支</h2>
+                        
+                        <span class="astro-card-category">占星常识</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">占星术包含多个分支，各自针对不同类型的问题</p>
+                
+            </a>
+            
+            <a href="/astrology/basics/sign-classifications/"
+               class="astro-card"
+               data-category="basics">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">◈</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">星座的分类</h2>
+                        
+                        <span class="astro-card-category">占星常识</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">十二星座按照阴阳、模式和元素进行系统分类</p>
+                
+            </a>
+            
+        
+            
+            <a href="/astrology/signs/aries/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♈</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">白羊座</h2>
+                        
+                        <span class="astro-card-date">3.21 - 4.19</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">黄道的起点，春天的使者，永远向前的先锋</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/taurus/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♉</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">金牛座</h2>
+                        
+                        <span class="astro-card-date">4.20 - 5.20</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">大地的守护者，感官的鉴赏家，慢工出细活的匠人</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/gemini/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♊</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">双子座</h2>
+                        
+                        <span class="astro-card-date">5.21 - 6.21</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">信息的使者，思想的探险家，永不停息的好奇心</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/cancer/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♋</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">巨蟹座</h2>
+                        
+                        <span class="astro-card-date">6.22 - 7.22</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">情感的守护者，家的港湾，用温柔包裹世界</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/leo/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♌</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">狮子座</h2>
+                        
+                        <span class="astro-card-date">7.23 - 8.22</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">黄道的王者，舞台的中心，用光芒照耀世界</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/virgo/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♍</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">处女座</h2>
+                        
+                        <span class="astro-card-date">8.23 - 9.22</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">细节的守护者，秩序的建筑师，在平凡中追求卓越</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/libra/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♎</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">天秤座</h2>
+                        
+                        <span class="astro-card-date">9.23 - 10.23</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">平衡的艺术家，关系的编织者，在对比中寻找美</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/scorpio/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♏</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">天蝎座</h2>
+                        
+                        <span class="astro-card-date">10.24 - 11.22</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">深渊的潜水者，秘密的守护者，在毁灭中重生</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/sagittarius/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♐</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">射手座</h2>
+                        
+                        <span class="astro-card-date">11.23 - 12.21</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">远方的追寻者，真理的猎手，永远在路上</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/capricorn/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♑</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">摩羯座</h2>
+                        
+                        <span class="astro-card-date">12.22 - 1.19</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">高峰的攀登者，时间的同盟，在坚持中抵达</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/aquarius/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♒</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">水瓶座</h2>
+                        
+                        <span class="astro-card-date">1.20 - 2.18</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">未来的先知，边界的挑战者，为众人抱薪者</p>
+                
+            </a>
+            
+            <a href="/astrology/signs/pisces/"
+               class="astro-card"
+               data-category="signs">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♓</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">双鱼座</h2>
+                        
+                        <span class="astro-card-date">2.19 - 3.20</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">梦境的旅人，边界的消融者，在共情中与万物相连</p>
+                
+            </a>
+            
+        
+            
+            <a href="/astrology/planets/pluto/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♇</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">冥王星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">深层的转变，以及在毁灭中重生的力量</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/saturn/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♄</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">土星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你的功课、恐惧，以及通往成熟的道路</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/uranus/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♅</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">天王星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">打破规则的力量，以及你独特不羁的那一面</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/sun/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">☉</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">太阳</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">星盘的中心，照亮你是谁的那束光</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/moon/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">☽</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">月亮</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你的情感底色，内心深处的那个孩子</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/jupiter/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♃</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">木星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你的幸运领域，以及生命中追求&quot;更多&quot;的方向</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/mercury/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">☿</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">水星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你如何思考、说话和理解这个世界</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/neptune/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♆</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">海王星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">超越现实的渴望，以及你灵魂深处的诗意</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/mars/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♂</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">火星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你的驱动力、战斗方式和行动模式</p>
+                
+            </a>
+            
+            <a href="/astrology/planets/venus/"
+               class="astro-card"
+               data-category="planets">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">♀</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">金星</h2>
+                        
+                        <span class="astro-card-category">行星</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你爱什么、你觉得什么是美的、什么让你快乐</p>
+                
+            </a>
+            
+        
+            
+            <a href="/astrology/houses/first-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅰ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第一宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你与世界相遇的方式，别人眼中的你</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/seventh-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅶ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第七宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你如何与他人建立深度连接</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/third-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅲ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第三宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你如何思考、交流和探索身边的世界</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/ninth-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅸ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第九宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你对意义的追寻和视野的扩展</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/second-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅱ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第二宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你拥有什么，以及什么让你感到安全</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/fifth-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅴ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第五宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你的创造力、快乐源泉和心之所向</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/eighth-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅷ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第八宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">深度连接、转化与共享资源的领域</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/sixth-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅵ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第六宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你的日常习惯、工作态度和身心健康</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/eleventh-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅺ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第十一宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你所属的群体和你对未来的愿景</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/twelfth-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅻ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第十二宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">隐藏的深层，以及通往灵性与超越的门</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/tenth-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅹ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第十宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你在世界上的位置和你想留下的印记</p>
+                
+            </a>
+            
+            <a href="/astrology/houses/fourth-house/"
+               class="astro-card"
+               data-category="houses">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">Ⅳ</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">第四宫</h2>
+                        
+                        <span class="astro-card-category">宫位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">你的根在哪里，你的内心深处是什么样</p>
+                
+            </a>
+            
+        
+            
+            <a href="/astrology/aspects/trine/"
+               class="astro-card"
+               data-category="aspects">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">△</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">三分相</h2>
+                        
+                        <span class="astro-card-category">相位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">自然流动的和谐与天生的天赋</p>
+                
+            </a>
+            
+            <a href="/astrology/aspects/sextile/"
+               class="astro-card"
+               data-category="aspects">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">⚹</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">六分相</h2>
+                        
+                        <span class="astro-card-category">相位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">温和的支持与顺畅的机会</p>
+                
+            </a>
+            
+            <a href="/astrology/aspects/square/"
+               class="astro-card"
+               data-category="aspects">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">□</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">刑相</h2>
+                        
+                        <span class="astro-card-category">相位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">推动你行动的张力与挑战</p>
+                
+            </a>
+            
+            <a href="/astrology/aspects/conjunction/"
+               class="astro-card"
+               data-category="aspects">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">☌</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">合相</h2>
+                        
+                        <span class="astro-card-category">相位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">两颗行星能量的融合与集中</p>
+                
+            </a>
+            
+            <a href="/astrology/aspects/opposition/"
+               class="astro-card"
+               data-category="aspects">
+                <div class="astro-card-header">
+                    
+                    <span class="astro-card-symbol">☍</span>
+                    
+                    <div>
+                        <h2 class="astro-card-title">对分相</h2>
+                        
+                        <span class="astro-card-category">相位</span>
+                        
+                    </div>
+                </div>
+                
+                <p class="astro-card-summary">对立面的张力与寻求平衡的功课</p>
+                
+            </a>
+            
+        
     </div>
 
-    <div class="categories-grid">
-        
-        <a href="&#x2F;xavierxcn/astrology/signs/" class="category-card">
-            <span class="category-symbol">
-                ♈
-                
-                
-                
-            </span>
-            <h2 class="category-name">星座</h2>
-            <span class="category-name-en">
-                Zodiac Signs
-                
-                
-                
-            </span>
-            <p class="category-desc">
-                黄道十二宫，性格与命运的基本蓝图
-                
-                
-                
-            </p>
-            <span class="category-count">12 个条目</span>
-            <span class="category-arrow">→</span>
-        </a>
-        
-        <a href="&#x2F;xavierxcn/astrology/planets/" class="category-card">
-            <span class="category-symbol">
-                
-                ☉
-                
-                
-            </span>
-            <h2 class="category-name">行星</h2>
-            <span class="category-name-en">
-                
-                Planets
-                
-                
-            </span>
-            <p class="category-desc">
-                
-                天体能量，驱动生命的原始力量
-                
-                
-            </p>
-            <span class="category-count">10 个条目</span>
-            <span class="category-arrow">→</span>
-        </a>
-        
-        <a href="&#x2F;xavierxcn/astrology/houses/" class="category-card">
-            <span class="category-symbol">
-                
-                
-                I
-                
-            </span>
-            <h2 class="category-name">宫位</h2>
-            <span class="category-name-en">
-                
-                
-                Houses
-                
-            </span>
-            <p class="category-desc">
-                
-                
-                人生领域，生活舞台的十二个面向
-                
-            </p>
-            <span class="category-count">12 个条目</span>
-            <span class="category-arrow">→</span>
-        </a>
-        
-        <a href="&#x2F;xavierxcn/astrology/aspects/" class="category-card">
-            <span class="category-symbol">
-                
-                
-                
-                ☌
-            </span>
-            <h2 class="category-name">相位</h2>
-            <span class="category-name-en">
-                
-                
-                
-                Aspects
-            </span>
-            <p class="category-desc">
-                
-                
-                
-                行星对话，能量交织的几何密码
-            </p>
-            <span class="category-count">5 个条目</span>
-            <span class="category-arrow">→</span>
-        </a>
-        
-    </div>
+    <footer class="astro-footer">
+        <p class="astro-stats" id="astro-stats">显示全部条目</p>
+    </footer>
 </section>
 
     </main>
 
     <footer class="site-footer">
-        <p>&copy; 2026 Xavier Fan. 保留所有权利。</p>
+        <p>&copy; 2026 Xavier Xiang. 保留所有权利。</p>
     </footer>
 
     
@@ -364,13 +1187,69 @@
         onload="renderMathInElement(document.body);"></script>
     
 
-    <script src="&#x2F;xavierxcn/static/js/search.js"></script>
+    <script src="/static/js/search.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            initSearch('/xavierxcn');
+            initSearch('');
         });
     </script>
 
     
+<script>
+(function() {
+    const tabs = document.querySelectorAll('.astro-tab');
+    const grid = document.getElementById('astro-grid');
+    const cards = grid ? Array.from(grid.querySelectorAll('.astro-card')) : [];
+    const stats = document.getElementById('astro-stats');
+    const totalCount = document.getElementById('total-count');
+    const total = cards.length;
+
+    // Set initial total count
+    if (totalCount) totalCount.textContent = total;
+    if (stats) stats.textContent = `显示全部 ${total} 个条目`;
+
+    function filterByCategory(category) {
+        grid.classList.add('filtering');
+
+        let visibleCount = 0;
+        cards.forEach((card, index) => {
+            const cardCategory = card.dataset.category;
+            const shouldShow = category === 'all' || cardCategory === category;
+
+            card.setAttribute('data-hidden', !shouldShow);
+            if (shouldShow) {
+                card.style.animationDelay = `${visibleCount * 0.03}s`;
+                visibleCount++;
+            }
+        });
+
+        // Update stats
+        const categoryName = category === 'all' ? '全部' :
+            document.querySelector(`[data-category="${category}"]`).textContent.replace(/\d+/g, '').trim();
+        stats.textContent = `显示 ${categoryName} ${visibleCount} 个条目`;
+
+        // Remove filtering class after animation
+        setTimeout(() => {
+            grid.classList.remove('filtering');
+        }, visibleCount * 30 + 250);
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Update active state
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+
+            // Filter cards
+            filterByCategory(tab.dataset.category);
+        });
+    });
+})();
+</script>
+
 </body>
 </html>

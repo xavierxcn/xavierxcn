@@ -27,19 +27,25 @@ TBD - created by archiving change add-tools-section. Update Purpose after archiv
 
 ### Requirement: Tool Page Copying
 
-系统 SHALL 将工具目录整体复制到输出目录。
+系统 SHALL 将工具目录中的静态资源复制到输出目录，并渲染工具模板。
 
-#### Scenario: 复制工具页面
+#### Scenario: 渲染工具模板
 
-- **WHEN** 工具元数据中包含 slug 为 `{slug}` 的工具
-- **THEN** 系统将 `content/tools/{slug}/` 目录整体复制到 `output/tools/{slug}/`
-- **AND** 保留目录结构和所有文件
+- **WHEN** 工具目录包含 `template.html` 文件
+- **THEN** 系统使用 Tera 引擎渲染该模板
+- **AND** 输出到 `output/tools/{slug}/index.html`
+- **AND** 渲染上下文包含 `site`、`nav`、`config`、`tool` 变量
 
-#### Scenario: 工具目录不存在
+#### Scenario: 复制工具静态资源
 
-- **WHEN** 工具元数据中包含工具但对应目录不存在
-- **THEN** 系统记录警告日志
-- **AND** 跳过该工具，继续处理其他工具
+- **WHEN** 工具目录包含非模板文件（如 assets 目录）
+- **THEN** 系统将这些文件复制到 `output/tools/{slug}/`
+- **AND** 保留目录结构
+
+#### Scenario: 兼容旧版工具页面
+
+- **WHEN** 工具目录不包含 `template.html` 但包含 `index.html`
+- **THEN** 系统将整个目录复制到输出目录（保持向后兼容）
 
 ### Requirement: Tools List Page Generation
 
@@ -55,6 +61,21 @@ TBD - created by archiving change add-tools-section. Update Purpose after archiv
 ### Requirement: Markdown to WeChat Tool
 
 系统 SHALL 提供 Markdown 转微信公众号 HTML 格式的工具页面。
+
+#### Scenario: 工具页面模板继承
+
+- **WHEN** 渲染 md2wechat 工具页面
+- **THEN** 使用 `template.html` 模板
+- **AND** 模板继承 `base.html`
+- **AND** 自动获得主站的 header、footer、搜索功能
+
+#### Scenario: 工具页面导航一致性
+
+- **WHEN** 访问 `/tools/md2wechat/`
+- **THEN** 页面头部导航栏与主站完全一致
+- **AND** 显示正确的站点标题
+- **AND** 包含搜索输入框
+- **AND** 包含完整的导航链接（首页、占星、工具、归档、关于）
 
 #### Scenario: 工具页面结构
 

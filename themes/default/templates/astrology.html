@@ -6,227 +6,341 @@
 
 {% block head %}
 <style>
-.astrology-hero {
-    text-align: center;
-    padding: var(--space-3xl) 0;
-    margin-bottom: var(--space-2xl);
-    position: relative;
-}
-
-.astrology-hero::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 60px;
-    background: linear-gradient(to bottom, transparent, var(--color-border-strong));
-}
-
-.astrology-hero::after {
-    content: '☉';
-    position: absolute;
-    top: 50px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 1.5rem;
-    color: var(--color-text-muted);
-    opacity: 0.4;
-}
-
-.astrology-title {
-    font-family: var(--font-serif);
-    font-size: 3.5rem;
-    font-weight: 400;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    color: var(--color-text);
-    margin-bottom: var(--space-md);
-    margin-top: var(--space-xl);
-}
-
-.astrology-subtitle {
-    font-family: var(--font-serif);
-    font-size: 1.15rem;
-    font-weight: 400;
-    font-style: italic;
-    color: var(--color-text-secondary);
-    letter-spacing: 0.02em;
-}
-
-.zodiac-band {
-    display: flex;
-    justify-content: center;
-    gap: var(--space-sm);
-    margin: var(--space-2xl) 0;
-    font-size: 1.1rem;
-    color: var(--color-text-muted);
-    opacity: 0.5;
-    letter-spacing: 0.3em;
-    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
-    font-variant-emoji: text;
-}
-
-.categories-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-lg);
-    max-width: 800px;
+/* ===== ASTROLOGY INDEX - CELESTIAL CATALOG ===== */
+.astrology-index {
+    max-width: 1100px;
     margin: 0 auto;
 }
 
-.category-card {
-    position: relative;
+/* Compact Header */
+.astro-header {
+    text-align: center;
+    padding: var(--space-xl) 0 var(--space-lg);
+    border-bottom: 1px solid var(--color-border);
+    margin-bottom: var(--space-xl);
+}
+
+.astro-header::before {
+    content: '✦';
     display: block;
-    padding: var(--space-2xl) var(--space-xl);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    opacity: 0.4;
+    margin-bottom: var(--space-sm);
+    letter-spacing: 0.5em;
+}
+
+.astro-title {
+    font-family: var(--font-serif);
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.2em;
+    color: var(--color-text);
+    margin: 0 0 var(--space-xs);
+}
+
+.astro-tagline {
+    font-family: var(--font-serif);
+    font-size: 0.9rem;
+    font-style: italic;
+    color: var(--color-text-muted);
+    margin: 0;
+}
+
+/* Tab Navigation */
+.astro-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 2px;
+    margin-bottom: var(--space-xl);
+    background: var(--color-border);
+    padding: 3px;
+    border-radius: 2px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.astro-tab {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    padding: var(--space-sm) var(--space-lg);
+    background: var(--color-bg);
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+    position: relative;
+}
+
+.astro-tab:hover {
+    color: var(--color-text);
+}
+
+.astro-tab.active {
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+.astro-tab-count {
+    font-size: 0.65rem;
+    opacity: 0.6;
+    margin-left: 4px;
+}
+
+/* Items Grid */
+.astro-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: var(--space-md);
+}
+
+/* Item Card */
+.astro-card {
+    display: block;
+    padding: var(--space-lg);
     background: var(--color-bg-elevated);
     border: 1px solid var(--color-border);
     text-decoration: none;
     transition: all var(--transition-base);
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.astro-card[data-hidden="true"] {
+    display: none;
+}
+
+.astro-card:hover {
+    border-color: var(--color-border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 24px var(--color-shadow);
+}
+
+.astro-card-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-sm);
+    margin-bottom: var(--space-sm);
+}
+
+.astro-card-symbol {
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+    transition: color var(--transition-fast);
+}
+
+.astro-card:hover .astro-card-symbol {
+    color: var(--color-accent);
+}
+
+.astro-card-title {
+    font-family: var(--font-serif);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin: 0;
+    line-height: 1.4;
+}
+
+.astro-card-category {
+    font-family: var(--font-sans);
+    font-size: 0.65rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 2px;
+}
+
+.astro-card-date {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    letter-spacing: 0.02em;
+    margin-top: 2px;
+}
+
+.astro-card-summary {
+    font-size: 0.85rem;
+    color: var(--color-text-secondary);
+    line-height: 1.55;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
 }
 
-.category-card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--color-accent), transparent);
-    opacity: 0;
-    transition: opacity var(--transition-base);
+/* Fade animation for filtering */
+.astro-grid.filtering .astro-card {
+    animation: cardFadeIn 0.25s ease-out forwards;
 }
 
-.category-card:hover {
-    border-color: var(--color-border-strong);
-    transform: translateY(-2px);
-    box-shadow: 0 8px 32px var(--color-shadow);
+@keyframes cardFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
-.category-card:hover::before {
-    opacity: 1;
+/* Stats footer */
+.astro-footer {
+    text-align: center;
+    padding: var(--space-xl) 0;
+    margin-top: var(--space-xl);
+    border-top: 1px solid var(--color-border);
 }
 
-.category-symbol {
-    font-size: 2.5rem;
-    color: var(--color-text-muted);
-    margin-bottom: var(--space-lg);
-    display: block;
-    transition: color var(--transition-base);
-    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
-    font-variant-emoji: text;
-}
-
-.category-card:hover .category-symbol {
-    color: var(--color-accent);
-}
-
-.category-name {
-    font-family: var(--font-serif);
-    font-size: 1.5rem;
-    font-weight: 500;
-    color: var(--color-text);
-    margin-bottom: var(--space-xs);
-    letter-spacing: 0.05em;
-}
-
-.category-name-en {
-    font-family: var(--font-sans);
-    font-size: 0.75rem;
-    font-weight: 400;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.15em;
-    margin-bottom: var(--space-md);
-    display: block;
-}
-
-.category-desc {
-    font-size: 0.9rem;
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    margin-bottom: var(--space-md);
-}
-
-.category-count {
+.astro-stats {
     font-family: var(--font-mono);
     font-size: 0.75rem;
     color: var(--color-text-muted);
+    letter-spacing: 0.05em;
 }
 
-.category-arrow {
-    position: absolute;
-    bottom: var(--space-xl);
-    right: var(--space-xl);
-    font-size: 1.25rem;
-    color: var(--color-text-muted);
-    transition: all var(--transition-base);
-    opacity: 0;
-}
-
-.category-card:hover .category-arrow {
-    opacity: 1;
-    transform: translateX(4px);
-    color: var(--color-accent);
-}
-
+/* Responsive */
 @media (max-width: 640px) {
-    .categories-grid {
+    .astro-title {
+        font-size: 1.5rem;
+        letter-spacing: 0.15em;
+    }
+
+    .astro-tabs {
+        width: 100%;
+        overflow-x: auto;
+        justify-content: flex-start;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .astro-tab {
+        padding: var(--space-sm) var(--space-md);
+        white-space: nowrap;
+    }
+
+    .astro-grid {
         grid-template-columns: 1fr;
-    }
-
-    .astrology-title {
-        font-size: 2.5rem;
-        letter-spacing: 0.1em;
-    }
-
-    .zodiac-band {
-        font-size: 0.9rem;
-        letter-spacing: 0.2em;
     }
 }
 </style>
 {% endblock %}
 
 {% block content %}
-<section class="astrology-page">
-    <header class="astrology-hero">
-        <h1 class="astrology-title">占星</h1>
-        <p class="astrology-subtitle">Astrology — 星辰的语言，命运的地图</p>
+<section class="astrology-index">
+    <header class="astro-header">
+        <h1 class="astro-title">占星</h1>
+        <p class="astro-tagline">星辰的语言，命运的地图</p>
     </header>
 
-    <div class="zodiac-band">
-        <span>♈</span><span>♉</span><span>♊</span><span>♋</span><span>♌</span><span>♍</span><span>♎</span><span>♏</span><span>♐</span><span>♑</span><span>♒</span><span>♓</span>
-    </div>
-
-    <div class="categories-grid">
+    <nav class="astro-tabs" role="tablist">
+        <button class="astro-tab active" data-category="all" role="tab" aria-selected="true">
+            全部<span class="astro-tab-count" id="total-count"></span>
+        </button>
         {% for category in categories %}
-        <a href="{{ site.base_path }}/astrology/{{ category.id }}/" class="category-card">
-            <span class="category-symbol">
-                {% if category.id == "signs" %}♈{% endif %}
-                {% if category.id == "planets" %}☉{% endif %}
-                {% if category.id == "houses" %}I{% endif %}
-                {% if category.id == "aspects" %}☌{% endif %}
-            </span>
-            <h2 class="category-name">{{ category.name }}</h2>
-            <span class="category-name-en">
-                {% if category.id == "signs" %}Zodiac Signs{% endif %}
-                {% if category.id == "planets" %}Planets{% endif %}
-                {% if category.id == "houses" %}Houses{% endif %}
-                {% if category.id == "aspects" %}Aspects{% endif %}
-            </span>
-            <p class="category-desc">
-                {% if category.id == "signs" %}黄道十二宫，性格与命运的基本蓝图{% endif %}
-                {% if category.id == "planets" %}天体能量，驱动生命的原始力量{% endif %}
-                {% if category.id == "houses" %}人生领域，生活舞台的十二个面向{% endif %}
-                {% if category.id == "aspects" %}行星对话，能量交织的几何密码{% endif %}
-            </p>
-            <span class="category-count">{{ category.items | length }} 个条目</span>
-            <span class="category-arrow">→</span>
-        </a>
+        <button class="astro-tab" data-category="{{ category.id }}" role="tab" aria-selected="false">
+            {{ category.name }}<span class="astro-tab-count">{{ category.items | length }}</span>
+        </button>
+        {% endfor %}
+    </nav>
+
+    <div class="astro-grid" id="astro-grid">
+        {% for category in categories %}
+            {% for item in category.items %}
+            <a href="{{ site.base_path }}/astrology/{{ category.id }}/{{ item.slug }}/"
+               class="astro-card"
+               data-category="{{ category.id }}">
+                <div class="astro-card-header">
+                    {% if item.symbol %}
+                    <span class="astro-card-symbol">{{ item.symbol }}</span>
+                    {% endif %}
+                    <div>
+                        <h2 class="astro-card-title">{{ item.title }}</h2>
+                        {% if item.date_range %}
+                        <span class="astro-card-date">{{ item.date_range }}</span>
+                        {% else %}
+                        <span class="astro-card-category">{{ category.name }}</span>
+                        {% endif %}
+                    </div>
+                </div>
+                {% if item.summary %}
+                <p class="astro-card-summary">{{ item.summary }}</p>
+                {% endif %}
+            </a>
+            {% endfor %}
         {% endfor %}
     </div>
+
+    <footer class="astro-footer">
+        <p class="astro-stats" id="astro-stats">显示全部条目</p>
+    </footer>
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+(function() {
+    const tabs = document.querySelectorAll('.astro-tab');
+    const grid = document.getElementById('astro-grid');
+    const cards = grid ? Array.from(grid.querySelectorAll('.astro-card')) : [];
+    const stats = document.getElementById('astro-stats');
+    const totalCount = document.getElementById('total-count');
+    const total = cards.length;
+
+    // Set initial total count
+    if (totalCount) totalCount.textContent = total;
+    if (stats) stats.textContent = `显示全部 ${total} 个条目`;
+
+    function filterByCategory(category) {
+        grid.classList.add('filtering');
+
+        let visibleCount = 0;
+        cards.forEach((card, index) => {
+            const cardCategory = card.dataset.category;
+            const shouldShow = category === 'all' || cardCategory === category;
+
+            card.setAttribute('data-hidden', !shouldShow);
+            if (shouldShow) {
+                card.style.animationDelay = `${visibleCount * 0.03}s`;
+                visibleCount++;
+            }
+        });
+
+        // Update stats
+        const categoryName = category === 'all' ? '全部' :
+            document.querySelector(`[data-category="${category}"]`).textContent.replace(/\d+/g, '').trim();
+        stats.textContent = `显示 ${categoryName} ${visibleCount} 个条目`;
+
+        // Remove filtering class after animation
+        setTimeout(() => {
+            grid.classList.remove('filtering');
+        }, visibleCount * 30 + 250);
+    }
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+            // Update active state
+            tabs.forEach(t => {
+                t.classList.remove('active');
+                t.setAttribute('aria-selected', 'false');
+            });
+            tab.classList.add('active');
+            tab.setAttribute('aria-selected', 'true');
+
+            // Filter cards
+            filterByCategory(tab.dataset.category);
+        });
+    });
+})();
+</script>
 {% endblock %}

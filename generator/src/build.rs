@@ -2,7 +2,7 @@ use crate::config::Config;
 use crate::content::{load_astrology, load_pages, load_posts, load_tools, AstrologyData, Page, Post, Tool};
 use crate::render::template::{
     AstrologyCategoryContext, AstrologyIndexContext, AstrologyItemContext, CategoryContext, ConfigContext, ListContext,
-    PageContext, Pagination, PostContext, TagContext, TemplateEngine, ToolsListContext,
+    PageContext, Pagination, PostContext, TagContext, TemplateEngine, ToolPageContext, ToolsListContext,
 };
 use anyhow::{Context, Result};
 use serde::Serialize;
@@ -22,6 +22,10 @@ pub struct SearchIndexItem {
     pub content: String,
     pub tags: Vec<String>,
     pub date: String,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub item_type: Option<String>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub category: Option<String>,
 }
 
 pub struct Builder {
@@ -136,7 +140,7 @@ impl Builder {
         Ok(())
     }
 
-    /// Generate tool pages (copy directories) and tools list
+    /// Generate tool pages (render templates or copy directories) and tools list
     fn generate_tools(&self, output_dir: &Path) -> Result<()> {
         if self.tools.is_empty() {
             return Ok(());
@@ -145,7 +149,7 @@ impl Builder {
         let tools_dir = output_dir.join("tools");
         fs::create_dir_all(&tools_dir)?;
 
-        // Copy each tool's directory to output
+        // Process each tool
         let content_tools_dir = Path::new(&self.config.build.content_dir).join("tools");
         for tool in &self.tools {
             let src_dir = content_tools_dir.join(&tool.slug);
@@ -153,8 +157,32 @@ impl Builder {
 
             if src_dir.exists() {
                 fs::create_dir_all(&dst_dir)?;
-                copy_dir_recursive(&src_dir, &dst_dir)?;
-                info!("Generated tool: /tools/{}/", tool.slug);
+
+                let template_path = src_dir.join("template.html");
+                if template_path.exists() {
+                    // Render template.html with Tera
+                    let context = ToolPageContext {
+                        site: &self.config.site,
+                        config: ConfigContext {
+                            markdown: &self.config.markdown,
+                        },
+                        tool,
+                        nav: &self.config.nav,
+                    };
+
+                    let template_name = format!("tools/{}/template.html", tool.slug);
+                    let html = self.template_engine.render_tool_template(&template_path, &template_name, &context)?;
+                    fs::write(dst_dir.join("index.html"), html)?;
+
+                    // Copy non-template files (assets, etc.)
+                    copy_tool_assets(&src_dir, &dst_dir)?;
+
+                    info!("Generated tool (template): /tools/{}/", tool.slug);
+                } else {
+                    // Fallback: copy the entire directory as before
+                    copy_dir_recursive(&src_dir, &dst_dir)?;
+                    info!("Generated tool (copy): /tools/{}/", tool.slug);
+                }
             } else {
                 tracing::warn!("Tool directory not found: {}", src_dir.display());
             }
@@ -450,52 +478,73 @@ impl Builder {
 
     /// Generate search index JSON file
     fn generate_search_index(&self, output_dir: &Path) -> Result<()> {
-        let search_index: Vec<SearchIndexItem> = self
-            .posts
-            .iter()
-            .map(|post| {
-                // Strip HTML tags from content
-                let strip_html = |html: &str| -> String {
-                    let mut result = String::new();
-                    let mut in_tag = false;
-                    for c in html.chars() {
-                        if c == '<' {
-                            in_tag = true;
-                        } else if c == '>' {
-                            in_tag = false;
-                        } else if !in_tag {
-                            result.push(c);
-                        }
-                    }
-                    result
-                };
+        // Helper to strip HTML tags
+        let strip_html = |html: &str| -> String {
+            let mut result = String::new();
+            let mut in_tag = false;
+            for c in html.chars() {
+                if c == '<' {
+                    in_tag = true;
+                } else if c == '>' {
+                    in_tag = false;
+                } else if !in_tag {
+                    result.push(c);
+                }
+            }
+            result
+        };
 
-                // Generate summary: use post summary or first 200 chars of content
-                let plain_content = strip_html(&post.html_content);
-                let summary = if let Some(ref s) = post.meta.summary {
-                    s.clone()
-                } else {
+        let mut search_index: Vec<SearchIndexItem> = Vec::new();
+
+        // Add posts to search index
+        for post in &self.posts {
+            let plain_content = strip_html(&post.html_content);
+            let summary = if let Some(ref s) = post.meta.summary {
+                s.clone()
+            } else {
+                plain_content.chars().take(200).collect::<String>() + "..."
+            };
+            let content = plain_content.chars().take(2000).collect();
+
+            search_index.push(SearchIndexItem {
+                slug: post.slug.clone(),
+                url: post.url.clone(),
+                title: post.meta.title.clone(),
+                summary,
+                content,
+                tags: post.meta.tags.clone(),
+                date: post
+                    .meta
+                    .date
+                    .map(|d| d.format("%Y-%m-%d").to_string())
+                    .unwrap_or_default(),
+                item_type: Some("post".to_string()),
+                category: None,
+            });
+        }
+
+        // Add astrology items to search index
+        for cat in &self.astrology.categories {
+            for item in &cat.items {
+                let plain_content = strip_html(&item.html_content);
+                let summary = item.meta.summary.clone().unwrap_or_else(|| {
                     plain_content.chars().take(200).collect::<String>() + "..."
-                };
-
-                // Content for search: first 2000 chars of plain text
+                });
                 let content = plain_content.chars().take(2000).collect();
 
-                SearchIndexItem {
-                    slug: post.slug.clone(),
-                    url: post.url.clone(),
-                    title: post.meta.title.clone(),
+                search_index.push(SearchIndexItem {
+                    slug: item.slug.clone(),
+                    url: item.url.clone(),
+                    title: item.meta.title.clone(),
                     summary,
                     content,
-                    tags: post.meta.tags.clone(),
-                    date: post
-                        .meta
-                        .date
-                        .map(|d| d.format("%Y-%m-%d").to_string())
-                        .unwrap_or_default(),
-                }
-            })
-            .collect();
+                    tags: item.meta.keywords.clone(),
+                    date: String::new(),
+                    item_type: Some("astrology".to_string()),
+                    category: Some(cat.name.clone()),
+                });
+            }
+        }
 
         let json = serde_json::to_string_pretty(&search_index)
             .context("Failed to serialize search index")?;
@@ -538,6 +587,32 @@ fn copy_dir_recursive(src: &Path, dst: &Path) -> Result<()> {
         let entry = entry?;
         let path = entry.path();
         let relative = path.strip_prefix(src)?;
+        let target = dst.join(relative);
+
+        if entry.file_type().is_dir() {
+            fs::create_dir_all(&target)?;
+        } else {
+            if let Some(parent) = target.parent() {
+                fs::create_dir_all(parent)?;
+            }
+            fs::copy(path, &target)?;
+        }
+    }
+    Ok(())
+}
+
+/// Copy tool assets (non-template files) from source to destination
+fn copy_tool_assets(src: &Path, dst: &Path) -> Result<()> {
+    for entry in WalkDir::new(src).min_depth(1) {
+        let entry = entry?;
+        let path = entry.path();
+        let relative = path.strip_prefix(src)?;
+
+        // Skip template.html as it's rendered separately
+        if relative == Path::new("template.html") {
+            continue;
+        }
+
         let target = dst.join(relative);
 
         if entry.file_type().is_dir() {

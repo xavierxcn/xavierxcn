@@ -4,6 +4,8 @@ symbol: "♏"
 element: 水
 modality: 固定
 ruling_planet: 冥王星
+date_range: "10.24 - 11.22"
+order: 8
 keywords:
   - 深度
   - 转化

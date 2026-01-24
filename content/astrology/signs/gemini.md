@@ -4,6 +4,8 @@ symbol: "♊"
 element: 风
 modality: 变动
 ruling_planet: 水星
+date_range: "5.21 - 6.21"
+order: 3
 keywords:
   - 好奇
   - 沟通

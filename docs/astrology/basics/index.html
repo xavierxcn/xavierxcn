@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>占星常识 - 占星 - Xavier的即兴发挥</title>
+    <meta name="description" content="占星常识 — 占星学基础知识">
+    <meta name="author" content="Xavier Xiang">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+<style>
+.category-hero {
+    text-align: center;
+    padding: var(--space-2xl) 0 var(--space-xl);
+    margin-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-border);
+}
+
+.category-breadcrumb {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-lg);
+}
+
+.category-breadcrumb a {
+    color: var(--color-text-muted);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.category-breadcrumb a:hover {
+    color: var(--color-accent);
+}
+
+.category-breadcrumb span {
+    margin: 0 var(--space-sm);
+    opacity: 0.5;
+}
+
+.category-hero-title {
+    font-family: var(--font-serif);
+    font-size: 2.5rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+}
+
+.category-hero-en {
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+}
+
+/* Filter Section */
+.filter-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-md);
+    margin-bottom: var(--space-2xl);
+    flex-wrap: wrap;
+}
+
+.filter-search {
+    position: relative;
+    flex: 0 1 280px;
+}
+
+.filter-search input {
+    width: 100%;
+    padding: var(--space-sm) var(--space-lg);
+    padding-left: 2.5rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    color: var(--color-text);
+    outline: none;
+    transition: all var(--transition-base);
+}
+
+.filter-search input::placeholder {
+    color: var(--color-text-muted);
+}
+
+.filter-search input:focus {
+    border-color: var(--color-accent);
+}
+
+.filter-search::before {
+    content: '⌕';
+    position: absolute;
+    left: var(--space-md);
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    pointer-events: none;
+}
+
+.filter-group {
+    display: flex;
+    gap: 2px;
+    background: var(--color-border);
+    padding: 2px;
+}
+
+.filter-btn {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-sm) var(--space-md);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 500;
+    background: var(--color-bg-elevated);
+    border: none;
+    color: var(--color-text-secondary);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.filter-btn:hover {
+    color: var(--color-text);
+}
+
+.filter-btn.active {
+    background: var(--color-text);
+    color: var(--color-bg);
+}
+
+.filter-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.filter-dot.fire { background: #C45C4A; }
+.filter-dot.earth { background: #8B7355; }
+.filter-dot.air { background: #7A9E9F; }
+.filter-dot.water { background: #5B7B95; }
+
+/* Items Grid */
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: var(--space-lg);
+}
+
+.item-card {
+    position: relative;
+    display: block;
+    padding: var(--space-xl);
+    background: var(--color-bg-elevated);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-base);
+    text-decoration: none;
+    color: inherit;
+}
+
+.item-card:hover {
+    border-color: var(--color-border-strong);
+    box-shadow: 0 4px 20px var(--color-shadow);
+}
+
+.item-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    margin-bottom: var(--space-md);
+}
+
+.item-symbol {
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--color-text-muted);
+    flex-shrink: 0;
+    transition: color var(--transition-base);
+    font-family: "Noto Sans Symbols 2", "Segoe UI Symbol", sans-serif;
+    font-variant-emoji: text;
+}
+
+.item-card:hover .item-symbol {
+    color: var(--color-accent);
+}
+
+.item-title-group {
+    flex: 1;
+    min-width: 0;
+}
+
+.item-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 500;
+    color: var(--color-text);
+    margin-bottom: var(--space-xs);
+    letter-spacing: 0.02em;
+}
+
+.item-attrs {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+}
+
+.item-attr {
+    font-family: var(--font-sans);
+    font-size: 0.7rem;
+    font-weight: 500;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 2px var(--space-xs);
+    background: var(--color-code-bg);
+}
+
+.item-summary {
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+    margin-bottom: var(--space-md);
+}
+
+.item-keywords {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+}
+
+.item-keyword {
+    font-family: var(--font-sans);
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-border);
+    transition: all var(--transition-fast);
+}
+
+.item-card:hover .item-keyword {
+    border-color: var(--color-border-strong);
+}
+
+.empty-state {
+    text-align: center;
+    padding: var(--space-3xl);
+    color: var(--color-text-muted);
+    font-style: italic;
+}
+
+@media (max-width: 640px) {
+    .category-hero-title {
+        font-size: 2rem;
+    }
+
+    .filter-section {
+        flex-direction: column;
+    }
+
+    .filter-search {
+        width: 100%;
+        flex: none;
+    }
+
+    .items-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="/" class="site-title">Xavier的即兴发挥</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<section class="category-page">
+    <header class="category-hero">
+        <nav class="category-breadcrumb">
+            <a href="/astrology/">占星</a>
+            <span>/</span>
+            占星常识
+        </nav>
+        <h1 class="category-hero-title">占星常识</h1>
+        <p class="category-hero-en">
+            
+            
+            
+            
+        </p>
+    </header>
+
+    <div class="filter-section">
+        <div class="filter-search">
+            <input type="text" id="filter-input" placeholder="搜索占星常识..." autocomplete="off">
+        </div>
+        
+    </div>
+
+    
+    <div class="items-grid" id="items-grid">
+        
+        <a href="/astrology/basics/intro/" class="item-card"
+             data-title="占星术"
+             data-keywords="占星术,定义"
+             data-element=""
+             data-modality="">
+            <div class="item-header">
+                
+                <span class="item-symbol">✧</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">占星术</h2>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">占星术通过观察天体位置来理解人间事务</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">占星术</span>
+                
+                <span class="item-keyword">定义</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="/astrology/basics/history/" class="item-card"
+             data-title="占星术的历史"
+             data-keywords="历史,巴比伦,希腊,阿拉伯"
+             data-element=""
+             data-modality="">
+            <div class="item-header">
+                
+                <span class="item-symbol">☉</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">占星术的历史</h2>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">从古巴比伦到现代，占星术经历了四千年的演变</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">历史</span>
+                
+                <span class="item-keyword">巴比伦</span>
+                
+                <span class="item-keyword">希腊</span>
+                
+                <span class="item-keyword">阿拉伯</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="/astrology/basics/chart-basics/" class="item-card"
+             data-title="星盘"
+             data-keywords="星盘,出生图,行星,宫位"
+             data-element=""
+             data-modality="">
+            <div class="item-header">
+                
+                <span class="item-symbol">⊛</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">星盘</h2>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">星盘记录了一个人出生时刻从出生地点观察到的天空配置</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">星盘</span>
+                
+                <span class="item-keyword">出生图</span>
+                
+                <span class="item-keyword">行星</span>
+                
+                <span class="item-keyword">宫位</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="/astrology/basics/branches/" class="item-card"
+             data-title="占星术的分支"
+             data-keywords="本命占星,合盘,择日,卜卦,推运"
+             data-element=""
+             data-modality="">
+            <div class="item-header">
+                
+                <span class="item-symbol">❂</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">占星术的分支</h2>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">占星术包含多个分支，各自针对不同类型的问题</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">本命占星</span>
+                
+                <span class="item-keyword">合盘</span>
+                
+                <span class="item-keyword">择日</span>
+                
+                <span class="item-keyword">卜卦</span>
+                
+                <span class="item-keyword">推运</span>
+                
+            </div>
+            
+        </a>
+        
+        <a href="/astrology/basics/sign-classifications/" class="item-card"
+             data-title="星座的分类"
+             data-keywords="元素,模式,阴阳,分类"
+             data-element=""
+             data-modality="">
+            <div class="item-header">
+                
+                <span class="item-symbol">◈</span>
+                
+                <div class="item-title-group">
+                    <h2 class="item-title">星座的分类</h2>
+                    
+                </div>
+            </div>
+            
+            <p class="item-summary">十二星座按照阴阳、模式和元素进行系统分类</p>
+            
+            
+            <div class="item-keywords">
+                
+                <span class="item-keyword">元素</span>
+                
+                <span class="item-keyword">模式</span>
+                
+                <span class="item-keyword">阴阳</span>
+                
+                <span class="item-keyword">分类</span>
+                
+            </div>
+            
+        </a>
+        
+    </div>
+    
+</section>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Xiang. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('');
+        });
+    </script>
+
+    
+<script>
+(function() {
+    const input = document.getElementById('filter-input');
+    const grid = document.getElementById('items-grid');
+    const cards = grid ? Array.from(grid.querySelectorAll('.item-card')) : [];
+    const filterBtns = document.querySelectorAll('.filter-btn');
+
+    let activeElement = '';
+
+    function filterCards() {
+        const query = input.value.toLowerCase().trim();
+
+        cards.forEach(card => {
+            const title = (card.dataset.title || '').toLowerCase();
+            const keywords = (card.dataset.keywords || '').toLowerCase();
+            const element = card.dataset.element || '';
+
+            const matchesQuery = !query || title.includes(query) || keywords.includes(query);
+            const matchesElement = !activeElement || element === activeElement;
+
+            card.style.display = (matchesQuery && matchesElement) ? '' : 'none';
+        });
+    }
+
+    if (input) {
+        input.addEventListener('input', filterCards);
+    }
+
+    filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const group = btn.closest('.filter-group');
+            if (group) {
+                group.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            }
+            btn.classList.add('active');
+            activeElement = btn.dataset.value || '';
+            filterCards();
+        });
+    });
+})();
+</script>
+
+</body>
+</html>

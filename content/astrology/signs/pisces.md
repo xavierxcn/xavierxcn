@@ -4,6 +4,8 @@ symbol: "♓"
 element: 水
 modality: 变动
 ruling_planet: 海王星
+date_range: "2.19 - 3.20"
+order: 12
 keywords:
   - 直觉
   - 梦想

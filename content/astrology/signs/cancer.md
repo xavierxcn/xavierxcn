@@ -4,6 +4,8 @@ symbol: "♋"
 element: 水
 modality: 本位
 ruling_planet: 月亮
+date_range: "6.22 - 7.22"
+order: 4
 keywords:
   - 情感
   - 家庭

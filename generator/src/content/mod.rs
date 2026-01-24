@@ -103,6 +103,12 @@ pub struct AstrologyMeta {
     pub keywords: Vec<String>,
     #[serde(default)]
     pub summary: Option<String>,
+    /// Date range for zodiac signs (e.g., "3.21 - 4.19")
+    #[serde(default)]
+    pub date_range: Option<String>,
+    /// Sort order within category (lower numbers first)
+    #[serde(default)]
+    pub order: Option<i32>,
 }
 
 /// An astrology item (sign, planet, house, or aspect)
@@ -293,6 +299,7 @@ pub fn load_tools<P: AsRef<Path>>(content_dir: P) -> Result<Vec<Tool>> {
 
 /// Astrology category definitions
 const ASTROLOGY_CATEGORIES: &[(&str, &str)] = &[
+    ("basics", "占星常识"),
     ("signs", "星座"),
     ("planets", "行星"),
     ("houses", "宫位"),
@@ -346,8 +353,15 @@ fn load_astrology_category(category_dir: &Path, category_id: &str) -> Result<Vec
         }
     }
 
-    // Sort by title
-    items.sort_by(|a, b| a.meta.title.cmp(&b.meta.title));
+    // Sort by order (if specified), then by title
+    items.sort_by(|a, b| {
+        match (a.meta.order, b.meta.order) {
+            (Some(ord_a), Some(ord_b)) => ord_a.cmp(&ord_b),
+            (Some(_), None) => std::cmp::Ordering::Less,
+            (None, Some(_)) => std::cmp::Ordering::Greater,
+            (None, None) => a.meta.title.cmp(&b.meta.title),
+        }
+    });
 
     Ok(items)
 }
@@ -447,7 +461,7 @@ summary: 黄道第一宫，象征新的开始
         fs::write(signs_dir.join("aries.md"), aries_content).unwrap();
 
         let data = load_astrology(temp_dir.path()).unwrap();
-        assert_eq!(data.categories.len(), 4);
+        assert_eq!(data.categories.len(), 5);
 
         let signs = data.get_category("signs").unwrap();
         assert_eq!(signs.items.len(), 1);
@@ -461,7 +475,7 @@ summary: 黄道第一宫，象征新的开始
     fn test_load_astrology_empty() {
         let temp_dir = TempDir::new().unwrap();
         let data = load_astrology(temp_dir.path()).unwrap();
-        assert_eq!(data.categories.len(), 4);
+        assert_eq!(data.categories.len(), 5);
         for cat in &data.categories {
             assert_eq!(cat.items.len(), 0);
         }
