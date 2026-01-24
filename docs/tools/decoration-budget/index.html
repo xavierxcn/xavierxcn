@@ -320,6 +320,67 @@
         font-weight: 600;
     }
 
+    /* Budget target & progress */
+    .summary-target-section {
+        margin-top: 16px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .summary-remaining {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 12px;
+    }
+
+    .summary-remaining-label {
+        font-size: 13px;
+        opacity: 0.85;
+    }
+
+    .summary-remaining-value {
+        font-size: 18px;
+        font-weight: 700;
+    }
+
+    .summary-remaining-value.overspent {
+        color: #fca5a5;
+    }
+
+    .budget-progress {
+        height: 8px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        overflow: hidden;
+    }
+
+    .budget-progress-bar {
+        height: 100%;
+        border-radius: 4px;
+        transition: width 0.3s ease, background-color 0.3s ease;
+    }
+
+    .budget-progress-bar.level-safe {
+        background: #4ade80;
+    }
+
+    .budget-progress-bar.level-warning {
+        background: #fbbf24;
+    }
+
+    .budget-progress-bar.level-danger {
+        background: #f87171;
+    }
+
+    .budget-progress-text {
+        display: flex;
+        justify-content: space-between;
+        font-size: 11px;
+        margin-top: 6px;
+        opacity: 0.75;
+    }
+
     /* Budget Panel */
     .budget-panel {
         background: var(--budget-surface);
@@ -497,35 +558,11 @@
         text-align: right;
     }
 
-    /* Simple mode headers and items */
-    .items-header-simple {
-        grid-template-columns: 140px 1fr 100px 40px;
-    }
-
-    .items-header-simple span:nth-child(3) {
-        text-align: right;
-    }
-
-    .budget-item-simple {
-        grid-template-columns: 140px 1fr 100px 40px;
-    }
-
-    .item-note-wide {
-        text-align: left;
-    }
-
     .item-subtotal-wrapper {
         display: flex;
         align-items: center;
         justify-content: flex-end;
         gap: 8px;
-    }
-
-    .item-action-wrapper {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 40px;
     }
 
     /* Add item button */
@@ -1064,13 +1101,7 @@
             gap: 8px;
         }
 
-        .budget-item-simple {
-            grid-template-columns: 1fr;
-            gap: 8px;
-        }
-
-        .items-header,
-        .items-header-simple {
+        .items-header {
             display: none;
         }
 
@@ -1079,18 +1110,13 @@
             margin-bottom: 4px;
         }
 
-        .item-input.item-note,
-        .item-input.item-note-wide {
+        .item-input.item-note {
             grid-column: 1 / -1;
         }
 
         .item-subtotal-wrapper {
             grid-column: 1 / -1;
             justify-content: space-between;
-        }
-
-        .item-action-wrapper {
-            width: auto;
         }
 
         .delete-item-btn {
@@ -1187,6 +1213,13 @@
                         <span class="input-unit">平方米</span>
                     </div>
                 </div>
+                <div class="form-group">
+                    <label for="budget-target">目标预算</label>
+                    <div class="input-with-unit">
+                        <input type="number" id="budget-target" placeholder="400000" min="0">
+                        <span class="input-unit">元</span>
+                    </div>
+                </div>
             </div>
 
             <div class="settings-section">
@@ -1265,6 +1298,19 @@
                     <div class="summary-row">
                         <span class="summary-row-label">软装配饰</span>
                         <span class="summary-row-value" id="summary-soft">¥0</span>
+                    </div>
+                </div>
+                <div class="summary-target-section" id="summary-target-section" style="display: none;">
+                    <div class="summary-remaining">
+                        <span class="summary-remaining-label">剩余预算</span>
+                        <span class="summary-remaining-value" id="summary-remaining">¥0</span>
+                    </div>
+                    <div class="budget-progress">
+                        <div class="budget-progress-bar level-safe" id="budget-progress-bar" style="width: 0%;"></div>
+                    </div>
+                    <div class="budget-progress-text">
+                        <span id="budget-progress-spent">已支出 ¥0</span>
+                        <span id="budget-progress-target">目标 ¥0</span>
                     </div>
                 </div>
             </div>
@@ -1487,6 +1533,7 @@ class DecorationBudget {
     constructor() {
         this.mode = 'banbao';
         this.area = 100;
+        this.budgetTarget = 0; // Target budget amount
         this.items = {}; // Store all items per category (user-added)
         this.collapsedCategories = new Set();
         this.itemCounter = 0;
@@ -1514,6 +1561,7 @@ class DecorationBudget {
                 const data = JSON.parse(saved);
                 this.mode = data.mode || 'banbao';
                 this.area = data.area || 100;
+                this.budgetTarget = data.budgetTarget || 0;
                 this.items = data.items || {};
                 this.itemCounter = data.itemCounter || 0;
                 this.quickQuote = data.quickQuote || { enabled: false, unitPrice: 0 };
@@ -1523,6 +1571,7 @@ class DecorationBudget {
 
                 // Update UI
                 document.getElementById('area').value = this.area;
+                document.getElementById('budget-target').value = this.budgetTarget || '';
                 document.querySelectorAll('.mode-option').forEach(opt => {
                     opt.classList.toggle('active', opt.dataset.mode === this.mode);
                 });
@@ -1544,6 +1593,7 @@ class DecorationBudget {
             localStorage.setItem('decoration-budget-v4', JSON.stringify({
                 mode: this.mode,
                 area: this.area,
+                budgetTarget: this.budgetTarget,
                 items: this.items,
                 itemCounter: this.itemCounter,
                 quickQuote: this.quickQuote,
@@ -1577,6 +1627,13 @@ class DecorationBudget {
             this.saveToStorage();
         });
 
+        // Budget target input
+        document.getElementById('budget-target').addEventListener('input', (e) => {
+            this.budgetTarget = parseFloat(e.target.value) || 0;
+            this.calculateTotals();
+            this.saveToStorage();
+        });
+
         // Quick quote toggle
         document.getElementById('quick-quote-toggle').addEventListener('change', (e) => {
             this.quickQuote.enabled = e.target.checked;
@@ -1602,7 +1659,9 @@ class DecorationBudget {
                 this.customSuggestions = {};
                 this.mode = 'banbao';
                 this.area = 100;
+                this.budgetTarget = 0;
                 document.getElementById('area').value = 100;
+                document.getElementById('budget-target').value = '';
                 document.getElementById('quick-quote-price').value = '';
                 document.getElementById('quick-quote-toggle').checked = false;
                 document.querySelectorAll('.mode-option').forEach(opt => {
@@ -1674,9 +1733,8 @@ class DecorationBudget {
     }
 
     getDisplayMode(categoryKey) {
-        const category = budgetCategories[categoryKey];
-        const config = category.modeConfig[this.mode];
-        return config ? config.display : 'detailed';
+        // Always use detailed mode to support itemized pricing (including extras/增项)
+        return 'detailed';
     }
 
     isCategoryVisible(categoryKey) {
@@ -1937,7 +1995,6 @@ class DecorationBudget {
             if (!this.isCategoryVisible(categoryKey)) continue;
 
             const isCollapsed = this.collapsedCategories.has(categoryKey);
-            const displayMode = this.getDisplayMode(categoryKey);
             const subtotal = this.calculateCategorySubtotal(categoryKey);
             const items = this.items[categoryKey] || [];
 
@@ -1956,8 +2013,8 @@ class DecorationBudget {
                         </div>
                     </div>
                     <div class="category-items ${isCollapsed ? 'collapsed' : ''}">
-                        ${items.length > 0 ? this.renderItemsHeader(displayMode) : ''}
-                        ${items.map(item => this.renderItem(categoryKey, item, displayMode)).join('')}
+                        ${items.length > 0 ? this.renderItemsHeader() : ''}
+                        ${items.map(item => this.renderItem(categoryKey, item)).join('')}
                         ${items.length === 0 ? '<div class="empty-category-hint">点击下方按钮添加项目</div>' : ''}
                         <button class="add-item-btn" data-category="${categoryKey}">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -1976,17 +2033,7 @@ class DecorationBudget {
         this.calculateTotals();
     }
 
-    renderItemsHeader(displayMode) {
-        if (displayMode === 'simple') {
-            return `
-                <div class="items-header items-header-simple">
-                    <span>项目名称</span>
-                    <span>工艺说明</span>
-                    <span>总价</span>
-                    <span></span>
-                </div>
-            `;
-        }
+    renderItemsHeader() {
         return `
             <div class="items-header">
                 <span>项目名称</span>
@@ -1998,10 +2045,7 @@ class DecorationBudget {
         `;
     }
 
-    renderItem(categoryKey, item, displayMode) {
-        if (displayMode === 'simple') {
-            return this.renderSimpleItem(categoryKey, item);
-        }
+    renderItem(categoryKey, item) {
         return this.renderDetailedItem(categoryKey, item);
     }
 
@@ -2030,33 +2074,6 @@ class DecorationBudget {
                     placeholder="品牌/备注">
                 <div class="item-subtotal-wrapper">
                     <span class="item-subtotal" data-category="${categoryKey}" data-item="${item.id}">¥${subtotal.toLocaleString()}</span>
-                    <button class="delete-item-btn" data-category="${categoryKey}" data-item="${item.id}" title="删除项目">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="18" y1="6" x2="6" y2="18"/>
-                            <line x1="6" y1="6" x2="18" y2="18"/>
-                        </svg>
-                    </button>
-                </div>
-            </div>
-        `;
-    }
-
-    renderSimpleItem(categoryKey, item) {
-        return `
-            <div class="budget-item budget-item-simple" data-category="${categoryKey}" data-item="${item.id}">
-                <span class="item-name" title="${item.name || '未命名'}">${item.name || '未命名'}</span>
-                <input type="text" class="item-input item-note item-note-wide"
-                    data-category="${categoryKey}"
-                    data-item="${item.id}"
-                    value="${item.note || ''}"
-                    placeholder="工艺说明（如：东方雨虹，厨卫刷三遍）">
-                <input type="number" class="item-input item-total"
-                    data-category="${categoryKey}"
-                    data-item="${item.id}"
-                    value="${item.total || ''}"
-                    min="0"
-                    placeholder="总价">
-                <div class="item-action-wrapper">
                     <button class="delete-item-btn" data-category="${categoryKey}" data-item="${item.id}" title="删除项目">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <line x1="18" y1="6" x2="6" y2="18"/>
@@ -2128,17 +2145,6 @@ class DecorationBudget {
                 this.updateItem(category, item, 'note', e.target.value);
             });
         });
-
-        // Input events for simple mode total
-        container.querySelectorAll('.item-total').forEach(input => {
-            input.addEventListener('input', (e) => {
-                const { category, item } = e.target.dataset;
-                const value = parseFloat(e.target.value) || 0;
-                this.updateItem(category, item, 'total', value);
-                this.updateCategorySubtotal(category);
-                this.calculateTotals();
-            });
-        });
     }
 
     updateItemSubtotal(categoryKey, itemId) {
@@ -2164,15 +2170,10 @@ class DecorationBudget {
 
     calculateCategorySubtotal(categoryKey) {
         let subtotal = 0;
-        const displayMode = this.getDisplayMode(categoryKey);
         const items = this.items[categoryKey] || [];
 
         for (const item of items) {
-            if (displayMode === 'simple') {
-                subtotal += item.total || 0;
-            } else {
-                subtotal += (item.qty || 0) * (item.price || 0);
-            }
+            subtotal += (item.qty || 0) * (item.price || 0);
         }
 
         return subtotal;
@@ -2247,6 +2248,41 @@ class DecorationBudget {
 
         document.getElementById('summary-furniture').textContent = `¥${furniture.toLocaleString()}`;
         document.getElementById('summary-soft').textContent = `¥${soft.toLocaleString()}`;
+
+        // Update budget target section
+        const targetSection = document.getElementById('summary-target-section');
+        if (targetSection) {
+            if (this.budgetTarget > 0) {
+                targetSection.style.display = 'block';
+
+                // Calculate remaining budget
+                const remaining = this.budgetTarget - total;
+                const remainingEl = document.getElementById('summary-remaining');
+                remainingEl.textContent = `¥${remaining.toLocaleString()}`;
+                remainingEl.classList.toggle('overspent', remaining < 0);
+
+                // Update progress bar
+                const progressPercent = Math.min((total / this.budgetTarget) * 100, 100);
+                const progressBar = document.getElementById('budget-progress-bar');
+                progressBar.style.width = `${progressPercent}%`;
+
+                // Set progress bar color based on percentage
+                progressBar.classList.remove('level-safe', 'level-warning', 'level-danger');
+                if (progressPercent <= 60) {
+                    progressBar.classList.add('level-safe');
+                } else if (progressPercent <= 90) {
+                    progressBar.classList.add('level-warning');
+                } else {
+                    progressBar.classList.add('level-danger');
+                }
+
+                // Update progress text
+                document.getElementById('budget-progress-spent').textContent = `已支出 ¥${total.toLocaleString()}`;
+                document.getElementById('budget-progress-target').textContent = `目标 ¥${this.budgetTarget.toLocaleString()}`;
+            } else {
+                targetSection.style.display = 'none';
+            }
+        }
     }
 
     exportToExcel() {
@@ -2290,9 +2326,14 @@ class DecorationBudget {
             ['基础信息'],
             ['房屋面积', `${this.area} 平方米`],
             ['装修方式', modeNames[this.mode]],
-            [],
-            ['费用汇总'],
         ];
+
+        if (this.budgetTarget > 0) {
+            summaryData.push(['目标预算', this.budgetTarget]);
+        }
+
+        summaryData.push([]);
+        summaryData.push(['费用汇总']);
 
         if (this.quickQuote.enabled) {
             const coverage = quickQuoteCoverage[this.mode];
@@ -2306,7 +2347,13 @@ class DecorationBudget {
         summaryData.push(['家具家电', furniture]);
         summaryData.push(['软装配饰', soft]);
         summaryData.push([]);
-        summaryData.push(['预算总计', quickQuoteTotal + design + hardfit + materials + customFurniture + furniture + soft]);
+        const totalSpent = quickQuoteTotal + design + hardfit + materials + customFurniture + furniture + soft;
+        summaryData.push(['预算总计', totalSpent]);
+
+        if (this.budgetTarget > 0) {
+            const remaining = this.budgetTarget - totalSpent;
+            summaryData.push(['剩余预算', remaining, remaining < 0 ? '已超支' : '']);
+        }
 
         const summaryWs = XLSX.utils.aoa_to_sheet(summaryData);
         XLSX.utils.book_append_sheet(wb, summaryWs, '预算汇总');
@@ -2317,49 +2364,19 @@ class DecorationBudget {
             [],
         ];
 
-        // Check display modes
-        const hasDetailedMode = Object.keys(budgetCategories).some(k =>
-            this.isCategoryVisible(k) && this.getDisplayMode(k) === 'detailed'
-        );
-        const hasSimpleMode = Object.keys(budgetCategories).some(k =>
-            this.isCategoryVisible(k) && this.getDisplayMode(k) === 'simple'
-        );
-
-        if (hasDetailedMode && hasSimpleMode) {
-            detailData.push(['分类', '项目', '显示模式', '数量', '单价 (元)', '工艺说明', '总价 (元)']);
-        } else if (hasSimpleMode) {
-            detailData.push(['分类', '项目', '工艺说明', '总价 (元)']);
-        } else {
-            detailData.push(['分类', '项目', '数量', '单价 (元)', '品牌/备注', '小计 (元)']);
-        }
+        // Detail header - always detailed mode
+        detailData.push(['分类', '项目', '数量', '单价 (元)', '品牌/备注', '小计 (元)']);
 
         for (const [categoryKey, category] of Object.entries(budgetCategories)) {
             if (!this.isCategoryVisible(categoryKey)) continue;
 
-            const displayMode = this.getDisplayMode(categoryKey);
             const items = this.items[categoryKey] || [];
 
             for (const item of items) {
                 const itemName = item.name || '未命名项目';
-
-                if (displayMode === 'simple') {
-                    const total = item.total || 0;
-                    if (total > 0 || item.note) {
-                        if (hasDetailedMode && hasSimpleMode) {
-                            detailData.push([category.name, itemName, '简化', '', '', item.note || '', total]);
-                        } else {
-                            detailData.push([category.name, itemName, item.note || '', total]);
-                        }
-                    }
-                } else {
-                    const subtotal = (item.qty || 0) * (item.price || 0);
-                    if (item.qty > 0 || item.price > 0) {
-                        if (hasDetailedMode && hasSimpleMode) {
-                            detailData.push([category.name, itemName, '详细', item.qty || 0, item.price || 0, item.note || '', subtotal]);
-                        } else {
-                            detailData.push([category.name, itemName, item.qty || 0, item.price || 0, item.note || '', subtotal]);
-                        }
-                    }
+                const subtotal = (item.qty || 0) * (item.price || 0);
+                if (item.qty > 0 || item.price > 0) {
+                    detailData.push([category.name, itemName, item.qty || 0, item.price || 0, item.note || '', subtotal]);
                 }
             }
         }
