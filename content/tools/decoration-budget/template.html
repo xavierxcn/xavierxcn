@@ -375,23 +375,6 @@
         color: var(--budget-text);
     }
 
-    .category-tag {
-        font-size: 11px;
-        padding: 3px 8px;
-        border-radius: 4px;
-        font-weight: 500;
-    }
-
-    .category-tag.included {
-        background: rgba(34, 197, 94, 0.1);
-        color: #16a34a;
-    }
-
-    .category-tag.self-purchase {
-        background: rgba(245, 158, 11, 0.1);
-        color: #d97706;
-    }
-
     .category-subtotal {
         font-size: 14px;
         font-weight: 600;
@@ -1878,20 +1861,6 @@ class DecorationBudget {
         }
     }
 
-    getModeTag(modeConfig) {
-        const config = modeConfig[this.mode];
-        if (!config) return '';
-        const tag = config.tag;
-        if (tag === 'included') {
-            return '<span class="category-tag included">包含</span>';
-        } else if (tag === 'self') {
-            return '<span class="category-tag self-purchase">自购</span>';
-        } else if (tag === 'labor') {
-            return '<span class="category-tag self-purchase">仅人工</span>';
-        }
-        return '';
-    }
-
     render() {
         const container = document.getElementById('budget-list');
         let html = '';
@@ -1910,7 +1879,6 @@ class DecorationBudget {
                         <div class="category-title">
                             <span class="category-icon">${category.icon}</span>
                             <span class="category-name">${category.name}</span>
-                            ${this.getModeTag(category.modeConfig)}
                         </div>
                         <div style="display: flex; align-items: center; gap: 16px;">
                             <span class="category-subtotal">¥${subtotal.toLocaleString()}</span>
