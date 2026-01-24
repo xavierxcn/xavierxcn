@@ -1994,7 +1994,7 @@ class Universe {
     this.#radix = new _charts_RadixChart_js__WEBPACK_IMPORTED_MODULE_3__["default"](this)
     this.#transit = new _charts_TransitChart_js__WEBPACK_IMPORTED_MODULE_4__["default"](this.#radix)
 
-    this.#loadFont("Astronomicon", '../assets/fonts/ttf/AstronomiconFonts_1.1/Astronomicon.ttf')
+    this.#loadFont("Astronomicon", '/xavierxcn/static/fonts/Astronomicon.ttf')
 
     return this
   }
