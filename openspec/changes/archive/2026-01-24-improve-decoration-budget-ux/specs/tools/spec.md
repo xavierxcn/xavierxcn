@@ -1,6 +1,6 @@
 # Spec Delta: tools/decoration-budget UX Improvements
 
-## MODIFIED Requirements
+## ADDED Requirements
 
 ### Requirement: Add Item Interaction
 **Priority**: High
@@ -57,8 +57,6 @@
 - Given 用户在移动设备上使用工具
 - When 查看项目列表
 - Then 删除按钮始终可见（使用紧凑图标）
-
-## ADDED Requirements
 
 ### Requirement: Collapse State Persistence
 **Priority**: Low
