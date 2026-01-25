@@ -1701,6 +1701,7 @@
 
             const hsys = houseSystem.value;
 
+            // Get planet positions
             const resultPtr = Module._get(
                 utc.year, utc.month, utc.day, utc.hour, utc.minute, 0,
                 lonDeg, lonMin, lonSec, lonDir,
@@ -1711,10 +1712,33 @@
             const resultStr = Module.UTF8ToString(resultPtr);
             const chartData = JSON.parse(resultStr);
 
-            // Debug: log house system and returned data structure
-            console.log('House system:', hsys);
-            console.log('Chart data keys:', Object.keys(chartData));
-            console.log('Chart data:', chartData);
+            // Get houses separately with the correct house system
+            if (typeof Module._getHouses === 'function') {
+                const housesPtr = Module._getHouses(
+                    utc.year, utc.month, utc.day, utc.hour, utc.minute, 0,
+                    lonDeg, lonMin, lonSec, lonDir,
+                    latDeg, latMin, latSec, latDir,
+                    hsys
+                );
+                const housesStr = Module.UTF8ToString(housesPtr);
+                const housesData = JSON.parse(housesStr);
+
+                // Debug
+                console.log('House system:', hsys);
+                console.log('Houses from _getHouses:', housesData);
+
+                // Override houses with correct house system data
+                if (housesData && housesData.houses) {
+                    chartData.houses = housesData.houses;
+                }
+                if (housesData && housesData.ascmc) {
+                    chartData.ascmc = housesData.ascmc;
+                }
+            } else {
+                console.log('_getHouses not available, using _get houses');
+                console.log('House system:', hsys);
+                console.log('Chart data:', chartData);
+            }
 
             if (chartData.error) {
                 throw new Error(chartData.error_msg || '计算错误');
