@@ -1624,14 +1624,14 @@
             const lonDeg = Math.floor(Math.abs(lon));
             const lonMin = Math.floor((Math.abs(lon) - lonDeg) * 60);
             const lonSec = Math.round(((Math.abs(lon) - lonDeg) * 60 - lonMin) * 60);
-            const lonDir = lon >= 0 ? 'E'.charCodeAt(0) : 'W'.charCodeAt(0);
+            const lonDir = lon >= 0 ? 'E' : 'W';
 
             const latDeg = Math.floor(Math.abs(lat));
             const latMin = Math.floor((Math.abs(lat) - latDeg) * 60);
             const latSec = Math.round(((Math.abs(lat) - latDeg) * 60 - latMin) * 60);
-            const latDir = lat >= 0 ? 'N'.charCodeAt(0) : 'S'.charCodeAt(0);
+            const latDir = lat >= 0 ? 'N' : 'S';
 
-            const hsys = houseSystem.value.charCodeAt(0);
+            const hsys = houseSystem.value;
 
             const resultPtr = Module._get(
                 utc.year, utc.month, utc.day, utc.hour, utc.minute, 0,
@@ -1643,9 +1643,10 @@
             const resultStr = Module.UTF8ToString(resultPtr);
             const chartData = JSON.parse(resultStr);
 
-            // Debug: log house system and returned data
-            console.log('House system:', houseSystem.value, '-> ASCII:', hsys);
-            console.log('Chart data houses:', chartData.house || chartData.houses || chartData.cusps);
+            // Debug: log house system and returned data structure
+            console.log('House system:', hsys);
+            console.log('Chart data keys:', Object.keys(chartData));
+            console.log('Chart data:', chartData);
 
             if (chartData.error) {
                 throw new Error(chartData.error_msg || '计算错误');
