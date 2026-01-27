@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OpenSpec 1.0 发布，聊聊它架构里那些有意思的东西 - Xavier的即兴发挥</title>
+    <meta name="description" content="A personal blog about technology and life">
+    <meta name="author" content="Xavier Xiang">
+
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-D2CY9FNGTC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-D2CY9FNGTC');
+    </script>
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+    
+
+    
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav">
+            <a href="/" class="site-title">Xavier的即兴发挥</a>
+            <div class="nav-right">
+                <div class="search-container">
+                    <input type="text" id="search-input" placeholder="搜索文章..." autocomplete="off">
+                    <div id="search-results" class="search-results"></div>
+                </div>
+                <ul class="nav-links">
+                    
+                    <li><a href="&#x2F;">首页</a></li>
+                    
+                    <li><a href="&#x2F;astrology&#x2F;">占星</a></li>
+                    
+                    <li><a href="&#x2F;tools&#x2F;">工具</a></li>
+                    
+                    <li><a href="&#x2F;archive&#x2F;">归档</a></li>
+                    
+                    <li><a href="&#x2F;about&#x2F;">关于</a></li>
+                    
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="main-content">
+        
+<article class="post">
+    <header class="post-header">
+        <h1>OpenSpec 1.0 发布，聊聊它架构里那些有意思的东西</h1>
+        <div class="post-meta">
+            <time datetime="2026-01-26">
+                2026年01月26日
+            </time>
+            
+        </div>
+
+        
+        <div class="tags">
+            
+            <a href="/tags/AI/" class="tag">AI</a>
+            
+            <a href="/tags/开发工具/" class="tag">开发工具</a>
+            
+            <a href="/tags/工程实践/" class="tag">工程实践</a>
+            
+            <a href="/tags/Agent/" class="tag">Agent</a>
+            
+        </div>
+        
+    </header>
+
+    <div class="post-content">
+        <p>Vibe Coding 不好、规格驱动好——行，这些道理都懂，不多说了。</p>
+<p>这篇想聊点别的：OpenSpec 1.0 在架构上做了哪些选择，为什么这些选择有意思，以及从 0.1 到 1.0 这一路它踩过什么坑、做过什么取舍。</p>
+<h2>文件系统当数据库用</h2>
+<p>翻 OpenSpec 的源码，第一个让我觉得有意思的设计是：它把文件系统当数据库。</p>
+<p>没有 SQLite，没有 <code>.state.json</code>。判断 proposal 阶段有没有完成？看 <code>proposal.md</code> 存不存在就行了。</p>
+<pre><code class="language-typescript">if (exists(artifactPath)) {
+  completed.add(artifactId)
+}
+</code></pre>
+<p>就这么简单。</p>
+<p>这带来几个好处：</p>
+<ul>
+<li>每个命令都重新扫描文件系统，没有缓存状态会坏掉</li>
+<li>所有状态都在文件里，Git 直接管，分支、合并都没问题</li>
+<li>调试的时候 <code>ls</code> 一下就知道当前什么状态</li>
+</ul>
+<p>很多工具喜欢搞一个 <code>.lock</code> 文件追踪状态，然后就会遇到各种状态不一致的问题——文件改了状态没更新，或者状态更新了但操作挂了一半。OpenSpec 的做法是：文件本身就是状态，不需要额外的状态层。</p>
+<p>听起来有点笨？但有时候笨办法就是好办法。</p>
+<h2>"依赖是启用器，不是门禁"</h2>
+<p>官方文档里有句话我觉得说得挺好：</p>
+<blockquote>
+<p>Dependencies are <em>enablers</em>, not <em>gates</em>.</p>
+</blockquote>
+<p>一般的工作流系统喜欢设卡：你必须完成步骤 1 才能做步骤 2。OpenSpec 不这么干，它只告诉你：这些东西好了，所以你现在可以干这个了。</p>
+<pre class="mermaid">graph TD
+    A[proposal] --&gt; B[specs]
+    A --&gt; C[design]
+    B --&gt; D[tasks]
+    C --&gt; D
+</pre>
+<p>没有 proposal 你写不出有意义的 design——这是逻辑，不是官僚主义。但系统不会拦着你，它只是说：specs 和 design 现在能写了，tasks 还不行因为依赖 design。</p>
+<p>这个区别对 AI 协作挺重要的。AI 不需要一个状态机告诉它"你现在在阶段 2"，它需要的是"这是你现在能做的事"。</p>
+<h2>老工作流 vs OPSX</h2>
+<p>这是 1.0 最大的变化。</p>
+<h3>老工作流有什么问题</h3>
+<p>0.1 到 0.17 这段时间，OpenSpec 用的是这套流程：</p>
+<pre><code>/openspec:proposal → /openspec:apply → /openspec:archive
+</code></pre>
+<p>用下来有几个痛点：</p>
+<p><strong>指令全写死在代码里。</strong> 想调整 proposal 的生成逻辑？得改 TypeScript 源码、重新编译、发新版本。</p>
+<p><strong>一个命令全干完。</strong> <code>/openspec:proposal</code> 一敲，proposal、design、tasks、specs 一股脑全出来了。没法单独调某一个环节。</p>
+<p><strong>线性的，改不回去。</strong> 实现到一半发现设计有问题，想回去改 design？没有官方的回退机制。要么手动改文件，要么重来。</p>
+<h3>OPSX 改了什么</h3>
+<p>0.18 引入了 OPSX，1.0 把它扶正了。</p>
+<p>核心变化是从"阶段"变成了"动作"：</p>
+<table><thead><tr><th>命令</th><th>干嘛的</th></tr></thead><tbody>
+<tr><th><code>/opsx:new</code></th><th>开一个新变更</th></tr>
+<tr><th><code>/opsx:continue</code></th><th>根据依赖图，创建下一个产物</th></tr>
+<tr><th><code>/opsx:ff</code></th><th>快进，一口气把规划产物都建了</th></tr>
+<tr><th><code>/opsx:apply</code></th><th>开始实现，随时能回去改产物</th></tr>
+<tr><th><code>/opsx:archive</code></th><th>完事了归档</th></tr>
+</tbody></table>
+<p>关键区别在这：</p>
+<pre class="mermaid">graph LR
+    A[proposal] --&gt; B[specs] --&gt; C[design] --&gt; D[tasks] --&gt; E[implement]
+    E -.-&gt;|发现问题| C
+    E -.-&gt;|发现问题| B
+    E -.-&gt;|发现问题| A
+</pre>
+<p>实现到一半发现设计有问题？直接改 design.md 然后继续。不用重开变更，不用 hack。</p>
+<p>还有一点，指令现在放在 <code>schema.yaml</code> 和 <code>templates/*.md</code> 里了：</p>
+<pre class="mermaid">flowchart TB
+    subgraph old[老工作流]
+        A1[硬编码在 TypeScript] --&gt; A2[等新版本] --&gt; A3[祈祷变好了]
+    end
+    subgraph new[OPSX]
+        B1[schema.yaml] --&gt; B2[立即生效]
+        B3[templates/*.md] --&gt; B2
+        B2 --&gt; B4[自己测试效果]
+    end
+</pre>
+<p>想调整 proposal 的生成指令？改模板文件就行，不用动代码。</p>
+<h2>ArtifactGraph 引擎</h2>
+<p>OPSX 的核心是个叫 ArtifactGraph 的东西，本质上是个依赖图引擎：</p>
+<ol>
+<li>读 <code>schema.yaml</code>，建 artifact 的依赖关系图</li>
+<li>扫文件系统，看哪些 artifact 已经有了</li>
+<li>用 Kahn 算法做拓扑排序</li>
+<li>告诉你现在能创建哪些 artifact</li>
+</ol>
+<pre><code class="language-typescript">const ArtifactSchema = z.object({
+  id: z.string(),
+  generates: z.string(),      // "proposal.md" 或 "specs/*.md"
+  description: z.string(),
+  template: z.string(),
+  requires: z.array(z.string()).default([]),
+});
+</code></pre>
+<p><code>generates</code> 支持 glob。<code>specs/*.md</code> 意味着只要 <code>specs/</code> 目录下有 <code>.md</code> 文件，这个 artifact 就算完成了。</p>
+<h2>Schema 系统</h2>
+<p>这个是 1.0 比较实用的新东西。</p>
+<p>以前只有一种工作流：proposal → specs → design → tasks。现在可以自己定义：</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#65737e;"># 先调研再写 proposal
+</span><span style="color:#bf616a;">name</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">research-first
+</span><span style="color:#bf616a;">artifacts</span><span style="color:#c0c5ce;">:
+</span><span style="color:#c0c5ce;">  - </span><span style="color:#bf616a;">id</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">research
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">generates</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">research.md
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">requires</span><span style="color:#c0c5ce;">: []
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">  - </span><span style="color:#bf616a;">id</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">proposal
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">generates</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">proposal.md
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">requires</span><span style="color:#c0c5ce;">: [</span><span style="color:#a3be8c;">research</span><span style="color:#c0c5ce;">]
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">  - </span><span style="color:#bf616a;">id</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">tasks
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">generates</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">tasks.md
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">requires</span><span style="color:#c0c5ce;">: [</span><span style="color:#a3be8c;">proposal</span><span style="color:#c0c5ce;">]
+</span></pre>
+<p>或者 TDD 风格的：</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">name</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">tdd
+</span><span style="color:#bf616a;">artifacts</span><span style="color:#c0c5ce;">:
+</span><span style="color:#c0c5ce;">  - </span><span style="color:#bf616a;">id</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">spec
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">generates</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">spec.md
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">requires</span><span style="color:#c0c5ce;">: []
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">  - </span><span style="color:#bf616a;">id</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">tests
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">generates</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">tests/*.test.ts</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">requires</span><span style="color:#c0c5ce;">: [</span><span style="color:#a3be8c;">spec</span><span style="color:#c0c5ce;">]
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#c0c5ce;">  - </span><span style="color:#bf616a;">id</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">implementation
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">generates</span><span style="color:#c0c5ce;">: &quot;</span><span style="color:#a3be8c;">src/**/*.ts</span><span style="color:#c0c5ce;">&quot;
+</span><span style="color:#c0c5ce;">    </span><span style="color:#bf616a;">requires</span><span style="color:#c0c5ce;">: [</span><span style="color:#a3be8c;">tests</span><span style="color:#c0c5ce;">]
+</span></pre>
+<p>Schema 解析走 XDG 标准：先找 <code>~/.local/share/openspec/schemas/&lt;name&gt;/</code>，没有再用包里内置的。不用 fork 项目就能完全自定义工作流。</p>
+<h2>项目配置</h2>
+<p>1.0 加了 <code>openspec/config.yaml</code>，解决一个实际问题：怎么让 AI 知道项目的约定？</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#bf616a;">schema</span><span style="color:#c0c5ce;">: </span><span style="color:#a3be8c;">spec-driven
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#bf616a;">context</span><span style="color:#c0c5ce;">: </span><span style="color:#b48ead;">|
+</span><span style="color:#a3be8c;">  Tech stack: TypeScript, React, Node.js
+</span><span style="color:#a3be8c;">  Testing: Vitest, Playwright
+</span><span style="color:#a3be8c;">  我们用中文写注释
+</span><span style="color:#a3be8c;">
+</span><span style="color:#bf616a;">rules</span><span style="color:#c0c5ce;">:
+</span><span style="color:#c0c5ce;">  </span><span style="color:#bf616a;">proposal</span><span style="color:#c0c5ce;">:
+</span><span style="color:#c0c5ce;">    - </span><span style="color:#a3be8c;">要有回滚计划
+</span><span style="color:#c0c5ce;">  </span><span style="color:#bf616a;">specs</span><span style="color:#c0c5ce;">:
+</span><span style="color:#c0c5ce;">    - </span><span style="color:#a3be8c;">场景用 Given/When/Then 格式
+</span><span style="color:#c0c5ce;">  </span><span style="color:#bf616a;">design</span><span style="color:#c0c5ce;">:
+</span><span style="color:#c0c5ce;">    - </span><span style="color:#a3be8c;">复杂流程画时序图
+</span></pre>
+<p>这些内容会注入到每个 artifact 的生成指令里。AI 不用每次都被提醒"我们用 TypeScript"。</p>
+<h2>21 种 AI 工具</h2>
+<p>这个数字本身就说明问题：AI 编程工具的生态正在快速碎片化。</p>
+<p>OpenSpec 的做法是生成适配层，不是给每个工具写一套实现：</p>
+<ul>
+<li>Claude Code: <code>.claude/skills/</code> 目录</li>
+<li>Cursor: slash commands</li>
+<li>GitHub Copilot: <code>.github/prompts/*.prompt.md</code></li>
+<li>Windsurf: <code>.windsurf/workflows/*.md</code></li>
+</ul>
+<p><code>openspec init</code> 选工具，它在对应目录生成配置。<code>openspec update</code> 刷新。底层逻辑一样，输出格式不同。</p>
+<h2>版本演进</h2>
+<p>翻 CHANGELOG 能看到演进轨迹：</p>
+<pre class="mermaid">timeline
+    title OpenSpec 版本演进
+    section 基础搭建
+        0.1-0.3 : list/show/validate/archive
+               : 多工具 init 向导
+               : AGENTS.md 概念
+    section 工具适配
+        0.4-0.10 : Codex, Copilot, Windsurf...
+                : Windows 兼容
+                : 非交互 init
+    section 打磨
+        0.11-0.17 : Amazon Q, Gemini CLI...
+                 : Shell 补全
+                 : config 命令
+    section 架构重写
+        0.18-0.22 : OPSX 工作流
+                 : ArtifactGraph
+                 : Schema 系统
+</pre>
+<p>1.0 本质上是把 OPSX 从"实验性"升级成"推荐"。</p>
+<h2>几个坑</h2>
+<p>用下来有些地方容易踩坑，记一下：</p>
+<p><strong>Scenario 必须 4 个 <code>#</code></strong></p>
+<pre style="background-color:#2b303b;">
+<span style="color:#8fa1b3;">#### Scenario: 用户登录成功   ✓ 对的
+</span><span style="color:#8fa1b3;">### Scenario: 用户登录成功    ✗ 会静默失败
+</span></pre>
+<p><strong>MODIFIED 要写完整内容</strong></p>
+<p>改已有的 requirement，得把整个 requirement 复制过来改，不能只写增量。不然归档时会丢内容。</p>
+<pre style="background-color:#2b303b;">
+<span style="color:#8fa1b3;">## MODIFIED Requirements
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#8fa1b3;">### Requirement: 用户认证
+</span><span style="color:#c0c5ce;">The system SHALL issue a JWT on successful login.
+</span><span style="color:#c0c5ce;">The system SHALL validate token expiration.  </span><span style="color:#65737e;">&lt;!-- 新增的 --&gt;
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#8fa1b3;">#### Scenario: Valid credentials
+</span><span style="color:#c0c5ce;">...
+</span><span style="color:#c0c5ce;">
+</span><span style="color:#8fa1b3;">#### Scenario: Expired token  &lt;!-- 新增的 --&gt;
+</span><span style="color:#c0c5ce;">...
+</span></pre>
+<p><strong>CLI 要显式参数，AI 负责推断</strong></p>
+<pre style="background-color:#2b303b;">
+<span style="color:#8fa1b3;">openspec</span><span style="color:#c0c5ce;"> status</span><span style="color:#bf616a;"> --change</span><span style="color:#c0c5ce;"> add-auth   </span><span style="color:#65737e;"># CLI 要明确指定
+</span></pre>
+<p>AI 助手从对话推断当前处理哪个 change，然后传显式参数给 CLI。确定性执行和智能推断分开。</p>
+<h2>小结</h2>
+<p>OpenSpec 1.0 不只是个"让 AI 写代码更规范"的工具。它更像是一套 AI 协作的基础设施：有文件系统（specs 和 changes 的物理隔离）、有进程管理（artifact 依赖图）、有可编程接口（schema 系统）。</p>
+<p>如果只是想让 AI "听话一点"，可能用不着这么重。但如果在认真想怎么把 AI 编程助手整进团队流程，OpenSpec 提供了一套打磨过的方案。</p>
+<p>而且它开源、没有 API 密钥依赖、所有状态在本地文件。你能完全控制这套流程，不用把核心工作流托管给哪个 SaaS。</p>
+<hr />
+<p><strong>链接</strong></p>
+<ul>
+<li><a href="https://github.com/Fission-AI/OpenSpec">GitHub</a></li>
+<li><a href="https://github.com/Fission-AI/OpenSpec/blob/master/docs/experimental-workflow.md">OPSX 文档</a></li>
+<li><a href="https://github.com/Fission-AI/OpenSpec/blob/master/docs/schema-customization.md">Schema 自定义</a></li>
+<li><a href="https://discord.gg/YctCnvvshC">Discord</a></li>
+</ul>
+
+    </div>
+
+    <footer class="post-footer">
+        
+    </footer>
+</article>
+
+<nav class="post-nav">
+    
+
+    
+</nav>
+
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2026 Xavier Xiang. 保留所有权利。</p>
+    </footer>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <script>mermaid.initialize({ startOnLoad: true });</script>
+    
+
+    
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+        onload="renderMathInElement(document.body);"></script>
+    
+
+    <script src="/static/js/search.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initSearch('');
+        });
+    </script>
+
+    
+</body>
+</html>
